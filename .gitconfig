@@ -1,0 +1,39 @@
+[user]
+  name    = Ryuichi KAWAMATA
+  email   = mail@rkmathi.net
+
+[core]
+  editor  = vim
+  autocrlf= input
+
+[push]
+  default = tracking
+
+[diff]
+  external = ~/.vim/git_diff_wrapper
+
+[pager]
+  diff =
+
+[color]
+  ui      = true
+  status  = auto
+  diff    = auto
+  branch  = auto
+  grep    = auto
+  interactive = auto
+
+[alias]
+  ad  = add .
+  br  = branch
+  ba  = branch -a
+  bn  = branch --no-merged
+  ci  = commit -m
+  co  = checkout
+  di  = diff
+  fe  = fetch
+  lg  = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
+  up  = pull --rebase
+  sh  = show
+  st  = status -s
+  wc  = whatchanged --graph

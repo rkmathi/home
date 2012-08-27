@@ -1,0 +1,13 @@
+[ui]
+  username = Ryuichi KAWAMATA <mail@rkmathi.net>
+  verbose  = True
+
+[extensions]
+  color     =
+  graphlog  =
+
+[color]
+  mode  = ansi
+
+[alias]
+  gl    = glog
