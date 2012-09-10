@@ -13,11 +13,11 @@ NeoBundle 'pyte'
 NeoBundle 'quickrun'
 NeoBundle 'mitechie/pyflakes-pathogen'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'klen/python-mode'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc'
+NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-ref'
 filetype plugin indent on
 
@@ -50,6 +50,9 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-k> unite#do_action('vspli
 let g:unite_enable_start_insert = 1
 let g:unite_enable_split_vertically = 1
 let g:unite_winwidth = 40
+" scrooloose/syntastic
+let g:syntastic_enable_signs = 1
+let g:syntastic_auto_loc_list = 2
 
 
 """ Other Settings """
