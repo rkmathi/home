@@ -9,7 +9,6 @@ endif
 call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'ZenCoding.vim'
 NeoBundle 'taglist.vim'
-NeoBundle 'pyte'
 NeoBundle 'quickrun'
 NeoBundle 'mitechie/pyflakes-pathogen'
 NeoBundle 'nathanaelkane/vim-indent-guides'
@@ -103,8 +102,7 @@ set listchars=tab:>_,trail:_,extends:>,precedes:<
 set display=uhex
 set colorcolumn=80
 set background=light
-colorscheme pyte
-"colorscheme peachpuff
+colorscheme peachpuff
 
 " Highlight settings
 highlight LineNr ctermbg=lightgrey ctermfg=darkyellow
