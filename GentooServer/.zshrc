@@ -146,6 +146,10 @@ alias e='exit'
 alias t='tmux -f ~/.tmux.conf'
 alias be="bundle exec"
 alias ck='../cake/console/cake'
-alias eedp="eix-sync -q; emerge -qavuDN @world; dispatch-conf; revdep-rebuild -v -- --ask"
-
+alias updagrade="eix-sync -q;\
+    emerge -qavuDN @world;\
+    dispatch-conf;\
+    emerge -avuDN @preserved-rebuild;\
+    dispatch-conf;\
+    eselect news read;"
 
