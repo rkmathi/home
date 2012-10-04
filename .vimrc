@@ -8,25 +8,19 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'pyte'
-NeoBundle 'ZenCoding.vim'
-" --> <C-y>+,
-NeoBundle 'taglist.vim'
-" --> :Tlist
+NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
+NeoBundle 'taglist.vim'         " --> :Tlist
 NeoBundle 'pyte'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mitechie/pyflakes-pathogen'
->>>>>>> origin/master
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
-NeoBundle 'Shougo/unite.vim'
-" --> :ub & :uf & :um
+NeoBundle 'Shougo/unite.vim'    " --> :ub & :uf & :um
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'thinca/vim-quickrun'
-" --> <\>+r
-NeoBundle 'thinca/vim-ref'
-" :Ref
+NeoBundle 'thinca/vim-quickrun' " --> <\>+r
+NeoBundle 'thinca/vim-ref'" :Ref
 filetype plugin indent on
 
 " ZenCoding.vim
