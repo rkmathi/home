@@ -106,8 +106,7 @@ set listchars=tab:>_,trail:_,extends:>,precedes:<
 set display=uhex
 set colorcolumn=80
 set background=light
-colorscheme pyte
-"colorscheme peachpuff
+colorscheme peachpuff
 
 " Highlight settings
 highlight LineNr ctermbg=lightgrey ctermfg=darkyellow
