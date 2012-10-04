@@ -10,7 +10,7 @@ call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'ZenCoding.vim'
 NeoBundle 'taglist.vim'
 NeoBundle 'pyte'
-NeoBundle 'quickrun'
+NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'mitechie/pyflakes-pathogen'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
@@ -18,6 +18,7 @@ NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 filetype plugin indent on
 
@@ -25,6 +26,8 @@ filetype plugin indent on
 let g:user_zen_settings = { 'indentation':' ' }
 " taglist.vim
 :set tags=tags
+" kchmck/vim-coffee-script
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 " nathanaelkane/vim-indent-guides
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=grey
