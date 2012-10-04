@@ -4,21 +4,25 @@ filetype off
 
 " NeoBundle
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim
+  set runtimepath+=~/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
-NeoBundle 'ZenCoding.vim'
-NeoBundle 'taglist.vim'
 NeoBundle 'pyte'
+NeoBundle 'ZenCoding.vim'
+" --> <C-y>+,
+NeoBundle 'taglist.vim'
+" --> :Tlist
 NeoBundle 'quickrun'
-NeoBundle 'mitechie/pyflakes-pathogen'
+" --> \+r
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'Shougo/unite.vim'
+" --> :ub & :uf & :um
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-ref'
+" :Ref
 filetype plugin indent on
 
 " ZenCoding.vim
@@ -47,7 +51,7 @@ au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split
 au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 au FileType unite nnoremap <silent> <buffer> <expr> <C-k> unite#do_action('vsplit')
 au FileType unite inoremap <silent> <buffer> <expr> <C-k> unite#do_action('vsplit')
-let g:unite_enable_start_insert = 1
+let g:unite_enable_start_insert = 0
 let g:unite_enable_split_vertically = 1
 let g:unite_winwidth = 40
 " scrooloose/syntastic
