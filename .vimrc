@@ -7,7 +7,6 @@ if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
-NeoBundle 'pyte'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'taglist.vim'         " --> :Tlist
 NeoBundle 'pyte'
