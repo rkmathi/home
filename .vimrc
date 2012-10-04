@@ -12,8 +12,10 @@ NeoBundle 'ZenCoding.vim'
 " --> <C-y>+,
 NeoBundle 'taglist.vim'
 " --> :Tlist
-NeoBundle 'quickrun'
-" --> \+r
+NeoBundle 'pyte'
+NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'mitechie/pyflakes-pathogen'
+>>>>>>> origin/master
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neocomplcache-snippets-complete'
@@ -21,6 +23,8 @@ NeoBundle 'Shougo/unite.vim'
 " --> :ub & :uf & :um
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'thinca/vim-quickrun'
+" --> <\>+r
 NeoBundle 'thinca/vim-ref'
 " :Ref
 filetype plugin indent on
@@ -29,6 +33,8 @@ filetype plugin indent on
 let g:user_zen_settings = { 'indentation':' ' }
 " taglist.vim
 :set tags=tags
+" kchmck/vim-coffee-script
+autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 " nathanaelkane/vim-indent-guides
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=grey
@@ -107,8 +113,7 @@ set listchars=tab:>_,trail:_,extends:>,precedes:<
 set display=uhex
 set colorcolumn=80
 set background=light
-colorscheme pyte
-"colorscheme peachpuff
+colorscheme peachpuff
 
 " Highlight settings
 highlight LineNr ctermbg=lightgrey ctermfg=darkyellow
