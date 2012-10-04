@@ -20,7 +20,7 @@ NeoBundle 'Shougo/unite.vim'    " --> :ub & :uf & :um
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
-NeoBundle 'thinca/vim-ref'" :Ref
+NeoBundle 'thinca/vim-ref'      " :Ref
 filetype plugin indent on
 
 " ZenCoding.vim
