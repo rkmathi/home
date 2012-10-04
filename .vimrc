@@ -110,7 +110,7 @@ set background=light
 colorscheme peachpuff
 
 " Highlight settings
-highlight LineNr ctermbg=lightgrey ctermfg=darkyellow
-highlight StatusLine ctermfg=lightgrey ctermbg=darkyellow
-highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
+highlight LineNr ctermbg=darkgrey ctermfg=yellow
+highlight StatusLine ctermfg=darkgrey ctermbg=yellow
+highlight StatusLineNC ctermfg=lightgrey ctermbg=darkyellow
 
