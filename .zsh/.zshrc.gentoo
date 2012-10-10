@@ -1,0 +1,32 @@
+# Prompt
+case ${UID} in
+    0)
+        PROMPT="
+%{$reset_color%}$ "
+        PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[red]%}$USER%{$reset_color%}@%{$fg[cyan]%}%m%{$reset_color%}$PROMPT"
+        ;;
+    *)
+        PROMPT="
+%{$reset_color%}$ "
+        PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[green]%}$USER%{$reset_color%}@%{$fg[cyan]%}%m%{$reset_color%}$PROMPT"
+        ;;
+esac
+
+# Alias
+alias t='tmux -f ~/.tmux/.tmux.conf.gentoo'
+alias updagrade="\
+    eix-sync -q;\
+    emerge -qauDN @world;\
+    dispatch-conf;\
+    emerge -qaD @okkake;\
+    emerge -qaD @preserved-rebuild;\
+    dispatch-conf;\
+    eselect news read"
+
+# Export
+source /usr/bin/virtualenvwrapper.sh
+export WORKON_HOME="$HOME/.venv"
+export BROWSER="google-chrome"
+

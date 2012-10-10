@@ -1,0 +1,29 @@
+# Prompt
+case ${UID} in
+    0)
+        PROMPT="
+%{$reset_color%}# "
+        PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[red]%}$USER%{$reset_color%}@%{$fg[yellow]%}%m%{$reset_color%}$PROMPT"
+        ;;
+    *)
+        PROMPT="
+%{$reset_color%}$ "
+        PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[green]%}$USER%{$reset_color%}@%{$fg[yellow]%}%m%{$reset_color%}$PROMPT"
+        ;;
+esac
+
+# Alias
+alias t='tmux -f ~/.tmux/.tmux.conf.osx'
+
+# Export
+export WORKON_HOME="$HOME/.venv"
+#export EPREFIX="$HOME/Gentoo"
+#export PATH="$EPREFIX/usr/bin:$EPREFIX/usr/sbin:$EPREFIX/bin:$EPREFIX/sbin:$EPREFIX/tmp/bin:$EPREFIX/tmp/usr/bin:$PATH"
+
+# Autojump
+if [ -f `brew --prefix`/etc/autojump ]; then
+  . `brew --prefix`/etc/autojump
+fi
+
