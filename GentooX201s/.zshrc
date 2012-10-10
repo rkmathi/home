@@ -40,13 +40,13 @@ case ${UID} in
         PROMPT="
 %{$reset_color%}$ "
         PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
-        PROMPT="%{$reset_color%}%{$fg[red]%}$USER%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[red]%}$USER%{$reset_color%}@%{$fg[cyan]%}%m%{$reset_color%}$PROMPT"
         ;;
     *)
         PROMPT="
 %{$reset_color%}$ "
         PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
-        PROMPT="%{$reset_color%}%{$fg[green]%}$USER%{$reset_color%}@%{$fg[green]%}%m%{$reset_color%}$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[green]%}$USER%{$reset_color%}@%{$fg[cyan]%}%m%{$reset_color%}$PROMPT"
         ;;
 esac
 
@@ -142,15 +142,22 @@ limit coredumpsize 0
 LESS=-r
 
 # Alias
-alias v='vim'
 alias e='exit'
+alias j='autojump'
 alias t='tmux -f ~/.tmux.conf'
+alias v='vim'
 alias be="bundle exec"
 alias ck='../cake/console/cake'
-alias eedp="eix-sync -q; emerge -qavuDN @world; dispatch-conf; emerge -qavuDN @live-rebuild; emerge -qavuDN @preserved-rebuild"
+alias updagrade="eix-sync -q;\
+             emerge -qauDN @world;\
+             dispatch-conf;\
+             emerge -qaD @okkake;\
+             emerge -qaD @preserved-rebuild;\
+             dispatch-conf;\
+             eselect news read"
 
 # Export
-export BROWSER="google-chrome"
-export WORKON_HOME=~/.venv
 source /usr/bin/virtualenvwrapper.sh
+export WORKON_HOME="$HOME/.venv"
+export BROWSER="google-chrome"
 
