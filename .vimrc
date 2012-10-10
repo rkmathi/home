@@ -7,6 +7,7 @@ if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
+NeoBundle 'pyte'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'taglist.vim'         " --> :Tlist
 NeoBundle 'kchmck/vim-coffee-script'
@@ -107,7 +108,7 @@ set background=light
 colorscheme peachpuff
 
 " Highlight settings
-highlight LineNr ctermbg=darkgrey ctermfg=yellow
-highlight StatusLine ctermfg=darkgrey ctermbg=yellow
-highlight StatusLineNC ctermfg=lightgrey ctermbg=darkyellow
+highlight LineNr ctermbg=lightgrey ctermfg=darkyellow
+highlight StatusLine ctermfg=lightgrey ctermbg=darkyellow
+highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
 
