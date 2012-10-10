@@ -8,8 +8,9 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'pyte'
-NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'taglist.vim'         " --> :Tlist
+NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
+NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
@@ -21,20 +22,20 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 filetype plugin indent on
 
-" ZenCoding.vim
-let g:user_zen_settings = { 'indentation':' ' }
 " taglist.vim
 :set tags=tags
+" ZenCoding.vim
+let g:user_zen_settings = { 'indentation':' ' }
 " kchmck/vim-coffee-script
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 " nathanaelkane/vim-indent-guides
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=grey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=darkgrey
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 2
 " Shougo/neocomplcache
-imap <C-Space> <C-x><C-o>
+inoremap <C-Space> <C-x><C-o>
 setlocal omnifunc=syntaxcomplete#Complete
 let g:neocomplcache_enable_at_startup= 1
 let g:neocomplcache_enable_smart_case = 1
@@ -42,9 +43,9 @@ let g:neocomplcache_enable_camel_case_completion = 1
 let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_min_syntax_length = 5
 " Shougo/unite.vim
-noremap :ub :<C-u>Unite buffer<CR>
-noremap :uf :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
-noremap :um :<C-u>Unite file_mru -buffer-name=file_mru<CR>
+nnoremap :ub :<C-u>Unite buffer<CR>
+nnoremap :uf :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
+nnoremap :um :<C-u>Unite file_mru -buffer-name=file_mru<CR>
 au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
 au FileType unite nnoremap <silent> <buffer> <expr> <C-k> unite#do_action('vsplit')
@@ -52,6 +53,10 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-k> unite#do_action('vspli
 let g:unite_enable_start_insert = 0
 let g:unite_enable_split_vertically = 1
 let g:unite_winwidth = 40
+" scrooloose/nerdtree
+nnoremap <silent> <C-e> :NERDTreeToggle<CR>
+let g:NERDTreeShowHidden = 1
+let g:NERDTreeDirArrows = 0
 " scrooloose/syntastic
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 2
@@ -108,7 +113,7 @@ set background=light
 colorscheme peachpuff
 
 " Highlight settings
-highlight LineNr ctermbg=lightgrey ctermfg=darkyellow
-highlight StatusLine ctermfg=lightgrey ctermbg=darkyellow
+highlight LineNr ctermbg=black ctermfg=yellow
+highlight StatusLine ctermfg=black ctermbg=yellow
 highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
 
