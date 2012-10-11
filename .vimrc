@@ -21,6 +21,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
+NeoBundle 'tpope/vim-haml'
 filetype plugin indent on
 
 " taglist.vim

@@ -128,7 +128,6 @@ LESS=-r
 
 # Alias
 alias e='exit'
-alias j='autojump'
 alias v='vim'
 alias be="bundle exec"
 alias ck='../cake/console/cake'
