@@ -1,0 +1,6 @@
+0,v
+1,v
+hoge,V
+fuga,V
+moga,V
+設定,v

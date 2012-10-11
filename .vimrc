@@ -4,17 +4,18 @@ filetype off
 
 " NeoBundle
 if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim
+  set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'pyte'
 NeoBundle 'taglist.vim'         " --> :Tlist
+NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neocomplcache-snippets-complete'
+"NeoBundle 'Shougo/neocomplcache'
+"NeoBundle 'Shougo/neocomplcache-snippets-complete'
 NeoBundle 'Shougo/unite.vim'    " --> :ub & :uf & :um
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
@@ -23,7 +24,12 @@ NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 filetype plugin indent on
 
 " taglist.vim
-:set tags=tags
+set tags=tags
+" YankRing.vim
+let g:yankring_clipboard_monitor = 1
+let g:yankring_history_file = '.vim/yankring_history'
+let g:yankring_ignore_duplicate = 0
+let g:yankring_max_history = 50
 " ZenCoding.vim
 let g:user_zen_settings = { 'indentation':' ' }
 " kchmck/vim-coffee-script
@@ -35,13 +41,17 @@ let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 2
 " Shougo/neocomplcache
-inoremap <C-Space> <C-x><C-o>
+"let g:acp_enableAtStartup = 0
+"let g:neocomplcache_enable_at_startup = 1
+"let g:neocomplcache_enable_smart_case = 1
+"let g:neocomplcache_enable_camel_case_completion = 1
+"let g:neocomplcache_enable_underbar_completion = 1
+"let g:neocomplcache_min_syntax_length = 5
 setlocal omnifunc=syntaxcomplete#Complete
-let g:neocomplcache_enable_at_startup= 1
-let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_min_syntax_length = 5
+autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python         setlocal omnifunc=pythoncomplete#Complete
 " Shougo/unite.vim
 nnoremap :ub :<C-u>Unite buffer<CR>
 nnoremap :uf :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
