@@ -38,8 +38,8 @@ setw -g mode-bg                     black
 setw -g mode-fg                     white
 setw -g window-status-bg            white
 setw -g window-status-fg            black
-setw -g window-status-current-attr  bold,underscore # !!
-setw -g window-status-current-bg    blue            # !!
+setw -g window-status-current-attr  bold,underscore
+setw -g window-status-current-bg    red
 setw -g window-status-current-fg    black
 
 set -g message-attr                 bold
