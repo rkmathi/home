@@ -40,7 +40,7 @@ setw -g window-status-bg            white
 setw -g window-status-fg            black
 setw -g window-status-current-attr  bold,underscore
 setw -g window-status-current-bg    red
-setw -g window-status-current-fg    black
+setw -g window-status-current-fg    yellow
 
 set -g message-attr                 bold
 set -g message-bg                   red
@@ -54,7 +54,7 @@ set -g status-fg                    black
 unbind-key -a
 
 bind-key    C-q send-prefix
-bind-key    C-r source-file ~/.tmux.conf
+bind-key    C-r source-file ~/.tmux/.tmux.conf.server
 bind-key -r C-l last-window
 bind-key -r C-n next-window
 bind-key -r C-p previous-window
