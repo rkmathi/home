@@ -25,7 +25,7 @@ alias updagrade="\
     eselect news read;"
 
 # Export
-source /usr/bin/virtualenvwrapper.sh
+#source /usr/bin/virtualenvwrapper.sh
 export WORKON_HOME="$HOME/.venv"
 
 # Autojump
