@@ -71,6 +71,13 @@ let g:NERDTreeDirArrows = 0
 " scrooloose/syntastic
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 2
+" tpope/vim-fugitive
+nnoremap <Space>gba :<C-u>Git ba<Enter>
+nnoremap <Space>gci :<C-u>Gcommit<Enter>
+nnoremap <Space>glg :<C-u>Git lg<Enter>
+nnoremap <Space>gst :<C-u>Git st<Enter>
+nnoremap <Space>gwc :<C-u>Git wc<Enter>
+
 
 
 """ Other Settings """
