@@ -21,6 +21,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
+NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
 
@@ -28,7 +29,7 @@ filetype plugin indent on
 set tags=tags
 " YankRing.vim
 let g:yankring_clipboard_monitor = 1
-let g:yankring_history_file = '.vim/yankring_history'
+let g:yankring_history_file = '.yankring_history'
 let g:yankring_ignore_duplicate = 0
 let g:yankring_max_history = 50
 " ZenCoding.vim
@@ -52,7 +53,6 @@ setlocal omnifunc=syntaxcomplete#Complete
 autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python         setlocal omnifunc=pythoncomplete#Complete
 " Shougo/unite.vim
 nnoremap :ub :<C-u>Unite buffer<CR>
 nnoremap :uf :<C-u>UniteWithBufferDir file -buffer-name=file<CR>

@@ -34,5 +34,5 @@
   fe  = fetch
   lg  = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
   sh  = show
-  st  = status -s
+  st  = status -sb
   wc  = whatchanged --graph
