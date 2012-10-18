@@ -5,6 +5,7 @@
 [core]
   editor  = vim
   autocrlf= input
+  excludesfile = ~/.gitignore-rkmathi
 
 [push]
   default = tracking
@@ -16,12 +17,12 @@
   diff =
 
 [color]
-  ui            = true
-  status        = auto
-  diff          = auto
-  branch        = auto
-  grep          = auto
-  interactive   = auto
+  ui      = true
+  status  = auto
+  diff    = auto
+  branch  = auto
+  grep    = auto
+  interactive = auto
 
 [alias]
   ad  = add .
@@ -33,6 +34,7 @@
   di  = diff
   fe  = fetch
   lg  = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
+  up  = pull --rebase
   sh  = show
   st  = status -sb
   wc  = whatchanged --graph

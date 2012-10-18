@@ -1,0 +1,35 @@
+# general
+*.bz2
+*.tar.gz
+*.tgz
+*.zip
+.gitignore
+.DS_Store
+.hg/
+
+# backup
+*~
+*.bak
+
+# c/c++/objc
+*.o
+*.a
+*.out
+
+# python
+*.pyc
+*.egg-info
+*.mo
+bulkloader-log-*
+build/
+dist/
+
+# ruby
+*.rbc
+*.gem
+*.sassc
+vendor/bundle
+db/*.sqlite3
+public/system/*
+coverage/
+spec/tmp/*
