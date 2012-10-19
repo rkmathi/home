@@ -23,7 +23,7 @@ export WORKON_HOME="$HOME/.venv"
 #export PATH="$EPREFIX/usr/bin:$EPREFIX/usr/sbin:$EPREFIX/bin:$EPREFIX/sbin:$EPREFIX/tmp/bin:$EPREFIX/tmp/usr/bin:$PATH"
 
 # Autojump
-if [ -f `brew --prefix`/etc/autojump ]; then
-  . `brew --prefix`/etc/autojump
-fi
+#if [ -f `brew --prefix`/etc/autojump ]; then
+#  . `brew --prefix`/etc/autojump
+#fi
 
