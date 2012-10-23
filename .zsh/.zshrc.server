@@ -18,9 +18,9 @@ esac
 alias t='tmux -f ~/.tmux/.tmux.conf.server'
 alias updagrade="\
     eix-sync -q;\
-    emerge -qavuDN @world;\
+    emerge -qauDN --with-bdeps=y @world;\
     dispatch-conf;\
-    emerge -avuDN @preserved-rebuild;\
+    emerge -q1 @preserved-rebuild;\
     dispatch-conf;\
     eselect news read;"
 
