@@ -15,8 +15,8 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'Shougo/neocomplcache-snippets-complete'
-NeoBundle 'Shougo/unite.vim'    " --> :ub & :uf & :um
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/unite.vim'    " --> :ub, :uf, :um
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'

@@ -26,8 +26,8 @@ alias updagrade="\
     eselect news read"
 
 # Export
-source /usr/bin/virtualenvwrapper.sh
-export WORKON_HOME="$HOME/.venv"
+#source /usr/bin/virtualenvwrapper.sh
+#export WORKON_HOME="$HOME/.venv"
 export BROWSER="google-chrome"
 
 # Autojump
