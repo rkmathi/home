@@ -4,10 +4,9 @@ filetype off
 
 " NeoBundle
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim
+  set runtimepath+=~/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
-NeoBundle 'pyte'
 NeoBundle 'taglist.vim'         " --> :Tlist
 NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
@@ -38,10 +37,10 @@ let g:user_zen_settings = { 'indentation':' ' }
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 " nathanaelkane/vim-indent-guides
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=grey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightyellow
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_guide_size = 4
+let g:indent_guides_guide_size = 1
 " Shougo/neocomplcache
 let g:acp_enableAtStartup = 0
 let g:neocomplcache_enable_at_startup = 1
@@ -77,7 +76,6 @@ nnoremap <Space>gci :<C-u>Gcommit<Enter>
 nnoremap <Space>glg :<C-u>Git lg<Enter>
 nnoremap <Space>gst :<C-u>Git st<Enter>
 nnoremap <Space>gwc :<C-u>Git wc<Enter>
-
 
 
 """ Other Settings """
@@ -126,8 +124,8 @@ set fileformats=unix,dos
 set list
 set listchars=tab:>_,trail:_,extends:>,precedes:<
 set display=uhex
-set colorcolumn=80
 set background=light
+set colorcolumn=80
 colorscheme peachpuff
 
 " Highlight settings
