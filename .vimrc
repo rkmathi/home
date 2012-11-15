@@ -4,10 +4,9 @@ filetype off
 
 " NeoBundle
 if has('vim_starting')
-  set runtimepath+=~/.vim/bundle/neobundle.vim
+  set runtimepath+=~/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
-NeoBundle 'pyte'
 NeoBundle 'taglist.vim'         " --> :Tlist
 NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
@@ -79,7 +78,6 @@ nnoremap <Space>gst :<C-u>Git st<Enter>
 nnoremap <Space>gwc :<C-u>Git wc<Enter>
 
 
-
 """ Other Settings """
 syntax on
 set ambw=double
@@ -126,8 +124,8 @@ set fileformats=unix,dos
 set list
 set listchars=tab:>_,trail:_,extends:>,precedes:<
 set display=uhex
-set colorcolumn=80
 set background=light
+set colorcolumn=80
 colorscheme peachpuff
 
 " Highlight settings
