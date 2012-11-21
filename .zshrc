@@ -135,9 +135,9 @@ alias ck='../cake/console/cake'
 ##========================================================##
 ##=================Environment settings ==================##
 ##========================================================##
-# for Gentoo
+# for Gentoo Laptop
 #[ -f ~/.zsh/.zshrc.gentoo ] && source ~/.zsh/.zshrc.gentoo
-# for Server
+# for Gentoo Server
 #[ -f ~/.zsh/.zshrc.server ] && source ~/.zsh/.zshrc.server
 # for OSX
 #[ -f ~/.zsh/.zshrc.osx ] && source ~/.zsh/.zshrc.osx

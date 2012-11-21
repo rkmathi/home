@@ -11,9 +11,9 @@ set -g default-shell        /bin/zsh
 set -g default-terminal     xterm-256color
 set -g history-limit        10000
 set -g mouse-resize-pane    off
-set -g mouse-select-pane    on
-set -g mouse-select-window  on
-set -g mouse-utf8           on
+set -g mouse-select-pane    off
+set -g mouse-select-window  off
+set -g mouse-utf8           off
 set -g visual-activity      on
 set -g visual-content       on
 set -g set-titles           on
@@ -31,7 +31,7 @@ setw -g remain-on-exit      off
 setw -g synchronize-panes   off
 setw -g automatic-rename    on
 setw -g mode-keys           vi
-setw -g mode-mouse          on
+setw -g mode-mouse          off
 
 # Colors
 setw -g mode-bg                     black
