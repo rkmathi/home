@@ -1,41 +1,35 @@
 [user]
-    name    = Ryuichi KAWAMATA
+    name    = Ryuichi KAWAMATA (rkmathi)
     email   = i@rkmathi.net
 
 [color]
     ui            = true
-    status        = auto
-    diff          = auto
-    branch        = auto
-    grep          = auto
-    interactive   = auto
 
 [core]
     editor  = vim
-    autocrlf= input
-
-[diff]
-#    external = ~/.vim/git_diff_wrapper
+    pager   = less -r
+    excludesfile = ~/.gitignore-rkmathi
 
 [merge]
     ff = false
 
-[pager]
-#    diff =
-
 [push]
     default = tracking
 
+[web]
+    browser = google-chrome
+
 [alias]
-    ad  = add .
-    ba  = branch -a
-    br  = branch
-    bn  = branch --no-merged
-    ci  = commit -m
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
+    info  = remote show origin
+    a   = add .
+    b   = branch
+    d   = diff
+    f   = fetch --prune
+    l   = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
+    s   = status --short --branch
+    ba  = branch --all
+    cm  = commit --message
     co  = checkout
-    di  = diff
-    fe  = fetch
-    lg  = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
-    st  = status -sb
-    wc  = whatchanged --graph
+    lv  = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s' --name-status
 
