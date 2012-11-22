@@ -16,9 +16,6 @@
 [push]
     default = tracking
 
-[web]
-    browser = google-chrome
-
 [alias]
     alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
     info  = remote show origin
