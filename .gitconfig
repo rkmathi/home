@@ -3,7 +3,7 @@
     email   = i@rkmathi.net
 
 [color]
-    ui            = true
+    ui      = true
 
 [core]
     editor  = vim
