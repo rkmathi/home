@@ -3,7 +3,7 @@
     email   = i@rkmathi.net
 
 [color]
-    ui            = true
+    ui      = true
 
 [core]
     editor  = vim
@@ -15,9 +15,6 @@
 
 [push]
     default = tracking
-
-[web]
-    browser = google-chrome
 
 [alias]
     alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
