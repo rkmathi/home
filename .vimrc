@@ -21,6 +21,7 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'ujihisa/neco-ghc'
 NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
 
@@ -45,9 +46,9 @@ let g:indent_guides_guide_size = 1
 let g:acp_enableAtStartup = 0
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_camel_case_completion = 0
 let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_min_syntax_length = 5
+let g:neocomplcache_min_syntax_length = 3
 setlocal omnifunc=syntaxcomplete#Complete
 autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags

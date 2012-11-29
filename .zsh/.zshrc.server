@@ -25,8 +25,9 @@ alias updagrade="\
     eselect news read;"
 
 # Export
-#source /usr/bin/virtualenvwrapper.sh
+source /usr/bin/virtualenvwrapper.sh
 export WORKON_HOME="$HOME/.venv"
+export PATH="$HOME/.cabal/bin:$PATH"
 
 # Autojump
 # determine the data directory according to the XDG Base Directory Specification
