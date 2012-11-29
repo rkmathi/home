@@ -1,0 +1,13 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 1
+
+TEXT
+^fg(pink)${cpu cpu1}% \
+^fg(pink)${cpu cpu2}% \
+^fg(pink)${cpu cpu3}% \
+^fg(pink)${cpu cpu4}% \
+^fg(green)Mem:$memperc% \
+^fg(yellow)${if_existing /sys/class/power_supply/BAT0/present}Bat:${battery_percent BAT0}%(${battery_time BAT0})${else}AC${endif} \
+^fg(white)${time %b %e %H:%M:%S}

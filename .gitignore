@@ -1,2 +1,8 @@
 .vim/bundle/
 .vim/.netrwhist
+.xmonad/*
+
+!.xmonad/conkyrc
+!.xmonad/topstatusbar.sh
+!.xmonad/xmonad.hs
+
