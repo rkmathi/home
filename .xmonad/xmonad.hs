@@ -22,6 +22,7 @@ import XMonad.Util.Run(spawnPipe)
 trayer'     = "trayer --edge top --align left --SetDockType true --SetPartialStrut false --expand true --widthtype percent --width 5 --transparent true --tint 0x000000 --height 16"
 dropbox'    = "dropbox -d"
 nmapplet'   = "nm-applet"
+skype'      = "skype"
 feh'        = "feh --bg-fill ~/Dropbox/rkmathi/media/pict/wallpaper"
 -- SPAWNS }}
 
@@ -53,7 +54,7 @@ manageHook' = (composeAll . concat $
         myMsgs     = ["Xchat", "Skype"]
         myFiles    = ["Thunar", "Comix", "Gpicview", "Acroread", "Xpdf",
                       "FoxitReader"]
-        myMiscs    = []
+        myMiscs    = ["skype"]
 
 -- Layout'
 tall        = Tall 1 (10/100) (1/2)
@@ -118,6 +119,7 @@ main = do
         spawn trayer'
         spawn dropbox'
         spawn nmapplet'
+        spawn skype'
         spawn feh'
         xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
             { modMask           = mod4Mask
