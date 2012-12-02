@@ -1,37 +1,21 @@
-# Prompt
+### Prompt
 case ${UID} in
     0)
         PROMPT="
-%{$reset_color%}$ "
+%{$reset_color%}# "
         PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
-        PROMPT="%{$reset_color%}%{$fg[red]%}$USER%{$reset_color%}@%{$fg[cyan]%}%m%{$reset_color%}$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[red]%}$USER%{$reset_color%}@%{$fg[red]%}%m%{$reset_color%}$PROMPT"
         ;;
     *)
         PROMPT="
 %{$reset_color%}$ "
         PROMPT="%{$reset_color%}[%{$fg[grey]%}%B%~%b%{$reset_color%}] %1(v|%F{blue}%1v%f|)$PROMPT"
-        PROMPT="%{$reset_color%}%{$fg[green]%}$USER%{$reset_color%}@%{$fg[cyan]%}%m%{$reset_color%}$PROMPT"
+        PROMPT="%{$reset_color%}%{$fg[green]%}$USER%{$reset_color%}@%{$fg[red]%}%m%{$reset_color%}$PROMPT"
         ;;
 esac
 
-# Alias
-alias t='tmux -f ~/.tmux/.tmux.conf.gentoo'
-alias updagrade="\
-    eix-sync -q;\
-    emerge -qtauDN --with-bdeps=y @world;\
-    dispatch-conf;\
-    emerge -qD @okkake;\
-    emerge -q1 @preserved-rebuild;\
-    dispatch-conf;\
-    eselect news read"
 
-# Export
-#source /usr/bin/virtualenvwrapper.sh
-#export WORKON_HOME="$HOME/.venv"
-export BROWSER="google-chrome"
-
-# Autojump
-# determine the data directory according to the XDG Base Directory Specification
+### Autojump
 if [[ -n ${XDG_DATA_HOME} ]] && [[ ${XDG_DATA_HOME} == *${USER}* ]]; then
     export AUTOJUMP_DATA_DIR="${XDG_DATA_HOME}/autojump"
 else
@@ -77,4 +61,21 @@ else
     false
 fi
 }
+
+
+# Alias
+alias t='tmux -f ~/.tmux/tmux.conf.server'
+alias updagrade="\
+    eix-sync -q;\
+    emerge -qtauDN --with-bdeps=y @world;\
+    dispatch-conf;\
+    emerge -q1 @preserved-rebuild;\
+    dispatch-conf;\
+    eselect news read;"
+
+
+# Export
+source /usr/bin/virtualenvwrapper.sh
+export WORKON_HOME="$HOME/.venv"
+export PATH="$HOME/.cabal/bin:$PATH"
 

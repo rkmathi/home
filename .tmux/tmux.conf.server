@@ -54,7 +54,7 @@ set -g status-fg                    black
 unbind-key -a
 
 bind-key    C-q send-prefix
-bind-key    C-r source-file ~/.tmux/.tmux.conf.server
+bind-key    C-r source-file ~/.tmux/tmux.conf.server
 bind-key -r C-l last-window
 bind-key -r C-n next-window
 bind-key -r C-p previous-window
