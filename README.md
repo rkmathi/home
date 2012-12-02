@@ -1,7 +1,8 @@
 #   configure files
 
-##  ln-config.sh
+##  install-script.py
 
-    $ rm ~/.zshrc
-    $ cp ./zshrc ~/.zshrc
-    $ source ln-config.sh
+    $ python install-script.py gui
+    or
+    $ python install-script.py cui
+
