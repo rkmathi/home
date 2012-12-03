@@ -93,7 +93,7 @@ additionalKeysP' =  [
 -- dzen*'
 dzenStatus' = "dzen2 -x '70' -w '920' -ta 'l'" ++ dzenStyle'
 dzenConky'  = "conky -c ~/.xmonad/conkyrc | dzen2 -x '990' -w '450' -ta 'r'" ++ dzenStyle'
-dzenStyle'  =" -h '16' -fg '#777777' -bg '#000000'"
+dzenStyle'  = " -h '16' -fg '#777777' -bg '#000000'"
 dzenPP'     = dzenPP
     { ppCurrent = dzenColor "#33ffff" ""
         . wrap " " " "
