@@ -1,39 +1,44 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import subprocess
 import sys
 
-cuis = ('.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux', 'vimrc',
-        '.vim', '.zsh')
+### Choose your config files!
+cuis = ('.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux',
+        '.vimrc', '.vim', '.zsh')
 guis = ('.gvimrc', '.xmonad')
 
-def rm_ln(filename):
-    cmd = "rm -rf ~/%(_)s && ln -s `pwd`/%(_)s ~/%(_)s" % {'_':filename}
+def mv_ln(fn):
+    cmd = "mv -f ~/%(_)s  ~/.old_config && ln -s `pwd`/%(_)s ~/%(_)s" % {'_':fn}
     subprocess.call(cmd, shell=True)
 
-def rm_cp(filename):
-    cmd = "rm -rf ~/%(_)s && cp `pwd`/%(_)s ~/%(_)s" % {'_':filename}
+def mv_cp(fn):
+    cmd = "mv -f ~/%(_)s ~/.old_config && cp `pwd`/%(_)s ~/%(_)s" % {'_':fn}
     subprocess.call(cmd, shell=True)
 
 def install_cui():
     for fn in cuis:
-        rm_ln(fn)
+        mv_ln(fn)
 
 def install_gui():
     for fn in guis:
-        rm_ln(fn)
+        mv_ln(fn)
 
 def install_zshrc(env):
     cated = "[ -f ~/.zsh/zshrc.%(_)s ] && source ~/.zsh/zshrc.%(_)s" % {'_':env}
     cmd = 'echo "%(_)s" >> ~/.zshrc' % {'_': cated}
-    rm_cp('.zshrc')
+    mv_cp('.zshrc')
     subprocess.call(cmd, shell=True)
 
 def install_error():
     sys.exit("Usage: python install-script.py [linux|osx|server]")
 
 def main():
+    cmd_mkdir = "mkdir -p ~/.old_config"
+    if not os.path.exists("~/.old_config"):
+        subprocess.call(cmd_mkdir, shell=True)
     if len(sys.argv) != 2:
         install_error()
     elif sys.argv[1] == 'linux' or sys.argv[1] == 'l':
