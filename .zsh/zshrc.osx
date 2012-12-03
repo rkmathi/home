@@ -1,4 +1,4 @@
-# Prompt
+### Prompt
 case ${UID} in
     0)
         PROMPT="
@@ -14,11 +14,12 @@ case ${UID} in
         ;;
 esac
 
-# Alias
-alias t='tmux -f ~/.tmux/.tmux.conf.osx'
-alias j='autojump'
 
-# Export
+### Alias
+alias t='tmux -f ~/.tmux/tmux.conf.osx'
+
+
+### Export
 export WORKON_HOME="$HOME/.venv"
 export PATH="/usr/local/git/bin:$PATH"
 export EPREFIX="$HOME/Gentoo"

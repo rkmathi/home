@@ -29,7 +29,7 @@ filetype plugin indent on
 set tags=tags
 " YankRing.vim
 let g:yankring_clipboard_monitor = 1
-let g:yankring_history_file = '.yankring_history'
+let g:yankring_history_file = '.vim/.yankring_history'
 let g:yankring_ignore_duplicate = 0
 let g:yankring_max_history = 50
 " ZenCoding.vim

@@ -2,7 +2,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
 zcompile ~/.zshrc
-source ~/.zsh/zsh-syntax-highlighting
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ##========================================================##
 ##=================== Prompt settings ====================##
@@ -136,9 +136,9 @@ alias ck='../cake/console/cake'
 ##=================Environment settings ==================##
 ##========================================================##
 # for Gentoo Laptop
-#[ -f ~/.zsh/.zshrc.gentoo ] && source ~/.zsh/.zshrc.gentoo
+#[ -f ~/.zsh/zshrc.laptop ] && source ~/.zsh/.zshrc.laptop
 # for Gentoo Server
-#[ -f ~/.zsh/.zshrc.server ] && source ~/.zsh/.zshrc.server
+#[ -f ~/.zsh/zshrc.server ] && source ~/.zsh/.zshrc.server
 # for OSX
-#[ -f ~/.zsh/.zshrc.osx ] && source ~/.zsh/.zshrc.osx
+#[ -f ~/.zsh/zshrc.osx ] && source ~/.zsh/.zshrc.osx
 
