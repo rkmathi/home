@@ -136,7 +136,7 @@ alias ck='../cake/console/cake'
 ##========================================================##
 ##=================Environment settings ==================##
 ##========================================================##
-#[ -f ~/.zsh/zshrc.laptop ] && source ~/.zsh/zshrc.laptop
-#[ -f ~/.zsh/zshrc.server ] && source ~/.zsh/zshrc.server
+#[ -f ~/.zsh/zshrc.linux ] && source ~/.zsh/zshrc.linux
 #[ -f ~/.zsh/zshrc.osx ] && source ~/.zsh/zshrc.osx
+#[ -f ~/.zsh/zshrc.server ] && source ~/.zsh/zshrc.server
 

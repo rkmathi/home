@@ -47,14 +47,13 @@ manageHook' = (composeAll . concat $
         myIgnores  = ["desktop", "desktop_window",
                       "notify-osd", "stalonetray", "trayer"]
         myNames    = ["Google Chrome Options", "bashrun"]
-        myFloats   = ["Save As...", "Downloads", "Gimp", "Mikutter.rb"]
+        myFloats   = ["Save As...", "Downloads", "Gimp", "Mikutter.rb",
+                      "Mirage"]
         myTerms    = ["Gnome-terminal", "Sakura"]
         myWebs     = ["Google-chrome", "Firefox"]
         myMikutters= ["Mikutter.rb"]
-        myMsgs     = ["Xchat", "Skype"]
-        myFiles    = ["Thunar", "Comix", "Gpicview", "Acroread", "Xpdf",
-                      "FoxitReader"]
-        myMiscs    = ["skype"]
+        myFiles    = ["Thunar", "Mirage", "Searchmonkey2"]
+        myMiscs    = ["Lyx", "Skype"]
 
 -- Layout'
 tall        = Tall 1 (10/100) (1/2)
@@ -76,24 +75,15 @@ additionalKeysP' =  [
     , ("<Print>", spawn "gnome-screenshot")
     , ("S-M-`", spawnSelected defaultGSConfig ["gnome-terminal"
                                              , "google-chrome"
-                                             , "skype"
-                                             , "gedit"
                                              , "mikutter"
-                                             , "firefox-bin"
-                                             , "FoxitReader"
-                                             , "gpicview"
-                                             , "vlc"
-                                             , "gvim"
-                                             , "lyx"
                                              , "thunar"
-                                             , "gconf-editor"]
-                                             )
-                    ]
+                                             , "lyx"]
+      )]
 
 -- dzen*'
 dzenStatus' = "dzen2 -x '70' -w '920' -ta 'l'" ++ dzenStyle'
 dzenConky'  = "conky -c ~/.xmonad/conkyrc | dzen2 -x '990' -w '450' -ta 'r'" ++ dzenStyle'
-dzenStyle'  =" -h '16' -fg '#777777' -bg '#000000'"
+dzenStyle'  = " -h '16' -fg '#777777' -bg '#000000'"
 dzenPP'     = dzenPP
     { ppCurrent = dzenColor "#33ffff" ""
         . wrap " " " "
