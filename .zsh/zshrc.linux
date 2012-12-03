@@ -63,7 +63,7 @@ fi
 }
 
 ### Alias
-alias t='tmux -f ~/.tmux/tmux.conf.laptop'
+alias t='tmux -f ~/.tmux/tmux.conf.linux'
 alias updagrade="\
     eix-sync -q;\
     emerge -qtauDN --with-bdeps=y @world;\

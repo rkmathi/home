@@ -1,49 +1,55 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import subprocess
 import sys
-import os
 
-def install_basics():
-    os.system("""
-rm -rf ~/.gitconfig
-ln -s `pwd`/.gitconfig ~/.gitconfig
-rm -rf ~/.gitignore-rkmathi
-ln -s `pwd`/.gitignore-rkmathi ~/.gitignore-rkmathi
-rm -rf ~/.hgrc
-ln -s `pwd`/.hgrc ~/.hgrc
-rm -rf ~/.tmux
-ln -s `pwd`/.tmux ~/.tmux
-rm -rf ~/.vimrc
-ln -s `pwd`/.vimrc ~/.vimrc
-rm -rf ~/.vim
-ln -s `pwd`/.vim ~/.vim
-rm -rf ~/.zsh
-ln -s `pwd`/.zsh ~/.zsh
-rm -rf ~/.zshrc
-cp `pwd`/.zshrc ~/.zshrc
-vi ~/.zshrc
-    """)
-    sys.exit(0)
+cuis = ('.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux', 'vimrc',
+        '.vim', '.zsh')
+guis = ('.gvimrc', '.xmonad')
 
-def install_guis():
-    os.system("""
-rm -rf ~/.gvimrc
-ln -s `pwd`/.gvimrc ~/.gvimrc
-rm -rf ~/.xmonad
-ln -s `pwd`/.xmonad ~/.
-    """)
-    sys.exit(0)
+def rm_ln(filename):
+    cmd = "rm -rf ~/%(_)s && ln -s `pwd`/%(_)s ~/%(_)s" % {'_':filename}
+    subprocess.call(cmd, shell=True)
+
+def rm_cp(filename):
+    cmd = "rm -rf ~/%(_)s && cp `pwd`/%(_)s ~/%(_)s" % {'_':filename}
+    subprocess.call(cmd, shell=True)
+
+def install_cui():
+    for fn in cuis:
+        rm_ln(fn)
+
+def install_gui():
+    for fn in guis:
+        rm_ln(fn)
+
+def install_zshrc(env):
+    cated = "[ -f ~/.zsh/zshrc.%(_)s ] && source ~/.zsh/zshrc.%(_)s" % {'_':env}
+    cmd = 'echo "%(_)s" >> ~/.zshrc' % {'_': cated}
+    rm_cp('.zshrc')
+    subprocess.call(cmd, shell=True)
 
 def install_error():
-    sys.exit("Usage: python install-script.py [gui|cui]")
+    sys.exit("Usage: python install-script.py [linux|osx|server]")
 
-if len(sys.argv) != 2:
-    install_error()
-elif sys.argv[1] == 'gui' or sys.argv[1] == 'g':
-    install_basics()
-    install_guis()
-elif sys.argv[1] == 'cui' or sys.argv[1] == 'c':
-    install_basics()
-else:
-    install_error()
+def main():
+    if len(sys.argv) != 2:
+        install_error()
+    elif sys.argv[1] == 'linux' or sys.argv[1] == 'l':
+        install_cui()
+        install_gui()
+        install_zshrc('linux')
+    elif sys.argv[1] == 'osx' or sys.argv[1] == 'o':
+        install_cui()
+        install_gui()
+        install_zshrc('osx')
+    elif sys.argv[1] == 'server' or sys.argv[1] == 's':
+        install_cui()
+        install_zshrc('server')
+    else:
+        install_error()
+
+if __name__ == '__main__':
+    main()
+
