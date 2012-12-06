@@ -21,6 +21,7 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-haml'
 NeoBundle 'ujihisa/neco-ghc'
 NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
