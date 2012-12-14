@@ -1,6 +1,18 @@
-[user]
-    name    = Ryuichi KAWAMATA (rkmathi)
-    email   = i@rkmathi.net
+[alias]
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
+    info  = remote show origin
+    a   = add -p . #with TermReadKey
+    b   = branch
+    d   = diff
+    f   = fetch --prune
+    g   = grep -nH --break --color --heading
+    l   = log --date=iso --graph --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
+    s   = status --branch --short
+    aa  = add .
+    ba  = branch --all
+    cm  = commit --message
+    co  = checkout
+    lv  = log --date=iso --graph --name-status --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
 
 [color]
     ui      = true
@@ -10,23 +22,16 @@
     pager   = less -r
     excludesfile = ~/.gitignore-rkmathi
 
+[interactive]
+    singlekey = true
+
 [merge]
     ff = false
 
 [push]
     default = tracking
 
-[alias]
-    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
-    info  = remote show origin
-    a   = add .
-    b   = branch
-    d   = diff
-    f   = fetch --prune
-    l   = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
-    s   = status --short --branch
-    ba  = branch --all
-    cm  = commit --message
-    co  = checkout
-    lv  = log --graph --date=iso --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s' --name-status
+[user]
+    name    = Ryuichi KAWAMATA (rkmathi)
+    email   = i@rkmathi.net
 
