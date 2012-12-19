@@ -4,9 +4,7 @@ export TERM=xterm-256color
 zcompile ~/.zshrc
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-##========================================================##
 ##=================== Prompt settings ====================##
-##========================================================##
 bindkey -e
 autoload -U  promptinit ; promptinit
 autoload -Uz colors     ; colors
@@ -27,7 +25,6 @@ if is-at-least 4.3.10; then
   zstyle ':vcs_info:git:*' formats '(%s)-[%b] %c%u'
   zstyle ':vcs_info:git:*' actionformats '(%s)-[%b|%a] %c%u'
 fi
-
 function _update_vcs_info_msg() {
     psvar=()
     LANG=en_US.UTF-8 vcs_info
@@ -35,69 +32,7 @@ function _update_vcs_info_msg() {
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
-
-##========================================================##
-##================== Completion settings =================##
-##========================================================##
-autoload -Uz compinit ; compinit
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
-zstyle ':completion:*' use-cache true
-zstyle ':completion:*:processes' command 'ps x'
-setopt list_packed
-setopt auto_remove_slash
-setopt auto_param_slash
-setopt mark_dirs
-setopt list_types
-unsetopt menu_complete
-setopt auto_list
-setopt auto_menu
-setopt auto_param_keys
-setopt auto_resume
-
-
-##========================================================##
-##==================== Predict settings ==================##
-##========================================================##
-autoload -U predict-on
-zle -N predict-on
-zle -N predict-off
-bindkey '^xp'  predict-on
-bindkey '^x^p' predict-off
-
-
-##========================================================##
-##=================== History settings ===================##
-##========================================================##
-HISTFILE=$HOME/.zhistory
-HISTSIZE=100000
-SAVEHIST=100000
-setopt extended_history
-setopt append_history
-setopt inc_append_history
-setopt share_history
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_reduce_blanks
-setopt hist_save_no_dups
-setopt hist_no_store
-setopt hist_expand
-
-
-##========================================================##
-##================== Directory settings ==================##
-##========================================================##
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushd_to_home
-setopt pushd_silent
-
-
-##========================================================##
-##==================== Other settings ====================##
-##========================================================##
+# misc settings
 setopt no_beep
 setopt complete_in_word
 setopt extended_glob
@@ -123,19 +58,62 @@ setopt rm_star_wait
 unsetopt no_clobber
 limit coredumpsize 0
 
+##================== Completion settings =================##
+autoload -Uz compinit ; compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*:processes' command 'ps x'
+setopt list_packed
+setopt auto_remove_slash
+setopt auto_param_slash
+setopt mark_dirs
+setopt list_types
+unsetopt menu_complete
+setopt auto_list
+setopt auto_menu
+setopt auto_param_keys
+setopt auto_resume
+
+##==================== Predict settings ==================##
+autoload -U predict-on
+zle -N predict-on
+zle -N predict-off
+bindkey '^xp'  predict-on
+bindkey '^x^p' predict-off
+
+##=================== History settings ===================##
+HISTFILE=$HOME/.zhistory
+HISTSIZE=100000
+SAVEHIST=100000
+setopt extended_history
+setopt append_history
+setopt inc_append_history
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_no_store
+setopt hist_expand
+
+##================== Directory settings ==================##
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_to_home
+setopt pushd_silent
+
+##==================== Other settings ====================##
+# alias
+alias e="exit"
+alias be="bundle exec"
+
 # less
 LESS=-r
 
-# Alias
-alias e='exit'
-alias v='vim'
-alias be="bundle exec"
-alias ck='../cake/console/cake'
-
-
-##========================================================##
 ##=================Environment settings ==================##
-##========================================================##
 #[ -f ~/.zsh/zshrc.linux ] && source ~/.zsh/zshrc.linux
 #[ -f ~/.zsh/zshrc.osx ] && source ~/.zsh/zshrc.osx
 #[ -f ~/.zsh/zshrc.server ] && source ~/.zsh/zshrc.server
