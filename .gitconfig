@@ -6,13 +6,13 @@
     d   = diff
     f   = fetch --prune
     g   = grep -nH --break --color --heading
-    l   = log --date=iso --graph --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
+    l   = log --abbrev-commit --date=relative --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s'
     s   = status --branch --short
     aa  = add .
     ba  = branch --all
     cm  = commit --message
     co  = checkout
-    lv  = log --date=iso --graph --name-status --pretty=format:'%Cgreen%cd %Cblue%cn %Cred%h\n  %Creset%s'
+    lv  = log --name-status --abbrev-commit --date=relative --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s'
 
 [color]
     ui      = true
