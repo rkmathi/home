@@ -1,13 +1,20 @@
+[alias]
+a   = add .
+b   = branch
+d   = diff
+l   = glog
+s   = status
+cm  = commit -m
+lv  = glog --style compact
+
 [ui]
-  username = Ryuichi KAWAMATA <i@rkmathi.net>
-  verbose  = True
+editor  = vim
+username= Ryuichi KAWAMATA <i@rkmathi.net>
 
 [extensions]
-  color     =
-  graphlog  =
+color   =
+graphlog=
+mq      =
 
 [color]
-  mode  = ansi
-
-[alias]
-  gl    = glog
+mode    = ansi
