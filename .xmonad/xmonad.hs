@@ -52,8 +52,8 @@ manageHook' = (composeAll . concat $
         myTerms    = ["Gnome-terminal", "Sakura"]
         myWebs     = ["Google-chrome", "Firefox"]
         myMikutters= ["Mikutter.rb"]
-        myFiles    = ["Thunar", "Mirage", "Searchmonkey2"]
-        myMiscs    = ["Lyx", "Skype"]
+        myFiles    = ["Thunar", "Mirage"]
+        myMiscs    = ["Skype"]
 
 -- Layout'
 tall        = Tall 1 (10/100) (1/2)
