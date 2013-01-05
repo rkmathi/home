@@ -15,6 +15,10 @@ def ln_files(fn):
     subprocess.call(cmd, shell=True)
 
 def install_files(env):
+    cated = "[ -f ~/.zsh.d/zshrc.%(_)s ] && source ~/.zsh.d/zshrc.%(_)s" % {'_':env}
+    cmd = 'echo "%(_)s" >> ~/.zshrc' % {'_': cated}
+    subprocess.call("cp -fv `pwd`/.zshrc ~/.zshrc", shell=True)
+    subprocess.call(cmd, shell=True)
     for fn in CUI_FILES:
         ln_files(fn)
     if env == 'linux':
@@ -24,12 +28,6 @@ def install_files(env):
         for fn in GUI_FILES:
             ln_files(fn)
 
-def install_zshrc(env):
-    cated = "[ -f ~/.zsh.d/zshrc.%(_)s ] && source ~/.zsh.d/zshrc.%(_)s" % {'_':env}
-    cmd = 'echo "%(_)s" >> ~/.zshrc' % {'_': cated}
-    subprocess.call("cp -fv `pwd`/.zshrc ~/.zshrc", shell=True)
-    subprocess.call(cmd, shell=True)
-
 def install_error():
     sys.exit("Usage: python install-script.py [linux|osx|server]")
 
@@ -37,15 +35,11 @@ def main():
     if len(sys.argv) != 2:
         install_error()
     elif sys.argv[1] == 'linux' or sys.argv[1] == 'l':
-        install_cui()
-        install_gui()
-        install_zshrc('linux')
+        install_files('linux')
     elif sys.argv[1] == 'osx' or sys.argv[1] == 'o':
         install_files('osx')
-        install_zshrc('osx')
     elif sys.argv[1] == 'server' or sys.argv[1] == 's':
-        install_cui()
-        install_zshrc('server')
+        install_files('server')
     else:
         install_error()
 
