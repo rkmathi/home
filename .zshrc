@@ -1,23 +1,89 @@
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-export TERM=xterm-256color
 zcompile ~/.zshrc
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-##=================== Prompt settings ====================##
-bindkey -e
-autoload -U  promptinit ; promptinit
-autoload -Uz colors     ; colors
-
-# Show branch name in Zsh's right prompt
+### Autoload
 autoload -Uz add-zsh-hook
+autoload -Uz colors     ; colors
+autoload -Uz compinit   ; compinit
+autoload -Uz is-at-least
+autoload -U  predict-on ; predict-on
+autoload -U  promptinit ; promptinit
 autoload -Uz vcs_info
+
+### General
+bindkey -e
+setopt always_last_prompt
+setopt auto_name_dirs
+setopt auto_resume
+setopt brace_ccl
+setopt bsd_echo
+setopt cdable_vars sh_word_split
+setopt extended_glob
+setopt hash_cmds
+setopt long_list_jobs
+setopt magic_equal_subst
+setopt multios
+setopt no_beep
+setopt no_clobber
+setopt no_flow_control
+setopt no_hup
+setopt notify
+setopt numeric_glob_sort
+setopt path_dirs
+setopt print_eight_bit
+setopt short_loops
+
+### Completion ###
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*:processes' command 'ps x'
+setopt auto_remove_slash
+setopt auto_param_slash
+setopt auto_list
+setopt auto_menu
+setopt auto_param_keys
+setopt list_packed
+setopt list_types
+setopt complete_in_word
+setopt mark_dirs
+setopt no_menu_complete
+
+### Directory ###
+setopt auto_cd
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushd_to_home
+setopt pushd_silent
+
+### Predict ###
+zle -N predict-on
+zle -N predict-off
+bindkey '^Z'   predict-on
+bindkey '^X^Z' predict-off
+zstyle ':predict' verbose true
+
+### History ###
+HISTFILE=$HOME/.zhistory
+HISTSIZE=100000
+SAVEHIST=100000
+setopt append_history
+setopt extended_history
+setopt hist_expand
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_no_store
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt inc_append_history
+setopt share_history
+
+### Show branch name ###
 zstyle ':vcs_info:*' enable git svn hg bzr
 zstyle ':vcs_info:*' formats '(%s)-[%b]'
 zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
 zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
 zstyle ':vcs_info:bzr:*' use-simple true
-autoload -Uz is-at-least
 if is-at-least 4.3.10; then
   zstyle ':vcs_info:git:*' check-for-changes true
   zstyle ':vcs_info:git:*' stagedstr "C"
@@ -32,89 +98,24 @@ function _update_vcs_info_msg() {
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
-# misc settings
-setopt no_beep
-setopt complete_in_word
-setopt extended_glob
-setopt brace_ccl
-setopt equals
-setopt numeric_glob_sort
-setopt path_dirs
-setopt print_eight_bit
-setopt auto_name_dirs
-unsetopt flow_control
-setopt no_flow_control
-setopt hash_cmds
-setopt bsd_echo
-setopt no_hup
-setopt notify
-setopt long_list_jobs
-setopt magic_equal_subst
-setopt multios
-setopt short_loops
-setopt always_last_prompt
-setopt cdable_vars sh_word_split
-setopt rm_star_wait
-unsetopt no_clobber
-limit coredumpsize 0
-
-##================== Completion settings =================##
-autoload -Uz compinit ; compinit
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
-zstyle ':completion:*' use-cache true
-zstyle ':completion:*:processes' command 'ps x'
-setopt list_packed
-setopt auto_remove_slash
-setopt auto_param_slash
-setopt mark_dirs
-setopt list_types
-unsetopt menu_complete
-setopt auto_list
-setopt auto_menu
-setopt auto_param_keys
-setopt auto_resume
-
-##==================== Predict settings ==================##
-autoload -U predict-on
-zle -N predict-on
-zle -N predict-off
-bindkey '^xp'  predict-on
-bindkey '^x^p' predict-off
-
-##=================== History settings ===================##
-HISTFILE=$HOME/.zhistory
-HISTSIZE=100000
-SAVEHIST=100000
-setopt extended_history
-setopt append_history
-setopt inc_append_history
-setopt share_history
-setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt hist_ignore_space
-setopt hist_reduce_blanks
-setopt hist_save_no_dups
-setopt hist_no_store
-setopt hist_expand
-
-##================== Directory settings ==================##
-setopt auto_cd
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushd_to_home
-setopt pushd_silent
-
-##==================== Other settings ====================##
-# alias
+### Alias/Export ###
 alias e="exit"
 alias be="bundle exec"
 
-# less
-LESS=-r
+# EDITOR
+export EDITOR="vim"
+if type vim > /dev/null 2>&1; then
+    alias v="vim"
+else
+    alias vim="vi"
+fi
 
-##=================Environment settings ==================##
-#[ -f ~/.zsh/zshrc.linux ] && source ~/.zsh/zshrc.linux
-#[ -f ~/.zsh/zshrc.osx ] && source ~/.zsh/zshrc.osx
-#[ -f ~/.zsh/zshrc.server ] && source ~/.zsh/zshrc.server
+# PAGER
+export PAGER="less"
+export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
+
+### Environment ###
+# source ~/.zsh.d/zshrc.linux
+# source ~/.zsh.d/zshrc.osx
+# source ~/.zsh.d/zshrc.server
 

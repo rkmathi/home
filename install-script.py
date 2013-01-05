@@ -5,40 +5,35 @@ import os
 import subprocess
 import sys
 
-### Choose your config files!
-cuis = ('.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux',
-        '.vimrc', '.vim', '.zsh')
-guis = ('.gvimrc', '.xmonad')
+CUI_FILES = ('.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux',
+        '.vim', '.vimrc', '.zsh.d', '.zshenv')
+GUI_FILES = ('.gvimrc', )
+X_FILES   = ('.xmonad', )
 
-def mv_ln(fn):
-    cmd = "mv -f ~/%(_)s  ~/.old_config && ln -s `pwd`/%(_)s ~/%(_)s" % {'_':fn}
+def ln_files(fn):
+    cmd = "ln -fsv `pwd`/%(_)s ~/%(_)s" % {'_':fn}
     subprocess.call(cmd, shell=True)
 
-def mv_cp(fn):
-    cmd = "mv -f ~/%(_)s ~/.old_config && cp `pwd`/%(_)s ~/%(_)s" % {'_':fn}
-    subprocess.call(cmd, shell=True)
-
-def install_cui():
-    for fn in cuis:
-        mv_ln(fn)
-
-def install_gui():
-    for fn in guis:
-        mv_ln(fn)
+def install_files(env):
+    for fn in CUI_FILES:
+        ln_files(fn)
+    if env == 'linux':
+        for fn in X_FILES:
+            ln_files(fn)
+    if env == 'linux' or 'osx':
+        for fn in GUI_FILES:
+            ln_files(fn)
 
 def install_zshrc(env):
-    cated = "[ -f ~/.zsh/zshrc.%(_)s ] && source ~/.zsh/zshrc.%(_)s" % {'_':env}
+    cated = "[ -f ~/.zsh.d/zshrc.%(_)s ] && source ~/.zsh.d/zshrc.%(_)s" % {'_':env}
     cmd = 'echo "%(_)s" >> ~/.zshrc' % {'_': cated}
-    mv_cp('.zshrc')
+    subprocess.call("cp -fv `pwd`/.zshrc ~/.zshrc", shell=True)
     subprocess.call(cmd, shell=True)
 
 def install_error():
     sys.exit("Usage: python install-script.py [linux|osx|server]")
 
 def main():
-    cmd_mkdir = "mkdir -p ~/.old_config"
-    if not os.path.exists("~/.old_config"):
-        subprocess.call(cmd_mkdir, shell=True)
     if len(sys.argv) != 2:
         install_error()
     elif sys.argv[1] == 'linux' or sys.argv[1] == 'l':
@@ -46,8 +41,7 @@ def main():
         install_gui()
         install_zshrc('linux')
     elif sys.argv[1] == 'osx' or sys.argv[1] == 'o':
-        install_cui()
-        install_gui()
+        install_files('osx')
         install_zshrc('osx')
     elif sys.argv[1] == 'server' or sys.argv[1] == 's':
         install_cui()
