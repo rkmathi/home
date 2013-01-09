@@ -24,6 +24,7 @@ dropbox'    = "dropbox -d"
 nmapplet'   = "nm-applet"
 skype'      = "skype"
 feh'        = "feh --bg-fill ~/Dropbox/rkmathi/media/pict/wallpaper"
+volume'     = "xfce4-volumed"
 -- SPAWNS }}
 
 
@@ -111,6 +112,7 @@ main = do
         spawn nmapplet'
         spawn skype'
         spawn feh'
+        spawn volume'
         xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig
             { modMask           = mod4Mask
             , terminal          = "gnome-terminal"
