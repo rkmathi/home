@@ -2,17 +2,20 @@
     alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
     info  = remote show origin
     a   = add -p . #with TermReadKey
+    aa  = add .
     b   = branch
+    ba  = branch --all
+    co  = checkout
+    cm  = commit --message
     d   = diff
     f   = fetch --prune
     g   = grep -nH --break --color --heading
     l   = log --abbrev-commit --date=relative --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s'
-    s   = status --branch --short
-    aa  = add .
-    ba  = branch --all
-    cm  = commit --message
-    co  = checkout
     lv  = log --name-status --abbrev-commit --date=relative --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s'
+    pln = pull --no-ff
+    plf = pull --ff
+    ps  = push
+    s   = status --branch --short
 
 [color]
     ui      = true
