@@ -5,7 +5,6 @@ autoload -Uz add-zsh-hook
 autoload -Uz colors     ; colors
 autoload -Uz compinit   ; compinit
 autoload -Uz is-at-least
-autoload -U  predict-on ; predict-on
 autoload -U  promptinit ; promptinit
 autoload -Uz vcs_info
 
@@ -54,13 +53,6 @@ setopt auto_pushd
 setopt pushd_ignore_dups
 setopt pushd_to_home
 setopt pushd_silent
-
-### Predict ###
-zle -N predict-on
-zle -N predict-off
-bindkey '^Z'   predict-on
-bindkey '^X^Z' predict-off
-zstyle ':predict' verbose true
 
 ### History ###
 HISTFILE=$HOME/.zhistory
