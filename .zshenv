@@ -10,7 +10,9 @@ path=(\
     /opt/bin(N-/) \
     /usr/bin(N-/) \
     /usr/local/bin(N-/) \
-    $HOME/bin(N-/)) \
+    $HOME/bin(N-/) \
+    $HOME/.gem/ruby/1.9.1/bin(N-/) \
+)
 
 typeset -xT SUDO_PATH sudo_path
 typeset -U sudo_path
