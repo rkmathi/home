@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 CUI_FILES = ('.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux',
-        '.vim', '.vimrc', '.zsh.d', '.zshenv')
+        '.vim', '.vimrc', '.zsh.d')
 GUI_FILES = ('.gvimrc', )
 X_FILES   = ('.xmonad', )
 
