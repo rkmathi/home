@@ -104,7 +104,7 @@ fi
 
 # PAGER
 export PAGER="less"
-export LESS='--quit-if-one-screen --RAW-CONTROL-CHARS'
+export LESS='--RAW-CONTROL-CHARS'
 
 ### Environment ###
 # source ~/.zsh.d/zshrc.linux
