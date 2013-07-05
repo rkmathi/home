@@ -67,7 +67,7 @@ fi
 alias t='tmux -f ~/.tmux/tmux.conf.server'
 alias updagrade="\
     eix-sync -q;\
-    emerge -qtauDN --with-bdeps=y @world;\
+    emerge -qtauDN --keep-going --with-bdeps=y @world;\
     dispatch-conf;\
     emerge -q1 @preserved-rebuild;\
     dispatch-conf;\
@@ -77,5 +77,4 @@ alias updagrade="\
 # Export
 source /usr/bin/virtualenvwrapper.sh
 export WORKON_HOME="$HOME/.venv"
-export PATH="$HOME/.gem/ruby/1.9.1/bin:$HOME/.cabal/bin:$PATH"
 

@@ -9,7 +9,7 @@ lv  = glog --style compact
 
 [ui]
 editor  = vim
-username= Ryuichi KAWAMATA <i@rkmathi.net>
+username= Ryuichi KAWAMATA <iam@rkmathi.net>
 
 [extensions]
 color   =

@@ -1,4 +1,8 @@
 zcompile ~/.zshrc
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export TERM=xterm-256color
+source ~/.zsh.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ### Autoload
 autoload -Uz add-zsh-hook
@@ -56,8 +60,8 @@ setopt pushd_silent
 
 ### History ###
 HISTFILE=$HOME/.zhistory
-HISTSIZE=100000
-SAVEHIST=100000
+HISTSIZE=10000
+SAVEHIST=10000
 setopt append_history
 setopt extended_history
 setopt hist_expand
@@ -70,7 +74,7 @@ setopt hist_save_no_dups
 setopt inc_append_history
 setopt share_history
 
-### Show branch name ###
+### Show vcs branch name ###
 zstyle ':vcs_info:*' enable git svn hg bzr
 zstyle ':vcs_info:*' formats '(%s)-[%b]'
 zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
@@ -90,7 +94,7 @@ function _update_vcs_info_msg() {
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
-### Alias/Export ###
+### Alias/Export/PATH ###
 alias e="exit"
 alias be="bundle exec"
 
@@ -105,6 +109,27 @@ fi
 # PAGER
 export PAGER="less"
 export LESS='--RAW-CONTROL-CHARS'
+
+# PATH
+export SCALA_PATH='/opt/scala-2.10.2'
+
+typeset -xT PYTHONPATH python_path
+typeset -U python_path
+python_path=( \
+    ./lib)
+
+typeset -xT SUDO_PATH sudo_path
+typeset -U sudo_path
+sudo_path=( \
+    {,/usr,/usr/local}/sbin)
+
+typeset -U path
+path=(\
+    $SCALA_PATH/bin \
+    /opt/bin \
+    /usr/bin \
+    /bin \
+)
 
 ### Environment ###
 # source ~/.zsh.d/zshrc.linux

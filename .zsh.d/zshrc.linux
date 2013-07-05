@@ -65,12 +65,12 @@ fi
 alias t='tmux -f ~/.tmux/tmux.conf.linux'
 alias updagrade="\
     eix-sync -q;\
-    emerge -qtauDN --with-bdeps=y @world;\
+    emerge -qtauDN --keep-going --with-bdeps=y @world;\
     dispatch-conf;\
-    emerge -qD @okkake;\
     emerge -q1 @preserved-rebuild;\
     dispatch-conf;\
     eselect news read"
+
 
 ### Export
 source /usr/bin/virtualenvwrapper.sh
