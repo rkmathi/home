@@ -7,12 +7,12 @@ if has('vim_starting')
   set runtimepath+=~/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('~/.vim/bundle'))
-NeoBundle 'taglist.vim'         " --> :Tlist
 NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'hil2u/vim-css3-syntax'
 NeoBundle 'kchmck/vim-coffee-script'
+NeoBundle 'majutsushi/tagbar'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
@@ -22,14 +22,10 @@ NeoBundle 'Shougo/vinarise'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
-NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'tpope/vim-haml'
-NeoBundle 'ujihisa/neco-ghc'
 NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
 
-" taglist.vim
-set tags=tags
 " YankRing.vim
 let g:yankring_clipboard_monitor = 1
 let g:yankring_history_file = '.vim/.yankring_history'
@@ -39,6 +35,9 @@ let g:yankring_max_history = 50
 let g:user_zen_settings = { 'indentation':' ' }
 " kchmck/vim-coffee-script
 autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+" majutsushi/tagbar
+let g:tagbar_ctags_bin = '/usr/bin/ctags'
+nnoremap <silent> <leader>o :TagbarToggle<CR>
 " nathanaelkane/vim-indent-guides
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightyellow
@@ -51,6 +50,10 @@ let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_camel_case_completion = 0
 let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default' : '',
+    \ 'scala' : $HOME . '/.vim/dict/scala.dict',
+    \ }
 let g:neocomplcache_min_syntax_length = 3
 setlocal omnifunc=syntaxcomplete#Complete
 autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
@@ -74,12 +77,6 @@ let g:NERDTreeDirArrows = 0
 " scrooloose/syntastic
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 2
-" tpope/vim-fugitive
-nnoremap <Space>gba :<C-u>Git ba<Enter>
-nnoremap <Space>gci :<C-u>Gcommit<Enter>
-nnoremap <Space>glg :<C-u>Git lg<Enter>
-nnoremap <Space>gst :<C-u>Git st<Enter>
-nnoremap <Space>gwc :<C-u>Git wc<Enter>
 
 
 """ Other Settings """
@@ -136,4 +133,7 @@ colorscheme peachpuff
 highlight LineNr ctermbg=black ctermfg=yellow
 highlight StatusLine ctermfg=black ctermbg=yellow
 highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
+
+" Make settings
+autocmd FileType scala :compiler sbt
 

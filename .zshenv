@@ -23,3 +23,4 @@ typeset -xT PYTHONPATH python_path
 typeset -U python_path
 python_path=( \
     ./lib)
+
