@@ -10,7 +10,6 @@ call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'derekwyatt/vim-scala'
-NeoBundle 'hil2u/vim-css3-syntax'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'majutsushi/tagbar'   " --> <\>+t
