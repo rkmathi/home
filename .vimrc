@@ -11,8 +11,9 @@ NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'hil2u/vim-css3-syntax'
+NeoBundle 'honza/vim-snippets'
 NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'majutsushi/tagbar'
+NeoBundle 'majutsushi/tagbar'   " --> <\>+t
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
@@ -25,22 +26,30 @@ NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
+if neobundle#exists_not_installed_bundles()
+  echomsg 'Not installed bundles : ' .
+        \ string(neobundle#get_not_installed_bundle_names())
+  echomsg 'Please execute ":NeoBundleInstall" command.'
+endif
 
 " YankRing.vim
 let g:yankring_clipboard_monitor = 1
 let g:yankring_history_file = '.vim/.yankring_history'
 let g:yankring_ignore_duplicate = 0
-let g:yankring_max_history = 50
+let g:yankring_max_history = 10
 " ZenCoding.vim
 let g:user_zen_settings = { 'indentation':' ' }
 " kchmck/vim-coffee-script
-autocmd BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+au BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 " majutsushi/tagbar
+let g:tagbar_autofocus = 1
+let g:tagbar_compact = 1
 let g:tagbar_ctags_bin = '/usr/bin/ctags'
-nnoremap <silent> <leader>o :TagbarToggle<CR>
+let g:tagbar_indent = 1
+let g:tagbar_width = 30
 " nathanaelkane/vim-indent-guides
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightyellow
+au VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=lightgrey
+au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightyellow
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
@@ -56,22 +65,18 @@ let g:neocomplcache_dictionary_filetype_lists = {
     \ }
 let g:neocomplcache_min_syntax_length = 3
 setlocal omnifunc=syntaxcomplete#Complete
-autocmd FileType css            setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown  setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript     setlocal omnifunc=javascriptcomplete#CompleteJS
+" Shougo/neosnippet
+let g:neosnippet#snippets_directory='
+    \ ~/.vim/bundle/vim-snippets/snippets,
+    \ ~/.vim/snippets'
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
 " Shougo/unite.vim
-nnoremap :ub :<C-u>Unite buffer<CR>
-nnoremap :uf :<C-u>UniteWithBufferDir file -buffer-name=file<CR>
-nnoremap :um :<C-u>Unite file_mru -buffer-name=file_mru<CR>
-au FileType unite nnoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite inoremap <silent> <buffer> <expr> <C-j> unite#do_action('split')
-au FileType unite nnoremap <silent> <buffer> <expr> <C-k> unite#do_action('vsplit')
-au FileType unite inoremap <silent> <buffer> <expr> <C-k> unite#do_action('vsplit')
 let g:unite_enable_start_insert = 0
 let g:unite_enable_split_vertically = 1
-let g:unite_winwidth = 40
+let g:unite_winwidth = 30
 " scrooloose/nerdtree
-nnoremap <silent> <C-e> :NERDTreeToggle<CR>
 let g:NERDTreeShowHidden = 1
 let g:NERDTreeDirArrows = 0
 " scrooloose/syntastic
@@ -79,11 +84,33 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 2
 
 
+""" Key-Remap Settings """
+nnoremap <silent> <C-]> g<C-]>
+nnoremap <silent> <leader>e :NERDTreeToggle<CR>
+nnoremap <silent> <leader>t :TagbarToggle<CR>
+nnoremap <silent> <leader>uf :<C-u>Unite buffer<CR>
+nnoremap <silent> <leader>ua :<C-u>UniteBookmarkAdd<CR>
+nnoremap <silent> <leader>ub :<C-u>Unite bookmark<CR>
+nnoremap <silent> <leader>um :<C-u>Unite file_mru<CR>
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \: "\<TAB>"
+au FileType unite nnoremap <silent> <buffer> <expr> <C-h> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
+
+
 """ Other Settings """
 syntax on
 set ambw=double
 set autoread
-set mouse=a
+set mouse=
 
 " Backup settings
 set nobackup
@@ -135,5 +162,5 @@ highlight StatusLine ctermfg=black ctermbg=yellow
 highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
 
 " Make settings
-autocmd FileType scala :compiler sbt
+au FileType scala :compiler sbt
 
