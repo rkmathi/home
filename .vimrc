@@ -43,7 +43,6 @@ au BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
 " majutsushi/tagbar
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
-let g:tagbar_ctags_bin = '/usr/bin/ctags'
 let g:tagbar_indent = 1
 let g:tagbar_width = 30
 " nathanaelkane/vim-indent-guides

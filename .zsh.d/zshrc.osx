@@ -21,5 +21,6 @@ alias t='tmux -f ~/.tmux/tmux.conf.osx'
 
 ### Export
 export EPREFIX="$HOME/Gentoo"
-export PATH="$EPREFIX/usr/bin:$EPREFIX/usr/sbin:$EPREFIX/bin:$EPREFIX/sbin:$EPREFIX/tmp/bin:$EPREFIX/tmp/usr/bin:$PATH"
+export JAVA_HOME="/Library/Java/Home"
+export PATH="$JAVA_HOME/bin:$EPREFIX/usr/bin:$EPREFIX/usr/sbin:$EPREFIX/bin:$EPREFIX/sbin:$EPREFIX/tmp/bin:$EPREFIX/tmp/usr/bin:$PATH"
 
