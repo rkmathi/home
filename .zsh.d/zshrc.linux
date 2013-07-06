@@ -74,6 +74,7 @@ alias updagrade="\
 
 ### Export
 source /usr/bin/virtualenvwrapper.sh
+export SCALA_PATH='/opt/scala-2.10.2'
 export WORKON_HOME="$HOME/.venv"
 export BROWSER="google-chrome"
-
+export PATH="$SCALA_PATH/bin:$PATH"

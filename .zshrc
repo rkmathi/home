@@ -111,8 +111,6 @@ export PAGER="less"
 export LESS='--RAW-CONTROL-CHARS'
 
 # PATH
-export SCALA_PATH='/opt/scala-2.10.2'
-
 typeset -xT PYTHONPATH python_path
 typeset -U python_path
 python_path=( \
@@ -125,8 +123,9 @@ sudo_path=( \
 
 typeset -U path
 path=(\
-    $SCALA_PATH/bin \
+    $HOME/bin \
     /opt/bin \
+    /usr/local/bin \
     /usr/bin \
     /bin \
 )
