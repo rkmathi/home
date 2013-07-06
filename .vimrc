@@ -90,6 +90,7 @@ let g:syntastic_auto_loc_list = 2
 """ Key-Remap Settings """
 nnoremap <silent> <C-]> g<C-]>
 nnoremap <silent> <leader>e :NERDTreeToggle<CR>
+nnoremap <silent> <leader>m :make<CR>
 nnoremap <silent> <leader>t :TagbarToggle<CR>
 nnoremap <silent> <leader>uf :<C-u>Unite buffer<CR>
 nnoremap <silent> <leader>ua :<C-u>UniteBookmarkAdd<CR>
