@@ -17,7 +17,14 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'    " --> :ub, :uf, :um
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+\ 'build' : {
+\     'windows' : 'make -f make_mingw32.mak',
+\     'cygwin' : 'make -f make_cygwin.mak',
+\     'mac' : 'make -f make_mac.mak',
+\     'unix' : 'make -f make_unix.mak',
+\    },
+\ }
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
@@ -85,6 +92,13 @@ let g:NERDTreeDirArrows = 0
 " scrooloose/syntastic
 let g:syntastic_enable_signs = 1
 let g:syntastic_auto_loc_list = 2
+" thinca/vim-quickrun
+let g:quickrun_config={
+\  '_': {
+\    'outputter/buffer/split': ':botright 8sp',
+\    'outputter/buffer/close_on_empty': 1
+\  }
+\}
 
 
 """ Key-Remap Settings """
