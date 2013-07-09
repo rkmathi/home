@@ -10,13 +10,13 @@ GUI_FILES = ('.gvimrc', )
 X_FILES   = ('.xmonad', )
 
 def ln_files(fn):
-    cmd = "ln -fsv `pwd`/%(_)s ~/%(_)s" % {'_':fn}
+    cmd = "ln -fsv `pwd`/%(_)s $HOME/%(_)s" % {'_':fn}
     subprocess.call(cmd, shell=True)
 
 def install_files(env):
-    cated = "[ -f ~/.zsh.d/zshrc.%(_)s ] && source ~/.zsh.d/zshrc.%(_)s" % {'_':env}
-    cmd = 'echo "%(_)s" >> ~/.zshrc' % {'_': cated}
-    subprocess.call("cp -fv `pwd`/.zshrc ~/.zshrc", shell=True)
+    cated = "[ -f $HOME/.zsh.d/zshrc.%(_)s ] && source $HOME/.zsh.d/zshrc.%(_)s" % {'_':env}
+    cmd = 'echo "%(_)s" >> $HOME/.zshrc' % {'_': cated}
+    subprocess.call("cp -fv `pwd`/.zshrc $HOME/.zshrc", shell=True)
     subprocess.call(cmd, shell=True)
     for fn in CUI_FILES:
         ln_files(fn)
