@@ -130,6 +130,8 @@ path=(\
     /bin \
 )
 
+export LD_LIBRARY_PATH=/usr/lib/jni:$LD_LIBRARY_PATH
+
 ### Environment ###
 # source ~/.zsh.d/zshrc.linux
 # source ~/.zsh.d/zshrc.osx
