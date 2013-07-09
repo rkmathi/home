@@ -78,8 +78,8 @@ let g:neocomplcache_min_syntax_length = 3
 setlocal omnifunc=syntaxcomplete#Complete
 " Shougo/neosnippet
 let g:neosnippet#snippets_directory='
-    \ ~/.vim/bundle/vim-snippets/snippets,
-    \ ~/.vim/snippets'
+    \ $HOME/.vim/bundle/vim-snippets/snippets,
+    \ $HOME/.vim/snippets'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
