@@ -5,9 +5,9 @@ let OSTYPE = system('uname')
 
 " NeoBundle
 if has('vim_starting')
-  set runtimepath+=~/.vim/neobundle.vim
+  set runtimepath+=$HOME/.vim/neobundle.vim
 endif
-call neobundle#rc(expand('~/.vim/bundle'))
+call neobundle#rc(expand('$HOME/.vim/bundle'))
 NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'derekwyatt/vim-scala'
@@ -101,7 +101,7 @@ let g:quickrun_config={
 \    'outputter/buffer/split': ':topleft 8sp',
 \    'outputter/buffer/close_on_empty': 0,
 \    'runner': 'vimproc',
-\    'runner/vimproc/updatetime': 30,
+\    'runner/vimproc/updatetime': 50,
 \  }
 \}
 
