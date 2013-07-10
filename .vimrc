@@ -96,8 +96,12 @@ let g:syntastic_auto_loc_list = 2
 " thinca/vim-quickrun
 let g:quickrun_config={
 \  '_': {
+\    'hook/neko/enable': 1,
+\    'hook/neko/wait': 20,
 \    'outputter/buffer/split': ':botright 8sp',
-\    'outputter/buffer/close_on_empty': 1
+\    'outputter/buffer/close_on_empty': 0,
+\    'runner': 'vimproc',
+\    'runner/vimproc/updatetime': 30,
 \  }
 \}
 
