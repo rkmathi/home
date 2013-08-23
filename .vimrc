@@ -30,6 +30,7 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'slim-template/vim-slim'
 NeoBundle 'teramako/jscomplete-vim'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 NeoBundle 'tpope/vim-haml'
