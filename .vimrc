@@ -13,6 +13,7 @@ NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'jelera/vim-javascript-syntax'
+NeoBundle 'jsx/jsx.vim'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'majutsushi/tagbar'   " --> <\>+t
 NeoBundle 'nathanaelkane/vim-indent-guides'
