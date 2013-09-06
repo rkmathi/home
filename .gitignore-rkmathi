@@ -13,10 +13,8 @@
 
 # python
 *.pyc
-*.egg-info
-*.mo
 
 # ruby
 *.rbc
 *.gem
-*.sassc
+
