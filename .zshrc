@@ -123,7 +123,7 @@ sudo_path=( \
 
 typeset -U path
 path=(\
-    $HOME/bin \
+    $HOME/opt/bin \
     /opt/bin \
     /usr/local/bin \
     /usr/bin \
