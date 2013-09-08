@@ -9,24 +9,23 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('$HOME/.vim/bundle'))
 NeoBundle 'YankRing.vim'
-NeoBundle 'ZenCoding.vim'       " --> <C-y>+,
+NeoBundle 'ZenCoding.vim'       " --> <C-y>,
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'jsx/jsx.vim'
-NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'majutsushi/tagbar'   " --> <\>+t
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/unite.vim'    " --> :ub, :uf, :um
+NeoBundle 'Shougo/unite.vim'    " --> <\>ub, <\>uf, <\>um
 NeoBundle 'Shougo/vimproc', {
-\ 'build' : {
-\     'windows' : 'make -f make_mingw32.mak',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'unix' : 'make -f make_unix.mak',
-\    },
+\   'build' : {
+\     'windows': 'make -f make_mingw32.mak',
+\     'cygwin':  'make -f make_cygwin.mak',
+\     'unix':    'make -f make_unix.mak',
+\     'mac':     'make -f make_mac.mak'
+\   }
 \ }
 NeoBundle 'Shougo/vinarise'
 NeoBundle 'scrooloose/nerdtree'
@@ -39,19 +38,17 @@ NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
 if neobundle#exists_not_installed_bundles()
   echomsg 'Not installed bundles : ' .
-        \ string(neobundle#get_not_installed_bundle_names())
+    \ string(neobundle#get_not_installed_bundle_names())
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
-
 " YankRing.vim
 let g:yankring_clipboard_monitor = 1
-let g:yankring_history_file = '.vim/.yankring_history'
+let g:yankring_history_dir = '$HOME/.vim'
+let g:yankring_history_file = '.yankring_history'
 let g:yankring_ignore_duplicate = 0
 let g:yankring_max_history = 10
 " ZenCoding.vim
-let g:user_zen_settings = { 'indentation':' ' }
-" kchmck/vim-coffee-script
-au BufWritePost *.coffee silent CoffeeMake! -cb | cwindow | redraw!
+let g:user_zen_settings = { 'indentation': '  ' }
 " majutsushi/tagbar
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
@@ -75,15 +72,15 @@ let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_camel_case_completion = 0
 let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'scala' : $HOME . '/.vim/dict/scala.dict',
-    \ }
+\   'default' : '',
+\   'scala' : $HOME . '/.vim/dict/scala.dict',
+\ }
 let g:neocomplcache_min_syntax_length = 3
 setlocal omnifunc=syntaxcomplete#Complete
 " Shougo/neosnippet
 let g:neosnippet#snippets_directory='
-    \ $HOME/.vim/bundle/vim-snippets/snippets,
-    \ $HOME/.vim/snippets'
+  \ $HOME/.vim/bundle/vim-snippets/snippets,
+  \ $HOME/.vim/snippets'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
@@ -101,7 +98,7 @@ let g:syntastic_javascript_checker = "jshint"
 " teramako/jscomplete-vim
 let g:jscomplete_use = ['dom', 'moz']
 " thinca/vim-quickrun
-let g:quickrun_config={
+let g:quickrun_config = {
 \  '_': {
 \    'hook/neko/enable': 1,
 \    'hook/neko/wait': 20,
@@ -126,11 +123,11 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: pumvisible() ? "\<C-n>" : "\<TAB>"
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-      \ "\<Plug>(neosnippet_expand_or_jump)"
-      \: "\<TAB>"
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : "\<TAB>"
 au FileType unite nnoremap <silent> <buffer> <expr> <C-h> unite#do_action('split')
 au FileType unite nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
 au FileType unite nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
@@ -141,17 +138,14 @@ syntax on
 set ambw=double
 set autoread
 set mouse=
-
 " Backup settings
 set nobackup
 set noswapfile
 set nowritebackup
-
 " Search settings
 set smartcase incsearch
 set hlsearch
 noremap <C-L> :nohl<CR><C-L>
-
 " Outer settings
 set number
 set showmode
@@ -160,24 +154,20 @@ set ruler
 set laststatus=2
 set cmdheight=1
 set shortmess=a
-
 " Tab settings
 set smarttab expandtab smartindent autoindent
 set shiftwidth=4
 set tabstop=4
 set softtabstop=0
-
 " Input settings
 set showmatch
 set matchtime=1
 set backspace=2
-
 " Encoding settings
 set enc=utf-8
 set fenc=utf-8
 set fencs=utf-8,euc-jp,iso2022-jp,cp932
 set fileformats=unix,dos
-
 " Colorscheme settings
 set list
 set listchars=tab:>_,trail:_,extends:>,precedes:<
@@ -185,12 +175,10 @@ set display=uhex
 set background=light
 set colorcolumn=80
 colorscheme peachpuff
-
 " Highlight settings
 highlight LineNr ctermbg=black ctermfg=yellow
 highlight StatusLine ctermfg=black ctermbg=yellow
 highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
-
 " Make settings
 au FileType scala :compiler sbt
 
