@@ -1,41 +1,39 @@
 [alias]
     alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
-    a   = add -p . # !!!with TermReadKey!!!
-    aa  = add .
+    a   = add --verbose
+    aa  = add --patch --verbose . #!!!with TermReadKey!!!
     b   = branch
     ba  = branch --all
     br  = branch --remote
     cm  = commit --message
     co  = checkout
     cob = checkout -b
-    d   = diff
+    di  = diff --color
     f   = fetch --prune
-    g   = grep -nH --break --color --heading
+    g   = grep -nH --break --heading
     i   = remote show origin
     l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
     lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
     pln = pull --no-ff
     plf = pull --ff-only
+    pso = push origin
     s   = status --branch --short
 
 [color]
-    ui      = true
+    ui          = true
 
 [core]
-    editor  = vim
-    pager   = less -r
-    excludesfile = ~/.gitignore-rkmathi
+    editor      = vim
+    pager       = less -R
+    excludesfile= ~/.gitignore-rkmathi
 
 [interactive]
-    singlekey = true
-
-[merge]
-    ff = false
+    singlekey   = true
 
 [push]
-    default = tracking
+    default     = upstream
 
 [user]
-    name    = Ryuichi KAWAMATA (@rkmathi)
-    email   = iam@rkmathi.net
+    name        = Ryuichi KAWAMATA (@rkmathi)
+    email       = iam@rkmathi.net
 
