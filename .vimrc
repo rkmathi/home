@@ -179,6 +179,7 @@ colorscheme peachpuff
 highlight LineNr ctermbg=black ctermfg=yellow
 highlight StatusLine ctermfg=black ctermbg=yellow
 highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
-" Make settings
+" Misc settings
 au FileType scala :compiler sbt
-
+au BufRead,BufNewFile *.erb set filetype=eruby.html
+au BufRead,BufNewFile *.ejs set filetype=ejs.html
