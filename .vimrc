@@ -94,7 +94,7 @@ let g:NERDTreeDirArrows = 0
 " scrooloose/syntastic
 let g:syntastic_auto_loc_list = 2
 let g:syntastic_enable_signs = 1
-let g:syntastic_javascript_checker = "jshint"
+"let g:syntastic_javascript_checker = "jshint"
 " teramako/jscomplete-vim
 let g:jscomplete_use = ['dom', 'moz']
 " thinca/vim-quickrun
@@ -179,6 +179,7 @@ colorscheme peachpuff
 highlight LineNr ctermbg=black ctermfg=yellow
 highlight StatusLine ctermfg=black ctermbg=yellow
 highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
-" Make settings
+" Misc settings
 au FileType scala :compiler sbt
-
+au BufRead,BufNewFile *.erb set filetype=eruby.html
+au BufRead,BufNewFile *.ejs set filetype=ejs.html

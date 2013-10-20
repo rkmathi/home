@@ -75,7 +75,5 @@ alias updagrade="\
 
 
 # Export
-source /usr/bin/virtualenvwrapper.sh
-export WORKON_HOME="$HOME/.venv"
-export PATH=$HOME/.gem/ruby/1.9.1/bin:$PATH
+export PATH=$HOME/.gem/ruby/2.0.0/bin:$PATH
 
