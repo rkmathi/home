@@ -10,6 +10,7 @@ endif
 call neobundle#rc(expand('$HOME/.vim/bundle'))
 NeoBundle 'YankRing.vim'
 NeoBundle 'ZenCoding.vim'       " --> <C-y>,
+NeoBundle 'derekwyatt/vim-sbt'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'honza/vim-snippets'
 NeoBundle 'jelera/vim-javascript-syntax'
