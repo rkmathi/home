@@ -1,1 +1,1 @@
-nnoremap <Space>r :QuickRun -cmdopt "<CR>
+nnoremap <leader>r :QuickRun -cmdopt "<CR>
