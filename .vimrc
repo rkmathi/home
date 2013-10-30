@@ -32,8 +32,10 @@ NeoBundle 'Shougo/vinarise'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'slim-template/vim-slim'
+NeoBundle 'superbrothers/vim-quickrun-markdown-gfm'
 NeoBundle 'thinca/vim-quickrun' " --> <\>+r
 NeoBundle 'tpope/vim-haml'
+NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 filetype plugin indent on
 if neobundle#exists_not_installed_bundles()
@@ -97,6 +99,10 @@ let g:syntastic_enable_signs = 1
 "let g:syntastic_javascript_checker = "jshint"
 " thinca/vim-quickrun
 let g:quickrun_config = {
+\  'markdown': {
+\    'type': 'markdown/gfm',
+\    'outputter': 'browser'
+\  },
 \  '_': {
 \    'hook/neko/enable': 1,
 \    'hook/neko/wait': 20,
@@ -106,6 +112,14 @@ let g:quickrun_config = {
 \    'runner/vimproc/updatetime': 50,
 \  }
 \}
+" tyru/open-browser.vim
+let g:openbrowser_browser_commands = [
+\ {
+\   "name": "open",
+\   "args": ["{browser}", "{uri}"]
+\ }
+\]
+\+ get(g:, 'openbrowser_browser_commands', [])
 
 
 """ Key-Remap Settings """
@@ -181,3 +195,5 @@ highlight StatusLineNC ctermfg=darkgrey ctermbg=yellow
 au FileType scala :compiler sbt
 au BufRead,BufNewFile *.erb set filetype=eruby.html
 au BufRead,BufNewFile *.ejs set filetype=ejs.html
+au BufRead,BufNewFile *.md set  filetype=markdown
+

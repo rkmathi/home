@@ -21,8 +21,7 @@ alias t='tmux -f ~/.tmux/tmux.conf.osx'
 
 ### Export
 export JAVA_HOME="/Library/Java/Home"
-export SCALA_HOME="$HOME/opt/scala"
-export PATH="$SCALA_HOME/bin:$JAVA_HOME/bin:\
-$PATH"
+export CABAL_HOME="$HOME/.cabal"
+export PATH="$CABAL_HOME/bin:$JAVA_HOME/bin:$PATH"
 
 [[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
