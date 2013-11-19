@@ -76,5 +76,6 @@ alias updagrade="\
 
 # Export
 export SCALA_HOME=/opt/scala
-export PATH=$SCALA_HOME/bin:$HOME/.gem/ruby/2.0.0/bin:$PATH
+export CABAL_HOME=$HOME/.cabal
+export PATH=$CABAL_HOME/bin:$SCALA_HOME/bin:$HOME/.gem/ruby/2.0.0/bin:$PATH
 
