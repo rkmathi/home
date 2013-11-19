@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: svn.vim
+" FILE: neobundle.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Jul 2013.
+" Last Modified: 26 Aug 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -24,74 +24,23 @@
 " }}}
 "=============================================================================
 
+if exists('g:loaded_neobundle')
+  finish
+elseif v:version < 702 || (v:version == 702 && !has('patch51'))
+  " Neobundle uses glob()/globpath() another parameter.
+  " It is implemented in Vim 7.2.051.
+  echoerr 'neobundle does not work this version of Vim "' . v:version . '".'
+        \ .' You must use Vim 7.2.051 or later.'
+  finish
+endif
+
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neobundle#types#svn#define() "{{{
-  return s:type
-endfunction"}}}
-
-let s:type = {
-      \ 'name' : 'svn',
-      \ }
-
-function! s:type.detect(path, opts) "{{{
-  if isdirectory(a:path)
-    return {}
-  endif
-
-  let type = ''
-
-  if a:path =~# '\<\%(file\|https\?\|svn\)://'
-        \ && a:path =~? '[/.]svn[/.]'
-    let uri = a:path
-    let name = split(uri, '/')[-1]
-
-    let type = 'svn'
-  elseif a:path =~# '\<\%(gh\|github\):\S\+\|://github.com/'
-    let name = substitute(split(a:path, ':')[-1],
-          \   '^//github.com/', '', '')
-    let uri =  'https://github.com/'. name
-    let uri .= '/trunk'
-
-    let name = split(name, '/')[-1]
-
-    let type = 'svn'
-  endif
-
-  return type == '' ?  {} :
-        \ { 'name': name, 'uri': uri, 'type' : type }
-endfunction"}}}
-function! s:type.get_sync_command(bundle) "{{{
-  if !executable('svn')
-    return 'E: svn command is not installed.'
-  endif
-
-  if !isdirectory(a:bundle.path)
-    let cmd = 'svn checkout'
-    let cmd .= printf(' %s "%s"', a:bundle.uri, a:bundle.path)
-  else
-    let cmd = 'svn up'
-  endif
-
-  return cmd
-endfunction"}}}
-function! s:type.get_revision_number_command(bundle) "{{{
-  if !executable('svn')
-    return ''
-  endif
-
-  return 'svn info'
-endfunction"}}}
-function! s:type.get_revision_lock_command(bundle) "{{{
-  if !executable('svn') || a:bundle.rev == ''
-    return ''
-  endif
-
-  return 'svn up -r ' . a:bundle.rev
-endfunction"}}}
+let g:loaded_neobundle = 1
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
+" __END__
 " vim: foldmethod=marker
