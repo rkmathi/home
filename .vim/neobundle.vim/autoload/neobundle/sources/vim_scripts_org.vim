@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: vim_scripts_org.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Oct 2012.
+" Last Modified: 01 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -31,7 +31,7 @@ let s:Cache = vital#of('unite.vim').import('System.Cache')
 
 let s:repository_cache = []
 
-function! neobundle#sources#vim_scripts_org#define()"{{{
+function! neobundle#sources#vim_scripts_org#define() "{{{
   return s:source
 endfunction"}}}
 
@@ -40,7 +40,7 @@ let s:source = {
       \ 'short_name' : 'vim.org',
       \ }
 
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
   if !executable('curl') && !executable('wget')
     call unite#print_error(
           \ '[neobundle/search:vim-scripts.org] '.
@@ -63,7 +63,7 @@ function! s:source.gather_candidates(args, context)"{{{
         \ 'source__script_type' : s:convert2script_type(v:val.raw_type),
         \ 'source__description' : v:val.description,
         \ 'source__options' : [],
-        \ 'action__uri' : 'https://github.com/vim-scripts/' . v:val.uri,
+        \ 'action__uri' : v:val.uri,
         \ }")
   catch
     call unite#print_error(
@@ -79,7 +79,7 @@ function! s:source.gather_candidates(args, context)"{{{
 endfunction"}}}
 
 " Misc.
-function! s:get_repository_plugins(context, path)"{{{
+function! s:get_repository_plugins(context, path) "{{{
   let cache_dir = neobundle#get_neobundle_dir() . '/.neobundle'
 
   if a:context.is_redraw || !s:Cache.filereadable(cache_dir, a:path)
@@ -94,7 +94,7 @@ function! s:get_repository_plugins(context, path)"{{{
       call delete(cache_path)
     endif
 
-    let temp = tempname()
+    let temp = unite#util#substitute_path_separator(tempname())
 
     if executable('curl')
       let cmd = 'curl --fail -s -o "' . temp . '" '. a:path
@@ -134,7 +134,7 @@ function! s:get_repository_plugins(context, path)"{{{
   return s:repository_cache
 endfunction"}}}
 
-function! s:convert_vim_scripts_data(data)"{{{
+function! s:convert_vim_scripts_data(data) "{{{
   return map(copy(a:data), "{
         \ 'name' : v:val.n,
         \ 'raw_type' : v:val.t,
@@ -144,7 +144,7 @@ function! s:convert_vim_scripts_data(data)"{{{
         \ }")
 endfunction"}}}
 
-function! s:convert2script_type(type)"{{{
+function! s:convert2script_type(type) "{{{
   if a:type ==# 'utility'
     return 'plugin'
   elseif a:type ==# 'color scheme'

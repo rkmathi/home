@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neobundle_search.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 18 Oct 2012.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -29,7 +29,7 @@ set cpo&vim
 
 let s:Cache = vital#of('unite.vim').import('System.Cache')
 
-function! unite#sources#neobundle_search#define()"{{{
+function! unite#sources#neobundle_search#define() "{{{
   " Init sources.
   if !exists('s:neobundle_sources')
     let s:neobundle_sources = {}
@@ -57,12 +57,12 @@ let s:source = {
       \ 'hooks' : {},
       \ 'action_table' : {},
       \ 'default_action' : 'yank',
-      \ 'max_candidates' : 50,
+      \ 'max_candidates' : 200,
       \ 'syntax' : 'uniteSource__NeoBundleSearch',
       \ 'parents' : ['uri'],
       \ }
 
-function! s:source.hooks.on_init(args, context)"{{{
+function! s:source.hooks.on_init(args, context) "{{{
   let a:context.source__sources = copy(s:neobundle_sources)
   if !empty(a:args)
     let a:context.source__sources = filter(
@@ -77,7 +77,13 @@ function! s:source.hooks.on_init(args, context)"{{{
           \ 'customlist,unite#sources#neobundle_search#complete_plugin_names')
   endif
 endfunction"}}}
-function! s:source.gather_candidates(args, context)"{{{
+function! s:source.gather_candidates(args, context) "{{{
+  if neobundle#util#is_sudo()
+    call neobundle#util#print_error(
+          \ '"sudo vim" is detected. This feature is disabled.')
+    return []
+  endif
+
   call unite#print_source_message('Search word: '
         \ . a:context.source__input, s:source.name)
 
@@ -94,6 +100,9 @@ function! s:source.gather_candidates(args, context)"{{{
       if !has_key(candidate, 'source__script_type')
         let candidate.source__script_type = ''
       endif
+      if !has_key(candidate, 'source__description')
+        let candidate.source__description = ''
+      endif
     endfor
 
     let candidates += source_candidates
@@ -108,13 +117,13 @@ function! s:source.gather_candidates(args, context)"{{{
         \ 'stridx(v:val.word, a:context.source__input) >= 0')
 endfunction"}}}
 
-function! s:source.complete(args, context, arglead, cmdline, cursorpos)"{{{
+function! s:source.complete(args, context, arglead, cmdline, cursorpos) "{{{
   let arglead = get(a:args, -1, '')
   return filter(keys(s:neobundle_sources),
         \ "stridx(v:val, arglead) == 0")
 endfunction"}}}
 
-function! s:source.hooks.on_syntax(args, context)"{{{
+function! s:source.hooks.on_syntax(args, context) "{{{
   syntax match uniteSource__NeoBundleSearch_DescriptionLine
         \ / -- .*$/
         \ contained containedin=uniteSource__NeoBundleSearch
@@ -132,12 +141,12 @@ function! s:source.hooks.on_syntax(args, context)"{{{
   highlight default link uniteSource__NeoBundleSearch_Description Comment
 endfunction"}}}
 
-" Actions"{{{
+" Actions "{{{
 let s:source.action_table.yank = {
       \ 'description' : 'yank plugin settings',
       \ 'is_selectable' : 1,
       \ }
-function! s:source.action_table.yank.func(candidates)"{{{
+function! s:source.action_table.yank.func(candidates) "{{{
   let @" = join(map(a:candidates,
         \ "'NeoBundle ' . s:get_neobundle_args(v:val)"), "\n")
   if has('clipboard')
@@ -150,21 +159,20 @@ endfunction"}}}
 let s:source.action_table.install = {
       \ 'description' : 'direct install plugins',
       \ 'is_selectable' : 1,
-      \ 'is_invalidate_cache' : 1,
       \ 'is_quit' : 0,
       \ }
-function! s:source.action_table.install.func(candidates)"{{{
+function! s:source.action_table.install.func(candidates) "{{{
   for candidate in a:candidates
     execute 'NeoBundleDirectInstall' s:get_neobundle_args(candidate)
   endfor
 endfunction"}}}
 "}}}
 
-" Filters"{{{
-function! s:source.source__sorter(candidates, context)"{{{
+" Filters "{{{
+function! s:source.source__sorter(candidates, context) "{{{
   return s:sort_by(a:candidates, 'v:val.source__name')
 endfunction"}}}
-function! s:source.source__converter(candidates, context)"{{{
+function! s:source.source__converter(candidates, context) "{{{
   let max_plugin_name = max(map(copy(a:candidates),
         \ 'len(v:val.source__name)'))
   let max_script_type = max(map(copy(a:candidates),
@@ -194,7 +202,7 @@ let s:source.filters =
       \      s:source.source__converter]
 "}}}
 
-" Misc."{{{
+" Misc. "{{{
 function! s:sort_by(list, expr)
   let pairs = map(a:list, printf('[v:val, %s]', a:expr))
   return map(s:sort(pairs,
@@ -219,13 +227,15 @@ function! s:get_neobundle_args(candidate)
   return string(a:candidate.source__path)
           \  . (empty(a:candidate.source__options) ?
           \    '' : ', ' . string(a:candidate.source__options))
+          \  . (a:candidate.source__description == '' ? '' :
+          \      ' " ' . a:candidate.source__description)
 endfunction
 
-function! unite#sources#neobundle_search#complete_plugin_names(arglead, cmdline, cursorpos)"{{{
+function! unite#sources#neobundle_search#complete_plugin_names(arglead, cmdline, cursorpos) "{{{
   return filter(s:get_plugin_names(), "stridx(v:val, a:arglead) == 0")
 endfunction"}}}
 
-function! s:initialize_plugin_names(context)"{{{
+function! s:initialize_plugin_names(context) "{{{
   let cache_dir = neobundle#get_neobundle_dir() . '/.neobundle'
   let path = 'plugin_names'
 
@@ -237,7 +247,7 @@ function! s:initialize_plugin_names(context)"{{{
   return s:get_plugin_names()
 endfunction"}}}
 
-function! s:get_plugin_names()"{{{
+function! s:get_plugin_names() "{{{
   let cache_dir = neobundle#get_neobundle_dir() . '/.neobundle'
   let path = 'plugin_names'
 

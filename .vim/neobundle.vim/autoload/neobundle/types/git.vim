@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: git.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Oct 2012.
+" Last Modified: 22 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,13 +27,13 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Global options definition."{{{
+" Global options definition. "{{{
 call neobundle#util#set_default(
-      \ 'g:neobundle#types#git#default_protocol', 'git',
+      \ 'g:neobundle#types#git#default_protocol', 'https',
       \ 'g:neobundle_default_git_protocol')
 "}}}
 
-function! neobundle#types#git#define()"{{{
+function! neobundle#types#git#define() "{{{
   return s:type
 endfunction"}}}
 
@@ -41,10 +41,18 @@ let s:type = {
       \ 'name' : 'git',
       \ }
 
-function! s:type.detect(path, opts)"{{{
+function! s:type.detect(path, opts) "{{{
+  if isdirectory(a:path.'/.git')
+    " Local repository.
+    return { 'name' : split(a:path, '/')[-1],
+          \  'uri' : a:path, 'type' : 'git' }
+  elseif isdirectory(a:path)
+    return {}
+  endif
+
   let type = ''
 
-  let protocol = matchstr(a:path, '^[^:]\+\ze://')
+  let protocol = matchstr(a:path, '^.\{-}\ze://')
   if protocol == '' || a:path =~#
         \'\<\%(gh\|github\|bb\|bitbucket\):\S\+'
         \ || has_key(a:opts, 'type__protocol')
@@ -52,80 +60,66 @@ function! s:type.detect(path, opts)"{{{
           \ g:neobundle#types#git#default_protocol)
   endif
 
-  if a:path =~# '\<\%(gh\|github\):\S\+\|://github.com/'
-    if a:path !~ '/'
+  if a:path =~# '\<gist:\S\+\|://gist.github.com/'
+    let name = split(a:path, ':')[-1]
+    let uri =  (protocol ==# 'ssh') ?
+          \ 'git@gist.github.com:' . split(name, '/')[-1] :
+          \ protocol . '://gist.github.com/'. split(name, '/')[-1]
+  elseif a:path =~# '\<\%(gh\|github\):\S\+\|://github.com/'
+    if a:path =~ '/'
+      let name = substitute(split(a:path, ':')[-1],
+            \   '^//github.com/', '', '')
+      let uri =  (protocol ==# 'ssh') ?
+            \ 'git@github.com:' . name :
+            \ protocol . '://github.com/'. name
+    else
       " www.vim.org Vim scripts.
       let name = split(a:path, ':')[-1]
       let uri  = (protocol ==# 'ssh') ?
             \ 'git@github.com:vim-scripts/' :
             \ protocol . '://github.com/vim-scripts/'
       let uri .= name
-    else
-      let name = substitute(split(a:path, ':')[-1],
-            \   '^//github.com/', '', '')
-      let uri =  (protocol ==# 'ssh') ?
-            \ 'git@github.com:' . name :
-            \ protocol . '://github.com/'. name
     endif
-
-    if uri !~ '\.git\s*$'
-      " Add .git suffix.
-      let uri .= '.git'
-    endif
-
-    let type = 'git'
   elseif a:path =~# '\<\%(git@\|git://\)\S\+'
         \ || a:path =~# '\.git\s*$'
+        \ || get(a:opts, 'type', '') ==# 'git'
     if a:path =~# '\<\%(bb\|bitbucket\):\S\+'
       let name = substitute(split(a:path, ':')[-1],
             \   '^//bitbucket.org/', '', '')
       let uri = (protocol ==# 'ssh') ?
             \ 'git@bitbucket.org:' . name :
             \ protocol . '://bitbucket.org/' . name
-
-      if uri !~ '\.git\s*$'
-        " Add .git suffix.
-        let uri .= '.git'
-      endif
     else
       let uri = a:path
     endif
-
-    let type = 'git'
+  else
+    return {}
   endif
 
-  return type == '' ?  {} :
-        \ { 'name': substitute(split(uri, '/')[-1],
-        \           '\.git\s*$','','i'), 'uri': uri, 'type' : type }
+  if uri !~ '\.git\s*$'
+    " Add .git suffix.
+    let uri .= '.git'
+  endif
+
+  return { 'name': neobundle#util#name_conversion(uri),
+        \  'uri': uri, 'type' : 'git' }
 endfunction"}}}
-function! s:type.get_sync_command(bundle)"{{{
+function! s:type.get_sync_command(bundle) "{{{
   if !executable('git')
     return 'E: "git" command is not installed.'
   endif
 
   if !isdirectory(a:bundle.path)
-    let cmd = 'git clone'
-
-    if get(a:bundle, 'type__shallow', 1)
-          \ && a:bundle.uri !~ '^git@github\.com:'
-      " Use shallow clone.
-      let cmd .= ' --depth 1'
-    endif
+    let cmd = 'git clone --recursive'
 
     let cmd .= printf(' %s "%s"', a:bundle.uri, a:bundle.path)
   else
-    let cmd = 'git pull --rebase'
-
-    if a:bundle.rev != ''
-          \ && get(a:bundle, 'type__update_style', 'default')
-          \        ==# 'default'
-      " Restore revision.
-      let cmd = 'git checkout master && ' . cmd
-    endif
+    let cmd = 'git pull --rebase && git submodule update --init --recursive'
   endif
+
   return cmd
 endfunction"}}}
-function! s:type.get_revision_number_command(bundle)"{{{
+function! s:type.get_revision_number_command(bundle) "{{{
   if !executable('git')
     return ''
   endif
@@ -137,14 +131,21 @@ function! s:type.get_revision_number_command(bundle)"{{{
 
   return 'git rev-parse ' . rev
 endfunction"}}}
-function! s:type.get_revision_pretty_command(bundle)"{{{
+function! s:type.get_revision_pretty_command(bundle) "{{{
   if !executable('git')
     return ''
   endif
 
   return "git log -1 --pretty=format:'%h [%cr] %s'"
 endfunction"}}}
-function! s:type.get_log_command(bundle, new_rev, old_rev)"{{{
+function! s:type.get_commit_date_command(bundle) "{{{
+  if !executable('git')
+    return ''
+  endif
+
+  return "git log -1 --pretty=format:'%ct'"
+endfunction"}}}
+function! s:type.get_log_command(bundle, new_rev, old_rev) "{{{
   if !executable('git') || a:new_rev == '' || a:old_rev == ''
     return ''
   endif
@@ -159,7 +160,7 @@ function! s:type.get_log_command(bundle, new_rev, old_rev)"{{{
   " Test.
   " return "git log HEAD^^^^..HEAD --graph --pretty=format:'%h [%cr] %s'"
 endfunction"}}}
-function! s:type.get_revision_lock_command(bundle)"{{{
+function! s:type.get_revision_lock_command(bundle) "{{{
   if !executable('git') || a:bundle.rev == ''
     return ''
   endif

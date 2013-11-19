@@ -1,7 +1,7 @@
 "=============================================================================
-" FILE: nosync.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 07 Jun 2013.
+" FILE: syntax/recipe.vim
+" AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
+" Last Modified: 15 Sep 2010
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,50 +27,31 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neobundle#types#nosync#define() "{{{
-  return s:type
-endfunction"}}}
+if version < 700
+  syntax clear
+elseif exists('b:current_syntax')
+  finish
+endif
 
-let s:type = {
-      \ 'name' : 'nosync',
-      \ }
+syntax region  recipeString    start=+"+  skip=+\\\\\|\\"+  end=+"+  contains=recipeEscape
+syntax region  recipeString    start=+'+  skip=+\\\\\|\\"+  end=+'+
 
-function! s:type.detect(path, opts) "{{{
-  " No Auto detect.
-  return {}
-endfunction"}}}
-function! s:type.get_sync_command(bundle) "{{{
-  if isdirectory(a:bundle.path)
-    return ''
-  endif
+syntax match   recipeEscape    '\\["\\/bfnrt]' contained
+syntax match   recipeEscape    '\\u\x\{4}' contained
 
-  " Try auto install.
-  let path = a:bundle.orig_path
-  let site = get(a:bundle, 'site', g:neobundle#default_site)
-  if path !~ '^/\|^\a:' && path !~ ':'
-    " Add default site.
-    let path = site . ':' . path
-  endif
+syntax match   recipeNumber    '-\?\<\%(0\|[1-9]\d*\)\%(\.\d\+\)\?\>'
 
-  for type in neobundle#config#get_types()
-    let detect = type.detect(path, a:bundle.orig_opts)
+syntax match   recipeBraces    '[{}\[\]]'
+syntax match   recipeComment   '^\s*#.*$'
 
-    if !empty(detect)
-      return type.get_sync_command(
-            \ extend(copy(a:bundle), detect))
-    endif
-  endfor
 
-  return 'E: Failed to auto installation.'
-endfunction"}}}
-function! s:type.get_revision_number_command(bundle) "{{{
-  return ''
-endfunction"}}}
-function! s:type.get_revision_lock_command(bundle) "{{{
-  return ''
-endfunction"}}}
+highlight def link recipeString             String
+highlight def link recipeEscape             Special
+highlight def link recipeNumber             Number
+highlight def link recipeBraces             Operator
+highlight def link recipeComment            Comment
+
+let b:current_syntax = 'recipe'
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
-
-" vim: foldmethod=marker

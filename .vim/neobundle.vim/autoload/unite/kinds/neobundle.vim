@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neobundle.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Oct 2012.
+" Last Modified: 20 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +27,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#kinds#neobundle#define()"{{{
+function! unite#kinds#neobundle#define() "{{{
   return s:kind
 endfunction"}}}
 
@@ -38,14 +38,16 @@ let s:kind = {
       \ 'default_action' : 'update',
       \}
 
-" Actions"{{{
+" Actions "{{{
 let s:kind.action_table.update = {
       \ 'description' : 'update bundles',
       \ 'is_selectable' : 1,
+      \ 'is_start' : 1,
       \ }
-function! s:kind.action_table.update.func(candidates)"{{{
-  call unite#start([['neobundle/update', '!']
-        \ + map(copy(a:candidates), 'v:val.action__bundle_name')])
+function! s:kind.action_table.update.func(candidates) "{{{
+  call unite#start_temporary([['neobundle/update', '!']
+        \ + map(copy(a:candidates), 'v:val.action__bundle_name')],
+        \ { 'log' : 1, 'script' : 1 })
 endfunction"}}}
 let s:kind.action_table.delete = {
       \ 'description' : 'delete bundles',
@@ -53,7 +55,7 @@ let s:kind.action_table.delete = {
       \ 'is_quit' : 0,
       \ 'is_selectable' : 1,
       \ }
-function! s:kind.action_table.delete.func(candidates)"{{{
+function! s:kind.action_table.delete.func(candidates) "{{{
   call call('neobundle#installer#clean', insert(map(copy(a:candidates),
         \ 'v:val.action__bundle_name'), 0))
 endfunction"}}}
@@ -61,35 +63,23 @@ let s:kind.action_table.reinstall = {
       \ 'description' : 'reinstall bundles',
       \ 'is_selectable' : 1,
       \ }
-function! s:kind.action_table.reinstall.func(candidates)"{{{
-  for candidate in a:candidates
-    " Save info.
-    let arg = candidate.action__bundle.orig_arg
-
-    " Remove.
-    call neobundle#installer#clean(1, candidate.action__bundle_name)
-
-    call call('neobundle#config#bundle',
-          \ [candidate.action__bundle.orig_arg])
-  endfor
-
-  " Install.
-  call unite#start([['neobundle/update', '!']
-        \ + map(copy(a:candidates), 'v:val.action__bundle_name')])
+function! s:kind.action_table.reinstall.func(candidates) "{{{
+  call neobundle#installer#reinstall(
+        \ map(copy(a:candidates), 'v:val.action__bundle'))
 endfunction"}}}
 let s:kind.action_table.preview = {
       \ 'description' : 'view the plugin documentation',
       \ 'is_quit' : 0,
       \ }
-function! s:kind.action_table.preview.func(candidate)"{{{
+function! s:kind.action_table.preview.func(candidate) "{{{
   " Search help files.
   let readme = get(split(globpath(
-        \ a:candidate.action__path, 'doc/*.?*'), '\n'), 0, '')
+        \ a:candidate.action__path, 'doc/*.?*', 1), '\n'), 0, '')
 
   if readme == ''
     " Search README files.
     let readme = get(split(globpath(
-          \ a:candidate.action__path, 'README*'), '\n'), 0, '')
+          \ a:candidate.action__path, 'README*', 1), '\n'), 0, '')
     if readme == ''
       return
     endif

@@ -4,8 +4,8 @@ import os
 import subprocess
 import sys
 
-CUI_FILES = ('.ctags', '.gitconfig', '.gitignore-rkmathi', '.hgrc', '.tmux',
-        '.vim', '.vimrc', '.zsh.d')
+CUI_FILES = ('.ctags', '.gitconfig', '.gitignore-rkmathi', '.hgrc',
+        '.sbtconfig', '.tmux', '.vim', '.vimrc', '.zsh.d')
 GUI_FILES = ('.gvimrc', )
 X_FILES   = ('.xmonad', )
 
