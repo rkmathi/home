@@ -7,16 +7,16 @@
     br  = branch --remote
     cm  = commit --message
     co  = checkout
-    cob = checkout -b
     di  = diff --color
     f   = fetch --prune
     g   = grep -nH --break --heading
     i   = remote show origin
     l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
     lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
-    pln = pull --no-ff
     plf = pull --ff-only
-    pso = push origin
+    pln = pull --no-ff
+    ps  = push
+    psom= push origin
     s   = status --branch --short
 
 [color]
