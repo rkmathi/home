@@ -8,7 +8,6 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('$HOME/.vim/bundle'))
 
-NeoBundle 'YankRing.vim'
 NeoBundleLazy 'derekwyatt/vim-sbt', {
   \   'autoload': {
   \     'filetypes': ['sbt'],
@@ -25,6 +24,7 @@ NeoBundleLazy 'jelera/vim-javascript-syntax', {
   \     'filetypes': ['javascript', 'js'],
   \   },
   \ }
+NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'majutsushi/tagbar'   " --> <\>+t
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'Shougo/neocomplcache'
@@ -55,12 +55,15 @@ if neobundle#exists_not_installed_bundles()
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
 
-" YankRing.vim
-let g:yankring_clipboard_monitor = 1
-let g:yankring_history_dir = '$HOME/.vim'
-let g:yankring_history_file = '.yankring_history'
-let g:yankring_ignore_duplicate = 0
-let g:yankring_max_history = 10
+" LeafCage/yankround.vim
+let g:yankround_dir = '/tmp/yankround'
+let g:yankround_max_history = 20
+nmap p <Plug>(yankround-p)
+nmap P <Plug>(yankround-P)
+nmap gp <Plug>(yankround-gp)
+nmap gP <Plug>(yankround-gP)
+nmap <C-p> <Plug>(yankround-prev)
+nmap <C-n> <Plug>(yankround-next)
 " majutsushi/tagbar
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
@@ -97,27 +100,6 @@ let g:neosnippet#snippets_directory='
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-" Shougo/vimfiler.vim
-nnoremap <F2> :VimFiler -buffer-name=explorer -split -winwidth=45 -toggle -no-quit<Cr>
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
-function! g:my_vimfiler_settings()
-  nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<Cr>
-  nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<Cr>
-endfunction
-
-let s:my_action = { 'is_selectable' : 1 }
-function! s:my_action.func(candidates)
-  wincmd p
-  exec 'split '. a:candidates[0].action__path
-endfunction
-call unite#custom_action('file', 'my_split', s:my_action)
-
-let s:my_action = { 'is_selectable' : 1 }
-function! s:my_action.func(candidates)
-  wincmd p
-  exec 'vsplit '. a:candidates[0].action__path
-endfunction
-call unite#custom_action('file', 'my_vsplit', s:my_action)
 " Shougo/unite.vim
 let g:unite_enable_start_insert = 0
 let g:unite_enable_split_vertically = 1
