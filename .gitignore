@@ -1,7 +1,6 @@
-.yankring_history.txt
-.yankring_history_v2.txt
 .vim/bundle/
 .vim/.netrwhist
+.vim/.yankround/
 .xmonad/*
 
 !.xmonad/conkyrc

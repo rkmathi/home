@@ -19,3 +19,4 @@ if isdirectory("project") && isdirectory("target") &&
 
   CompilerSet errorfile=target/error
 endif
+
