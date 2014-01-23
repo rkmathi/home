@@ -17,6 +17,7 @@ NeoBundle     'honza/vim-snippets'
 NeoBundle     'LeafCage/yankround.vim'
 NeoBundle     'majutsushi/tagbar'
 NeoBundle     'nathanaelkane/vim-indent-guides'
+NeoBundle     'osyo-manga/vim-over'
 NeoBundle     'scrooloose/syntastic'
 NeoBundleLazy 'Shougo/neocomplcache', {
 \   'depends' : ["Shougo/neosnippet"],
@@ -47,6 +48,10 @@ if neobundle#exists_not_installed_bundles()
     \ string(neobundle#get_not_installed_bundle_names())
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
+" prefix
+nn  [exec]    <Nop>
+nm  <leader>  [exec]
+xm  <leader>  [exec]
 
 " LeafCage/yankround.vim
 let g:yankround_dir = '$HOME/.vim/.yankround'
@@ -68,12 +73,16 @@ elseif OSTYPE == "Linux\n"
 endif
 let g:tagbar_indent=1
 let g:tagbar_width=30
+nn  <silent> [exec]t :TagbarToggle<CR>
 " nathanaelkane/vim-indent-guides
 au VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=grey
 au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=yellow
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_guide_size=1
+" osyo-manga/vim-over
+nnoremap [exec]s :OverCommandLine<CR>
+nnoremap [exec]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
 " scrooloose/syntastic
 let g:syntastic_auto_loc_list=1
 let g:syntastic_mode_map = {
@@ -100,10 +109,67 @@ let g:neosnippet#snippets_directory='
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
+im  <C-k> <Plug>(neosnippet_expand_or_jump)
+xm  <C-k> <Plug>(neosnippet_expand_target)
+im  <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : pumvisible() ? "\<C-n>" : "\<TAB>"
 " Shougo/unite.vim
+if !exists("g:unite_source_menu_menus")
+    let g:unite_source_menu_menus = {}
+endif
+let g:unite_source_menu_menus.startup = {
+\ "description" : "startup menu",
+\   "command_candidates" : [
+\     [ "vimrc",  "edit " . $MYVIMRC ],
+\     [ "gvimrc", "edit " . $MYGVIMRC ],
+\     [ "unite-file_mru", "Unite file_mru" ],
+\     [ "unite-directory_mru", "Unite directory_mru" ],
+\   ]
+\ }
 let g:unite_enable_start_insert=0
 let g:unite_enable_split_vertically=1
 let g:unite_winwidth=30
+let g:unite_source_alias_aliases = {
+\   "startup_file_mru" : {
+\     "source" : "file_mru",
+\   },
+\     "startup_directory_mru" : {
+\     "source" : "directory_mru",
+\   },
+\ }
+call unite#custom_max_candidates("startup_file_mru", 15)
+call unite#custom_max_candidates("startup_directory_mru", 10)
+command! UniteStartup
+\ Unite
+\ output:echo:"===:file:mru:===":! startup_file_mru
+\ output:echo:":":!
+\ output:echo:"===:directory:mru:===":! startup_directory_mru
+\ output:echo:":":!
+\ -hide-source-names
+\ -no-split
+\ -quick-match
+function! GetBufByte()
+  let byte = line2byte(line('$') + 1)
+  if byte == -1
+    return 0
+  else
+    return byte - 1
+  endif
+endfunction
+augroup startup
+  autocmd!
+  if @% == '' && GetBufByte() == 0
+    autocmd VimEnter * nested :UniteStartup
+  endif
+augroup END
+nn  <silent> [exec]uf :<C-u>Unite buffer<CR>
+nn  <silent> [exec]ua :<C-u>UniteBookmarkAdd<CR>
+nn  <silent> [exec]ub :<C-u>Unite bookmark<CR>
+nn  <silent> [exec]um :<C-u>Unite file_mru<CR>
+au FileType unite nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-h> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
 " thinca/vim-quickrun
 let g:quickrun_config = {
 \   '_': {
@@ -202,8 +268,8 @@ set sw=2 sts=0 ts=2
 " draw underscore
 MyAutocmd InsertLeave * setlocal  nocursorline
 MyAutocmd InsertEnter * setlocal  cursorline
-MyAutocmd InsertLeave * highlight StatusLine
-MyAutocmd InsertEnter * highlight StatusLine ctermfg=16 guibg=black
+MyAutocmd InsertLeave * highlight StatusLine ctermfg=black guibg=black
+MyAutocmd InsertEnter * highlight StatusLine ctermfg=grey  guibg=black
 
 " search
 set hlsearch incsearch smartcase wrapscan
@@ -232,14 +298,6 @@ highlight StatusLineNC  ctermfg=grey ctermbg=green
 
 
 """ KEYMAP SETTINGS """
-" prefix
-nn  [exec]    <Nop>
-nn  [space]   <Nop>
-nm  <leader>  [exec]
-xm  <leader>  [exec]
-nm  <Space>   [space]
-xm  <Space>   [space]
-
 " bracket (http://vim-users.jp/2011/04/hack214/)
 vn  ( t(
 vn  ) t)
@@ -262,25 +320,6 @@ map <silent> tx :tabclose<CR>
 map <silent> tn :tabnext<CR>
 map <silent> tp :tabprevious<CR>
 
-" tagbar
-nn  <silent> [exec]t :TagbarToggle<CR>
-
-" neosnippet
-im  <C-k> <Plug>(neosnippet_expand_or_jump)
-xm  <C-k> <Plug>(neosnippet_expand_target)
-im  <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\ : pumvisible() ? "\<C-n>" : "\<TAB>"
-
-" unite
-nn  <silent> [exec]uf :<C-u>Unite buffer<CR>
-nn  <silent> [exec]ua :<C-u>UniteBookmarkAdd<CR>
-nn  <silent> [exec]ub :<C-u>Unite bookmark<CR>
-nn  <silent> [exec]um :<C-u>Unite file_mru<CR>
-au FileType unite nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
-au FileType unite nnoremap <silent> <buffer> <expr> <C-h> unite#do_action('split')
-au FileType unite nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-
 " move
 nn <silent> j  gj
 nn <silent> gj j
@@ -297,5 +336,4 @@ vn <silent> g$ $
 
 " misc
 nn  <silent> <C-]>    g<C-]>
-nn  <silent> [exec]m  :make<CR>
 
