@@ -20,15 +20,15 @@ NeoBundle     'nathanaelkane/vim-indent-guides'
 NeoBundle     'osyo-manga/vim-over'
 NeoBundle     'scrooloose/syntastic'
 NeoBundleLazy 'Shougo/neocomplcache', {
-\   'depends' : ["Shougo/neosnippet"],
 \   'autoload' : {
 \     'insert' : 1
 \   }
 \ }
-NeoBundleLazy 'Shougo/neosnippet'
+NeoBundle     'Shougo/neosnippet'
+NeoBundle     'Shougo/neosnippet-snippets'
 NeoBundleLazy 'Shougo/unite.vim', {
-\ 'autoload' : {
-\   'commands' : [ "Unite", "UniteWithBufferDir", "UniteWithCurrentDir" ]
+\   'autoload' : {
+\     'commands' : [ "Unite", "UniteWithBufferDir", "UniteWithCurrentDir" ]
 \   }
 \ }
 NeoBundle     'Shougo/vimproc', {
