@@ -309,16 +309,16 @@ ono ] t]
 ono [ t[
 
 " clear search results
-nn  <C-L>     :nohl<CR><C-L>
+nn  <C-l>     :nohl<CR><C-L>
 
 " tab jump
 for n in range(1, 9)
   execute 'nn <silent> t'.n  ':<C-u>tabnext'.n.'<CR>'
 endfor
-map <silent> tc :tablast <bar> tabnew<CR>
-map <silent> tx :tabclose<CR>
-map <silent> tn :tabnext<CR>
-map <silent> tp :tabprevious<CR>
+map <silent> <C-t>c :tablast <bar> tabnew<CR>
+map <silent> <C-t>x :tabclose<CR>
+map <silent> <C-t>n :tabnext<CR>
+map <silent> <C-t>p :tabprevious<CR>
 
 " move
 nn <silent> j  gj
