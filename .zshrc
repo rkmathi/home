@@ -97,14 +97,10 @@ add-zsh-hook precmd _update_vcs_info_msg
 ### Alias/Export/PATH ###
 alias e="exit"
 alias be="bundle exec"
+alias v="vim"
 
 # EDITOR
 export EDITOR="vim"
-if type vim > /dev/null 2>&1; then
-    alias v="vim"
-else
-    alias vim="vi"
-fi
 
 # PAGER
 export PAGER="less"
