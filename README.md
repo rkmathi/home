@@ -1,2 +1,2 @@
-Install with install.sh
+Install with *install.sh*
 
