@@ -1,7 +1,0 @@
-source ~/.tmux/tmux.conf
-
-# Environment
-bind-key C-r source-file ~/.tmux/tmux.conf.osx
-setw -g window-status-current-bg    green
-setw -g window-status-current-fg    black
-

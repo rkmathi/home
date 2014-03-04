@@ -1,10 +1,9 @@
 #!/bin/bash
 
-PATTERN_CUI="^c(|ui)$"           # cui
-PATTERN_GUI="^g(|ui)$"            # gui
-PATTERN_LIN="^l(|inux)$"    # linux
+PATTERN_LIG="^(lg|linux-gui)$"    # linux-gui
+PATTERN_LIS="^l(c|inux-cui)$"     # linux-cui
 PATTERN_OSX="^o(|sx)$"            # osx
-PATTERN_WIN="^w(|indows)$" # windows
+PATTERN_WIN="^w(|indows)$"        # windows
 _CP_GROUP=(
 ".zshrc"
 )
@@ -17,16 +16,19 @@ _LN_GROUP=(
 ".tmux"
 ".vim"
 ".vimrc"
-".zsh.d"
+".zsh-syntax-highlighting"
 )
-CUI_LN_GROUP=(
-)
-GUI_LN_GROUP=(
+LIG_LN_GROUP=(
 ".gvimrc"
+".zshrc.env"
+".xmonad"
 )
-LIN_LN_GROUP=(
+LIC_LN_GROUP=(
+".zshrc.env"
 )
 OSX_LN_GROUP=(
+".gvimrc"
+".zshrc.env"
 )
 WIN_LN_GROUP=(
 )
@@ -35,82 +37,69 @@ WIN_LN_GROUP=(
 function goto_error() {
   cat << _EOT_
 Usage:
-  $ ./install.sh -u [CUI/GUI] -o [Linux/OSX/Windows] (-w want_to_install)
+  $ ./install.sh -e [Environment] (-w want_to_install_additional)
 Example:
-  $ ./install.sh -u cui -o osx (-w .xmonad ...)
+  $ ./install.sh -e osx (-w .gvimrc .xmonad ...)
 Options:
-  -u :
-    (c cui)
-    (g gui)
-  -o :
-    (l linux)
-    (o osx)
-    (w windows)
+  -e :
+    (l lc linux-cui)
+    (lg linux-gui)
+    (o  osx)
+    (w  windows)
   -w :
-    (.xmonad )
+    (.gvimrc .xmonad )
 _EOT_
   exit -1
 }
 
 function cp_file() {
-  echo "cp -fv `pwd`/$1 $HOME/$1"
+  cp -fv `pwd`/$1 $HOME/$1
 }
 
 function ln_file() {
-  echo "ln -fsv `pwd`/$1 $HOME/$1"
+  ln -fsv `pwd`/$1 $HOME/$1
+}
+
+function ln_env_file() {
+  ln -fsv `pwd`/envs/$env_type/$1 $HOME/$1
 }
 
 function must_install() {
+  echo "MUST INSTALL"
   for file in ${_CP_GROUP[@]}; do cp_file $file ; done
   for file in ${_LN_GROUP[@]}; do ln_file $file ; done
 }
 
-function ui_install() {
-  if [[ $ui_type = "cui" ]]; then
-    echo "CUI"
-    for file in ${CUI_LN_GROUP[@]}; do ln_file $file ; done
-  elif [[ $ui_type = "gui" ]]; then
-    echo "GUI"
-    for file in ${GUI_LN_GROUP[@]}; do ln_file $file ; done
-  fi
-}
-
-function os_install() {
-  if [[ $os_type = "lin" ]]; then
-    echo "Linux"
-    for file in ${LIN_LN_GROUP[@]}; do ln_file $file ; done
-  elif [[ $os_type = "osx" ]]; then
+function env_install() {
+  if   [[ $env_type = "lig" ]]; then
+    echo "Linux GUI"
+    for file in ${LIG_LN_GROUP[@]}; do ln_env_file $file ; done
+  elif [[ $env_type = "lic" ]]; then
+    echo "Linux CUI"
+    for file in ${LIC_LN_GROUP[@]}; do ln_env_file $file ; done
+  elif [[ $env_type = "osx" ]]; then
     echo "OSX"
-    for file in ${OSX_LN_GROUP[@]}; do ln_file $file ; done
-  elif [[ $os_type = "win" ]]; then
+    for file in ${OSX_LN_GROUP[@]}; do ln_env_file $file ; done
+  elif [[ $env_type = "win" ]]; then
     echo "WIN"
-    for file in ${WIN_LN_GROUP[@]}; do ln_file $file ; done
+    for file in ${WIN_LN_GROUP[@]}; do ln_env_file $file ; done
   fi
-
 }
 
 
-while getopts ":u:o:w" opts; do
+while getopts ":e:w" opts; do
   case ${opts} in
-    u )
-      if [[ $OPTARG =~ $PATTERN_CUI ]]; then
-        ui_type="cui"
-      elif [[ $OPTARG =~ $PATTERN_GUI ]]; then
-        ui_type="gui"
-      else
-        echo "Invalid UI option"
-        goto_error
-      fi
-      ;;
-    o )
-      if   [[ $OPTARG =~ $PATTERN_LIN ]]; then
-        os_type="lin"
+    e )
+      if   [[ $OPTARG =~ $PATTERN_LIG ]]; then
+        env_type="lig"
+      elif [[ $OPTARG =~ $PATTERN_LIC ]]; then
+        env_type="lic"
       elif [[ $OPTARG =~ $PATTERN_OSX ]]; then
-        os_type="osx"
+        env_type="osx"
       elif [[ $OPTARG =~ $PATTERN_WIN ]]; then
-        os_type="win"
+        env_type="win"
       else
-        echo "Invalid OS option"
+        echo "Invalid Environment option"
         goto_error
       fi
       ;;
@@ -125,19 +114,15 @@ while getopts ":u:o:w" opts; do
 done
 shift `expr $OPTIND - 1`
 
-if [ -z $ui_type ] || [ -z $os_type ]; then
-  echo "No ui_type or os_type"
+if [ -z $env_type ]; then
+  echo "No env_type"
   goto_error
 fi
 
-echo "Install type => $ui_type / $os_type"
-if [[ $with_file = "true" ]]; then
-  with_file=$@
-  echo "(with $with_file)"
-fi
-
 must_install
-ui_install
-os_install
-
+env_install
+if [[ $with_file = "true" ]]; then
+  echo "(with $@)"
+  for file in $@; do ln_file $file ; done
+fi
 

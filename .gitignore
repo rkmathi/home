@@ -1,3 +1,6 @@
+.vim/.vim/
+.zsh-syntax-highlighting/.zsh-syntax-highlighting/
+
 .vim/bundle/
 .vim/.netrwhist
 .vim/.yankround/

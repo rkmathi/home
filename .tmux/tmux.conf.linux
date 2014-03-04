@@ -1,7 +1,0 @@
-source ~/.tmux/tmux.conf
-
-# Environment
-bind-key C-r source-file ~/.tmux/tmux.conf.linux
-setw -g window-status-current-bg    blue
-setw -g window-status-current-fg    yellow
-

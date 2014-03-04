@@ -2,7 +2,7 @@ zcompile ~/.zshrc
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
-source ~/.zsh.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 ### Autoload
 autoload -Uz add-zsh-hook
@@ -126,10 +126,6 @@ path=(\
     /bin \
 )
 
-export LD_LIBRARY_PATH=/usr/lib/jni:$LD_LIBRARY_PATH
-
 ### Environment ###
-# source ~/.zsh.d/zshrc.linux
-# source ~/.zsh.d/zshrc.osx
-# source ~/.zsh.d/zshrc.server
+source ~/.zshrc.env
 
