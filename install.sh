@@ -6,6 +6,7 @@ PATTERN_OSX="^o(|sx)$"            # osx
 PATTERN_WIN="^w(|indows)$"        # windows
 _CP_GROUP=(
 ".zshrc"
+".zsh-syntax-highlighting"
 )
 _LN_GROUP=(
 ".ctags"
@@ -15,12 +16,10 @@ _LN_GROUP=(
 ".sbtconfig"
 ".vim"
 ".vimrc"
-".zsh-syntax-highlighting"
 )
 LIG_LN_GROUP=(
 ".gvimrc"
 ".tmux.conf"
-".xmonad"
 ".zshrc.env"
 )
 LIC_LN_GROUP=(
@@ -55,7 +54,7 @@ _EOT_
 }
 
 function cp_file() {
-  cp -fv `pwd`/$1 $HOME/$1
+  \cp -afv `pwd`/$1 $HOME/$1
 }
 
 function ln_file() {
@@ -125,6 +124,6 @@ must_install
 env_install
 if [[ $with_file = "true" ]]; then
   echo "(with $@)"
-  for file in $@; do ln_file $file ; done
+  for file in $@; do cp_file $file ; done
 fi
 
