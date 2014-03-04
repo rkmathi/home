@@ -105,7 +105,7 @@ done
 shift `expr $OPTIND - 1`
 if [ -z $env_type ]; then echo "No option error"; goto_error; fi
 
-#must_install
-#env_install $env_type
-#add_install $@
+must_install
+env_install $env_type
+add_install $@
 
