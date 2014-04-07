@@ -31,7 +31,7 @@
     singlekey   = true
 
 [push]
-    default     = upstream
+    default     = current
 
 [user]
     name        = Ryuichi KAWAMATA (@rkmathi)

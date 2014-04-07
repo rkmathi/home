@@ -7,6 +7,7 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('$HOME/.vim/bundle'))
 
+NeoBundle 'altercation/vim-colors-solarized'
 NeoBundleLazy 'derekwyatt/vim-sbt', {
 \   'autoload': { 'filetypes': ['sbt'] }
 \ }
@@ -140,29 +141,6 @@ let g:unite_source_alias_aliases = {
 \ }
 call unite#custom_max_candidates("startup_file_mru", 15)
 call unite#custom_max_candidates("startup_directory_mru", 10)
-command! UniteStartup
-\ Unite
-\ output:echo:"===:file:mru:===":! startup_file_mru
-\ output:echo:":":!
-\ output:echo:"===:directory:mru:===":! startup_directory_mru
-\ output:echo:":":!
-\ -hide-source-names
-\ -no-split
-\ -quick-match
-function! GetBufByte()
-  let byte = line2byte(line('$') + 1)
-  if byte == -1
-    return 0
-  else
-    return byte - 1
-  endif
-endfunction
-augroup startup
-  autocmd!
-  if @% == '' && GetBufByte() == 0
-    autocmd VimEnter * nested :UniteStartup
-  endif
-augroup END
 nn  <silent> [exec]uf :<C-u>Unite buffer<CR>
 nn  <silent> [exec]ua :<C-u>UniteBookmarkAdd<CR>
 nn  <silent> [exec]ub :<C-u>Unite bookmark<CR>
@@ -173,7 +151,7 @@ au FileType unite nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vspli
 " thinca/vim-quickrun
 let g:quickrun_config = {
 \   '_': {
-\     'outputter/buffer/split': ':topleft 8sp',
+\     'outputter/buffer/split': ':botright 8sp',
 \     'outputter/buffer/close_on_empty': 0,
 \     'runner': 'vimproc',
 \     'runner/vimproc/updatetime': 50,
@@ -256,7 +234,9 @@ else
   set t_Co=16
 endif
 set list listchars=tab:>_,trail:_
-colorscheme peachpuff
+"colorscheme peachpuff
+set background=light
+colorscheme solarized
 
 " hex
 set display=uhex
@@ -291,11 +271,6 @@ set showmode
 set shortmess=a
 set title
 
-" Highlight settings
-highlight LineNr        ctermbg=black ctermfg=green
-highlight StatusLine    ctermfg=black ctermbg=green
-highlight StatusLineNC  ctermfg=grey ctermbg=green
-
 
 """ KEYMAP SETTINGS """
 " bracket (http://vim-users.jp/2011/04/hack214/)
@@ -307,9 +282,6 @@ ono ( t(
 ono ) t)
 ono ] t]
 ono [ t[
-
-" clear search results
-nn  <C-l>     :nohl<CR><C-L>
 
 " tab jump
 for n in range(1, 9)
@@ -335,5 +307,5 @@ vn <silent> $  g$
 vn <silent> g$ $
 
 " misc
-nn  <silent> <C-]>    g<C-]>
+nn  <C-l>     :nohl<CR><C-L>
 

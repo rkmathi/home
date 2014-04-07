@@ -1,15 +1,21 @@
-# general
-.DS_Store
+# Mercurial
 .hg/
+
+# OSX
+.DS_Store
+
+# Windows
+Desktop.ini
+ehthumbs.db
+Thumbs.db
 
 # backup
 *~
 *.bak
 
-# c/c++/objc
+# c/c++
 *.o
 *.a
-*.out
 
 # python
 *.pyc

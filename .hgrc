@@ -1,11 +1,11 @@
 [alias]
-a   = add .
-b   = branch
-d   = diff
-l   = glog
-s   = status
+a   = add
+br  = branch
 cm  = commit -m
+di  = diff
+l   = glog
 lv  = glog --style compact
+s   = status
 
 [ui]
 editor  = vim
@@ -18,3 +18,4 @@ mq      =
 
 [color]
 mode    = ansi
+
