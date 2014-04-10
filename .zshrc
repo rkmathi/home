@@ -113,16 +113,15 @@ python_path=( \
     ./lib)
 
 typeset -xT SUDO_PATH sudo_path
-typeset -U sudo_path
-sudo_path=( \
-    {,/usr,/usr/local}/sbin)
 
 typeset -U path
 path=(\
     $HOME/opt/bin \
     /opt/bin \
     /usr/local/bin \
+    /usr/sbin \
     /usr/bin \
+    /sbin \
     /bin \
 )
 
