@@ -1,2 +1,2 @@
-export SBT_OPTS="-Xms2M -Xmx1024M -Xss1M -XX:PermSize=256MB -XX:MaxPermSize=256M -XX:+CMSClassUnloadingEnabled"
+export SBT_OPTS="-Xms2M -Xss2M -Xmx1024M -XX:+CMSClassUnloadingEnabled"
 
