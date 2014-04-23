@@ -1,39 +1,43 @@
 [alias]
-    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
-    a   = add --verbose
-    aa  = add --patch --verbose . #!!!with TermReadKey!!!
-    b   = branch
-    ba  = branch --all
-    br  = branch --remote
-    cm  = commit --message
-    co  = checkout
-    di  = diff --color
-    f   = fetch --prune
-    g   = grep -nH --break --heading
-    i   = remote show origin
-    l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
-    lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
-    plf = pull --ff-only
-    pln = pull --no-ff
-    ps  = push
-    psom= push origin
-    s   = status --branch --short
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
+  a   = add --verbose
+  aa  = add --patch --verbose . #!!!with TermReadKey!!!
+  b   = branch
+  ba  = branch --all
+  br  = branch --remote
+  cm  = commit --message
+  co  = checkout
+  di  = diff --color
+  f   = fetch --prune
+  g   = grep -nH --break --heading
+  i   = remote show origin
+  l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
+  lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
+  plf = pull --ff-only
+  pln = pull --no-ff
+  ps  = push
+  psom= push origin
+  s   = status --branch --short
 
 [color]
-    ui          = true
+  branch      = true
+  diff        = true
+  status      = true
+  ui          = true
 
 [core]
-    editor      = vim
-    pager       = less -R
-    excludesfile= ~/.gitignore-rkmathi
+  editor      = vim
+  excludesfile= ~/.gitignore-rkmathi
+  pager       = less -R
+  precomposeunicode = true
 
 [interactive]
-    singlekey   = true
+  singlekey   = true
 
 [push]
-    default     = current
+  default     = current
 
 [user]
-    name        = Ryuichi KAWAMATA (@rkmathi)
-    email       = iam@rkmathi.net
+  name        = Ryuichi KAWAMATA (@rkmathi)
+  email       = iam@rkmathi.net
 
