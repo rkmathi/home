@@ -107,12 +107,7 @@ export PAGER="less"
 export LESS='--RAW-CONTROL-CHARS'
 
 # PATH
-typeset -xT PYTHONPATH python_path
-typeset -U python_path
-python_path=( \
-    ./lib)
-
-typeset -xT SUDO_PATH sudo_path
+export GOPATH=$HOME/.go
 
 typeset -U path
 path=(\
