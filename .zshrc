@@ -111,8 +111,8 @@ export GOPATH=$HOME/.go
 
 typeset -U path
 path=(\
+    $GOPATH/bin \
     $HOME/opt/bin \
-    /opt/bin \
     /usr/local/bin \
     /usr/sbin \
     /usr/bin \
