@@ -1,13 +1,20 @@
 set nocompatible
 filetype off
 
+" gocode
+set rtp+=$GOROOT/misc/vim
+exe "set rtp+=" . globpath($GOPATH, "src/github.com/golang/lint/misc/vim")
+
 """ PLUGIN SETTINGS """
 if has('vim_starting')
   set runtimepath+=$HOME/.vim/neobundle.vim
 endif
 call neobundle#rc(expand('$HOME/.vim/bundle'))
 
-NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle     'altercation/vim-colors-solarized'
+NeoBundleLazy 'Blackrush/vim-gocode', {
+\   'autoload': { 'filetypes': ['go'] }
+\ }
 NeoBundleLazy 'derekwyatt/vim-sbt', {
 \   'autoload': { 'filetypes': ['sbt'] }
 \ }
@@ -103,6 +110,10 @@ let g:neocomplcache_dictionary_filetype_lists = {
 \ }
 let g:neocomplcache_min_syntax_length=3
 setlocal omnifunc=syntaxcomplete#Complete
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
+endif
+let g:neocomplcache_omni_patterns['go'] = '\h\w*\.\?'
 " Shougo/neosnippet
 let g:neosnippet#snippets_directory='
 \ $HOME/.vim/bundle/vim-snippets/snippets,
