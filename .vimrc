@@ -7,14 +7,16 @@ if has('vim_starting')
 endif
 call neobundle#rc(expand('$HOME/.vim/bundle'))
 
-"" Essentials ""
-NeoBundle     'altercation/vim-colors-solarized'
-NeoBundle     'LeafCage/yankround.vim'
-NeoBundle     'nathanaelkane/vim-indent-guides'
-NeoBundle     'osyo-manga/vim-over'
-NeoBundle     'scrooloose/syntastic'
-NeoBundle     'Shougo/neocomplcache'
-NeoBundle     'Shougo/vimproc', {
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'LeafCage/yankround.vim'
+NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'scrooloose/syntastic'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimproc', {
 \   'build' : {
 \     'windows' : 'make -f make_mingw32.mak',
 \     'cygwin' : 'make -f make_cygwin.mak',
@@ -22,9 +24,8 @@ NeoBundle     'Shougo/vimproc', {
 \     'unix' : 'make -f make_unix.mak',
 \   }
 \ }
-NeoBundle     'thinca/vim-quickrun'
-"" Others ""
-NeoBundle     'Shougo/vinarise'
+NeoBundle 'thinca/vim-quickrun'
+NeoBundle 'tpope/vim-surround'
 
 
 """ Plugin settings """
@@ -35,7 +36,6 @@ if neobundle#exists_not_installed_bundles()
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
 
-"" ESSENTIALS ""
 " LeafCage/yankround.vim
 let g:yankround_dir='$HOME/.vim/.yankround'
 let g:yankround_max_history=20
@@ -63,10 +63,20 @@ let g:neocomplcache_dictionary_filetype_lists = {
 \   'scala' : $HOME . '/.vim/dict/scala.dict',
 \ }
 let g:neocomplcache_min_syntax_length=3
+" Shougo/neosnippet
+let g:neosnippet#snippets_directory='
+\ $HOME/.vim/bundle/vim-snippets/snippets,
+\ $HOME/.vim/snippets
+\'
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+" Shougo/unite.vim
+let g:unite_enable_start_insert=1
 " thinca/vim-quickrun
 let g:quickrun_config = {}
 let g:quickrun_config = {
-\   '*': {
+\   '_': {
 \     'outputter/buffer/close_on_empty': 1,
 \     'outputter/buffer/split': ':botright 8sp',
 \     'runner': 'vimproc',
@@ -87,9 +97,16 @@ nm  <C-n> <Plug>(yankround-next)
 " osyo-manga/vim-over
 nn  [exec]s :OverCommandLine<CR>
 nn  [exec]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+" Shougo/neosnippet.vim
+im  <C-k> <Plug>(neosnippet_expand_or_jump)
+xm  <C-k> <Plug>(neosnippet_expand_target)
+im  <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\ : pumvisible() ? "\<C-n>" : "\<TAB>"
 " thinca/vim-quickrun
 autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
-nn  [exec]q <Nop>
+nn  <leader>r  <Nop>
+nn  [exec]qr <Nop>
 nm  <silent> [exec]qr :QuickRun<CR>
 
 " bracket (http://vim-users.jp/2011/04/hack214/)
@@ -107,7 +124,7 @@ ono < t<
 ono > t>
 
 " clear
-nn  <C-l>    :nohl<CR><C-L>
+nn  <silent> <C-l> :noh<CR><C-l>
 
 " tab
 map <silent> <C-t>c :tablast <bar> tabnew<CR>
@@ -188,12 +205,12 @@ augroup vimrc
 augroup END
 command!
 \ -bang -nargs=*
-\ MyAutocmd
+\ MyAutoCmd
 \ autocmd<bang> vimrc <args>
-MyAutocmd InsertLeave * setlocal  nocursorline
-MyAutocmd InsertEnter * setlocal  cursorline
-MyAutocmd InsertLeave * highlight StatusLine ctermfg=black guibg=black
-MyAutocmd InsertEnter * highlight StatusLine ctermfg=grey  guibg=black
+MyAutoCmd InsertLeave * setlocal  nocursorline
+MyAutoCmd InsertEnter * setlocal  cursorline
+MyAutoCmd InsertLeave * highlight StatusLine ctermfg=black guibg=black
+MyAutoCmd InsertEnter * highlight StatusLine ctermfg=grey  guibg=black
 
 " backspace
 set backspace=indent,eol,start
@@ -207,7 +224,6 @@ if stridx($TERM, "xterm-256color") >= 0
 else
   set t_Co=16
 endif
-set list listchars=tab:>_,trail:_
 "colorscheme peachpuff
 set background=light
 colorscheme solarized
@@ -227,9 +243,12 @@ set ambw=double
 set autoread
 set cmdheight=1
 set colorcolumn=80
+set completeopt-=preview
 set laststatus=2
+set list listchars=tab:»_,trail:_
 set matchtime=1
 set mouse=
+set novisualbell
 set number
 set ruler
 set scrolloff=3
@@ -237,10 +256,11 @@ set showcmd
 set showmatch
 set showmode
 set shortmess=a
+set t_vb=
 set title
 
 
 """ Other setting files """
-set runtimepath+=$HOME/.vim/vimrc.d/
-runtime! userautoload/*.vim
+set runtimepath+=$HOME/.vim/
+runtime! vimrc.d/*.vim
 
