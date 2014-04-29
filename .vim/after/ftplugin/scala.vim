@@ -1,1 +1,1 @@
-nnoremap <leader>r :QuickRun -cmdopt "<CR>
+nn <leader>qr :QuickRun -cmdopt "<CR>
