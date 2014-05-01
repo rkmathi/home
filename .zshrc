@@ -107,21 +107,6 @@ export PAGER="less"
 export LESS='--RAW-CONTROL-CHARS'
 
 # PATH
-program_exists () {
-  type "$1" &> /dev/null ;
-}
-if program_exists go; then
-  function setupGOROOT() {
-    local GOPATH=`which go`
-    local GODIR=`dirname $GOPATH`
-    local GOPATH_BREW_RELATIVE=`readlink $GOPATH`
-    local GOPATH_BREW=`dirname $GOPATH_BREW_RELATIVE`
-    export GOROOT=`cd $GODIR; cd $GOPATH_BREW/..; pwd`
-  }
-  setupGOROOT
-fi
-export GOPATH=$HOME/.go
-
 typeset -U path
 path=(\
     $HOME/opt/bin \
@@ -131,8 +116,6 @@ path=(\
     /sbin \
     /bin \
 )
-
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 ### Environment ###
 source ~/.zshrc.env
