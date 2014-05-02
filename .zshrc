@@ -120,7 +120,7 @@ path=(\
 # golang
 export GOROOT=$HOME/.go
 export GOPATH=$HOME/.gopath
-export PATH=$GOPATH/bin:$GOPATH/bin:$PATH
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
 ### Environment ###
 source ~/.zshrc.env
