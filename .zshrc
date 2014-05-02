@@ -117,6 +117,11 @@ path=(\
     /bin \
 )
 
+# golang
+export GOROOT=$HOME/.go
+export GOPATH=$HOME/.golang
+export PATH=$GOPATH/bin:$GOPATH/bin:$PATH
+
 ### Environment ###
 source ~/.zshrc.env
 
