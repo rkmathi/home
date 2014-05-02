@@ -119,7 +119,7 @@ path=(\
 
 # golang
 export GOROOT=$HOME/.go
-export GOPATH=$HOME/.golang
+export GOPATH=$HOME/.gopath
 export PATH=$GOPATH/bin:$GOPATH/bin:$PATH
 
 ### Environment ###
