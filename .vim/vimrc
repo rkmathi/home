@@ -13,7 +13,7 @@ NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc', {
@@ -52,17 +52,27 @@ let g:syntastic_mode_map={
 \   'active_filetypes': ['c', 'cpp', 'go', 'perl', 'python', 'ruby', 'scala'],
 \   'passive_filetypes': ['html', 'xml']
 \ }
-" Shougo/neocomplcache
+" Shougo/neocomplete.vim
 let g:acp_enableAtStartup=0
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_enable_smart_case=1
-let g:neocomplcache_enable_camel_case_completion=1
-let g:neocomplcache_enable_underbar_completion=1
-let g:neocomplcache_dictionary_filetype_lists = {
-\   'default' : '',
-\   'scala' : $HOME . '/.vim/dict/scala.dict',
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns={}
+endif
+let g:neocomplete#keyword_patterns._='\h\w*'
+let g:neocomplete#enable_fuzzy_completion=0
+let g:neocomplete#enable_ignore_case=0
+let g:neocomplete#enable_smart_case=1
+let g:neocomplete#sources#buffer#disabled_pattern='\.log\|\.log\.\|\.jax'
+if !exists('g:neocomplete#sources#dictionary#dictionaries')
+  let g:neocomplete#sources#dictionary#dictionaries = {}
+endif
+let g:neocomplete#sources#dictionary#dictionaries = {
+\ 'default': '',
+\ 'perl':   $HOME.'/.vim/dict/perl.dict',
+\ 'ruby':   $HOME.'/.vim/dict/ruby.dict',
+\ 'scala':  $HOME.'/.vim/dict/scala.dict',
 \ }
-let g:neocomplcache_min_syntax_length=3
+call neocomplete#custom_source('_', 'sorters',  ['sorter_length'])
+call neocomplete#custom_source('_', 'matchers', ['matcher_head'])
 " Shougo/neosnippet
 let g:neosnippet#snippets_directory='
 \ $HOME/.vim/bundle/vim-snippets/snippets,
