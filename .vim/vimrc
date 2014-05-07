@@ -15,6 +15,7 @@ NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimproc', {
 \   'build' : {
@@ -254,6 +255,10 @@ set autoread
 set cmdheight=1
 set colorcolumn=80
 set completeopt-=preview
+set foldenable
+set foldlevel=99
+set foldmethod=syntax
+set foldnestmax=2
 set laststatus=2
 set list listchars=tab:»_,trail:_
 set matchtime=1
