@@ -135,6 +135,8 @@ fi
 if which pyenv > /dev/null; then
   export PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
   eval "$(pyenv init -)"
+  export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
+  pyenv virtualenvwrapper
 fi
 
 # rbenv
