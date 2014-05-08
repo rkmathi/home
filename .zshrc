@@ -117,14 +117,14 @@ path=(\
 )
 
 # golang
-if which go > /dev/null; then
+if [ -e $HOME/.gopath ]; then
   export GOROOT=$HOME/.go
   export GOPATH=$HOME/.gopath
   export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
 
 # plenv
-if which plenv > /dev/null; then
+if [ -e $HOME/.plenv ]; then
   export PERL_CPANM_OPT="--local-lib=~/perl5"
   export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
   export PATH="$HOME/.plenv/bin:$HOME/.plenv/shims:$PATH"
@@ -132,7 +132,7 @@ if which plenv > /dev/null; then
 fi
 
 # pyenv
-if which pyenv > /dev/null; then
+if [ -e $HOME/.pyenv ]; then
   export PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
   eval "$(pyenv init -)"
   export PYENV_VIRTUALENVWRAPPER_PREFER_PYENV="true"
@@ -140,7 +140,7 @@ if which pyenv > /dev/null; then
 fi
 
 # rbenv
-if which rbenv > /dev/null; then
+if [ -e $HOME/.rbenv ]; then
   export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
   eval "$(rbenv init -)"
 fi
