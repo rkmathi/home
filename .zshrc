@@ -104,12 +104,11 @@ export EDITOR="vim"
 
 # PAGER
 export PAGER="less"
-export LESS='--RAW-CONTROL-CHARS'
+export LESS="--RAW-CONTROL-CHARS"
 
 # PATH
 typeset -U path
 path=(\
-    $HOME/opt/bin \
     /usr/local/bin \
     /usr/sbin \
     /usr/bin \
@@ -118,9 +117,31 @@ path=(\
 )
 
 # golang
-export GOROOT=$HOME/.go
-export GOPATH=$HOME/.gopath
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+if which go > /dev/null; then
+  export GOROOT=$HOME/.go
+  export GOPATH=$HOME/.gopath
+  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
+
+# plenv
+if which plenv > /dev/null; then
+  export PERL_CPANM_OPT="--local-lib=~/perl5"
+  export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
+  export PATH="$HOME/.plenv/bin:$HOME/.plenv/shims:$PATH"
+  eval "$(plenv init -)"
+fi
+
+# pyenv
+if which pyenv > /dev/null; then
+  export PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
+  eval "$(pyenv init -)"
+fi
+
+# rbenv
+if which rbenv > /dev/null; then
+  export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
+  eval "$(rbenv init -)"
+fi
 
 ### Environment ###
 source ~/.zshrc.env
