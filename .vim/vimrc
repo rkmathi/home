@@ -51,7 +51,7 @@ let g:syntastic_auto_loc_list=0
 let g:syntastic_mode_map={
 \   'mode': 'passive',
 \   'active_filetypes': [
-\     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'scala', 'vim',
+\     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'vim',
 \   ],
 \   'passive_filetypes': ['html', 'xml'],
 \ }
