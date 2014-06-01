@@ -1,0 +1,5 @@
+set diff-context      = 5
+set main-view         = id:width=6 date author commit-title:graph=yes,refs=yes
+set vertical-split    = no
+set split-view-height = 80%
+

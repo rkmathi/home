@@ -14,6 +14,7 @@ LN_GROUP=(
 ".gitignore-rkmathi"
 ".hgrc"
 ".sbtconfig"
+".tigrc"
 ".vim"
 ".vimrc"
 ".zsh-syntax-highlighting"

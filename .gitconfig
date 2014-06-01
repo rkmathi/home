@@ -1,6 +1,7 @@
 [alias]
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
   a   = add --verbose
+  adot= add --verbose .
   b   = branch
   ba  = branch --all
   br  = branch --remote
@@ -35,6 +36,11 @@
 
 [push]
   default     = current
+
+[tig "bind"]
+  generic = g move-first-line
+  generic = <Ctrl-F> move-page-down
+  generic = <Ctrl-B> move-page-up
 
 [user]
   name        = Ryuichi KAWAMATA (@rkmathi)
