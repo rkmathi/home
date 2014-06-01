@@ -37,11 +37,6 @@
 [push]
   default     = current
 
-[tig "bind"]
-  generic = g move-first-line
-  generic = <Ctrl-F> move-page-down
-  generic = <Ctrl-B> move-page-up
-
 [user]
   name        = Ryuichi KAWAMATA (@rkmathi)
   email       = iam@rkmathi.net
