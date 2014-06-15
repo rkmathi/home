@@ -10,6 +10,12 @@ NeoBundleLazy 'davidhalter/jedi-vim', {
 \   },
 \ }
 
+NeoBundleLazy 'lambdalisue/vim-pyenv', {
+\   'autoload': {
+\     'filetypes': ['python', 'python3', 'djangohtml']
+\   },
+\   'depends': ['davidhalter/jedi-vim'],
+\ }
 
 autocmd FileType python setlocal omnifunc=jedi#completions
 let g:jedi#auto_vim_configuration=0
