@@ -136,14 +136,10 @@ vn  ( t(
 vn  ) t)
 vn  ] t]
 vn  [ t[
-vn  < t<
-vn  > t>
 ono ( t(
 ono ) t)
 ono ] t]
 ono [ t[
-ono < t<
-ono > t>
 
 " clear
 nn  <silent> <C-l> :noh<CR><C-l>
