@@ -51,9 +51,11 @@ let g:syntastic_auto_loc_list=0
 let g:syntastic_mode_map={
 \   'mode': 'passive',
 \   'active_filetypes': [
-\     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'vim',
+\     'c', 'cpp', 'go', 'vim',
 \   ],
-\   'passive_filetypes': ['html', 'xml'],
+\   'passive_filetypes': [
+\      'html', 'javascript', 'perl', 'python', 'ruby', 'xml',
+\   ],
 \ }
 let g:syntastic_ruby_checkers=['rubocop']
 " Shougo/neocomplete.vim

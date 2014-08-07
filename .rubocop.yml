@@ -1,0 +1,10 @@
+### .rubocop.yml
+
+# Limit lines 80 chars
+LineLength:
+  Enabled: false
+
+# Use only ascii symbols in comments.
+AsciiComments:
+  Enabled: false
+
