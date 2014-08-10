@@ -26,6 +26,7 @@ NeoBundle 'Shougo/vimproc', {
 \   },
 \ }
 NeoBundle 'thinca/vim-quickrun'
+NeoBundle "tsukkee/unite-tag.git"
 NeoBundle 'tpope/vim-surround'
 
 
@@ -94,10 +95,8 @@ endif
 " Shougo/unite.vim
 let g:unite_enable_start_insert=0
 let g:unite_enable_split_vertically=1
-au FileType unite nn  <silent><buffer><expr><C-l> unite#do_action('split')
-au FileType unite ino <silent><buffer><expr><C-l> unite#do_action('split')
-au FileType unite nn  <silent><buffer><expr><C-j> unite#do_action('vsplit')
-au FileType unite ino <silent><buffer><expr><C-j> unite#do_action('vsplit')
+au FileType unite nn <silent><buffer><expr><C-a><C-s> unite#do_action('split')
+au FileType unite nn <silent><buffer><expr><C-a><C-v> unite#do_action('vsplit')
 " thinca/vim-quickrun
 let g:quickrun_config = {}
 let g:quickrun_config = {
