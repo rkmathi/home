@@ -7,25 +7,36 @@
   br  = branch --remote
   cm  = commit --message
   co  = checkout
-  di  = diff --color
+  di  = diff
+  di1 = diff HEAD~1
+  di2 = diff HEAD~2
+  di3 = diff HEAD~3
   f   = fetch --prune
   g   = grep -nH --break --heading
-  i   = remote show origin
   l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
   lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
   plf = pull --ff-only
   pln = pull --no-ff
+  plr = pull --rebase
   ps  = push
   pso = push origin
+  psom= push origin master
+  rsh = remote show
+  rsho= remote show origin
   s   = status --branch --short
+  sh  = show
+  wc  = whatchanged
 
 [color]
-  branch      = true
-  diff        = true
-  status      = true
-  ui          = true
+  branch      = auto
+  diff        = auto
+  grep        = auto
+  interactive = auto
+  status      = auto
+  ui          = auto
 
 [core]
+  autocrlf    = input
   editor      = vim
   excludesfile= ~/.gitignore-rkmathi
   pager       = less -R
