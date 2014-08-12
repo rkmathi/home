@@ -14,6 +14,7 @@ NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/unite.vim'
@@ -94,9 +95,9 @@ if has('conceal')
 endif
 " Shougo/unite.vim
 let g:unite_enable_start_insert=0
-let g:unite_enable_split_vertically=1
-au FileType unite nn <silent><buffer><expr><C-a><C-s> unite#do_action('split')
-au FileType unite nn <silent><buffer><expr><C-a><C-v> unite#do_action('vsplit')
+let g:unite_enable_split_vertically=0
+au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
+au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
 " thinca/vim-quickrun
 let g:quickrun_config = {}
 let g:quickrun_config = {
@@ -127,6 +128,11 @@ xm  <C-k> <Plug>(neosnippet_expand_target)
 im  <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \   "\<Plug>(neosnippet_expand_or_jump)"
 \   : pumvisible() ? "\<C-n>" : "\<TAB>"
+" Shougo/unite.vim
+nn <silent> ,ub :<C-u>Unite -winheight=10 bookmark<CR>
+nn <silent> ,uf :<C-u>Unite -winheight=10 file<CR>
+nn <silent> ,um :<C-u>Unite -winheight=10 buffer file_mru<CR>
+nn <silent> ,ur :<C-u>Unite -winheight=20 -buffer-name=register register<CR>
 " thinca/vim-quickrun
 autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
 nn  <leader>r  <Nop>
