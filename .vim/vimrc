@@ -12,6 +12,7 @@ NeoBundle 'honza/vim-snippets'
 NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'osyo-manga/vim-over'
+NeoBundle 'othree/eregex.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
@@ -122,6 +123,12 @@ nm  <C-n> <Plug>(yankround-next)
 " osyo-manga/vim-over
 nn  [exec]s :OverCommandLine<CR>
 nn  [exec]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+" othree/eregex.vim
+let g:eregex_default_enable=1
+nn / :M/
+nn ? :M?
+nn ,/ /
+nn ,? /
 " Shougo/neosnippet.vim
 im  <C-k> <Plug>(neosnippet_expand_or_jump)
 xm  <C-k> <Plug>(neosnippet_expand_target)
