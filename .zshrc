@@ -117,7 +117,7 @@ path=(\
 )
 
 # golang
-if [ -e $HOME/go ]; then
+if [ -e $HOME/gopath ]; then
   export GOPATH=$HOME/gopath
   export GOROOT=/usr/local/opt/go/libexec
   export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
