@@ -88,9 +88,7 @@ call neocomplete#custom_source('_', 'sorters',  ['sorter_length'])
 call neocomplete#custom_source('_', 'matchers', ['matcher_head'])
 " Shougo/neosnippet
 let g:neosnippet#snippets_directory='
-\   $HOME/.vim/bundle/vim-snippets/snippets,
-\   $HOME/.vim/snippets
-\ '
+\   $HOME/.vim/bundle/vim-snippets/snippets,$HOME/.vim/snippets'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
@@ -113,72 +111,67 @@ let g:quickrun_config = {
 
 """ KEYMAP SETTINGS """
 " prefix
-nn  [exec]    <Nop>
-nm  <leader>  [exec]
-xm  <leader>  [exec]
+noremap [exec]    <Nop>
+map     <leader>  [exec]
 
 " LeafCage/yankround.vim
-nm  <C-p> <Plug>(yankround-prev)
-nm  <C-n> <Plug>(yankround-next)
+nmap  <C-p> <Plug>(yankround-prev)
+nmap  <C-n> <Plug>(yankround-next)
 " osyo-manga/vim-over
-nn  [exec]s :OverCommandLine<CR>
-nn  [exec]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+nnoremap  [exec]s :OverCommandLine<CR>
+nnoremap  [exec]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
 " othree/eregex.vim
 let g:eregex_default_enable=1
-nn / :M/
-nn ? :M?
-nn ,/ /
-nn ,? /
+nnoremap / :M/
+nnoremap ? :M?
+nnoremap ,/ /
+nnoremap ,? /
 " Shougo/neosnippet.vim
-im  <C-k> <Plug>(neosnippet_expand_or_jump)
-xm  <C-k> <Plug>(neosnippet_expand_target)
-im  <expr><TAB> neosnippet#expandable_or_jumpable() ?
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \   "\<Plug>(neosnippet_expand_or_jump)"
 \   : pumvisible() ? "\<C-n>" : "\<TAB>"
 " Shougo/unite.vim
-nn <silent> ,ub :<C-u>Unite -winheight=10 bookmark<CR>
-nn <silent> ,uf :<C-u>Unite -winheight=10 file<CR>
-nn <silent> ,um :<C-u>Unite -winheight=10 buffer file_mru<CR>
-nn <silent> ,ur :<C-u>Unite -winheight=20 -buffer-name=register register<CR>
+nnoremap <silent> ,ub :<C-u>Unite -winheight=10 bookmark<CR>
+nnoremap <silent> ,uf :<C-u>Unite -winheight=10 file<CR>
+nnoremap <silent> ,um :<C-u>Unite -winheight=10 buffer file_mru<CR>
+nnoremap <silent> ,ur :<C-u>Unite -winheight=20 -buffer-name=register register<CR>
 " thinca/vim-quickrun
 autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
-nn  <leader>r  <Nop>
-nn  [exec]qr <Nop>
-nm  <silent> [exec]qr :QuickRun<CR>
+nnoremap  <leader>r  <Nop>
+nnoremap  [exec]qr <Nop>
+nnoremap  <silent> [exec]qr :QuickRun<CR>
 
-" bracket (http://vim-users.jp/2011/04/hack214/)
-vn  ( t(
-vn  ) t)
-vn  ] t]
-vn  [ t[
-ono ( t(
-ono ) t)
-ono ] t]
-ono [ t[
+" bracket
+nnoremap  ( t(
+nnoremap  ) t)
+nnoremap  ] t]
+nnoremap  [ t[
 
 " clear
-nn  <silent> <C-l> :noh<CR><C-l>
+nnoremap  <silent> <C-l> :noh<CR><C-l>
 
 " tab
-map <silent> <C-t>c   :tablast <bar> tabnew<CR>
-map <silent> <C-t>x   :tabclose<CR>
-map <silent> <C-t>n   :tabnext<CR>
-map <silent> <S-Tab>  :tabnext<CR>
-map <silent> <C-t>p   :tabprevious<CR>
+nnoremap <silent> <S-t>c   :tablast <bar> tabnew<CR>
+nnoremap <silent> <S-t>x   :tabclose<CR>
+nnoremap <silent> <S-t>n   :tabnext<CR>
+nnoremap <silent> <S-Tab>  :tabnext<CR>
+nnoremap <silent> <S-t>p   :tabprevious<CR>
 
 " move
-nn  <silent> j  gj
-nn  <silent> gj j
-nn  <silent> k  gk
-nn  <silent> gk k
-nn  <silent> $  g$
-nn  <silent> g$ $
-vn  <silent> j  gj
-vn  <silent> gj j
-vn  <silent> k  gk
-vn  <silent> gk k
-vn  <silent> $  g$
-vn  <silent> g$ $
+nnoremap  <silent> j  gj
+nnoremap  <silent> gj j
+nnoremap  <silent> k  gk
+nnoremap  <silent> gk k
+nnoremap  <silent> $  g$
+nnoremap  <silent> g$ $
+nnoremap  <silent> j  gj
+nnoremap  <silent> gj j
+nnoremap  <silent> k  gk
+nnoremap  <silent> gk k
+nnoremap  <silent> $  g$
+nnoremap  <silent> g$ $
 
 
 """ Encoding settings """
@@ -295,6 +288,7 @@ set showmatch
 set showmode
 set shortmess=a
 set t_vb=
+set tags=tags;
 set title
 
 
