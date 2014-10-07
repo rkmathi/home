@@ -7,10 +7,10 @@
   br  = branch --remote
   cm  = commit --message
   co  = checkout
-  di  = diff
-  di1 = diff HEAD~1
-  di2 = diff HEAD~2
-  di3 = diff HEAD~3
+  d   = diff
+  d1  = diff HEAD~1
+  d2  = diff HEAD~2
+  d3  = diff HEAD~3
   f   = fetch --prune
   g   = grep -nH --break --heading
   l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'

@@ -98,6 +98,9 @@ add-zsh-hook precmd _update_vcs_info_msg
 alias e="exit"
 alias be="bundle exec"
 alias v="vim"
+function p() {
+  $* | peco
+}
 function tex2pdf() {
   platex $1
   dvipdfmx $1
