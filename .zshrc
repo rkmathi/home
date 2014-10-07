@@ -98,6 +98,12 @@ add-zsh-hook precmd _update_vcs_info_msg
 alias e="exit"
 alias be="bundle exec"
 alias v="vim"
+function tex2pdf() {
+  platex $1
+  dvipdfmx $1
+  open $1.pdf
+}
+
 
 # EDITOR
 export EDITOR="vim"
@@ -127,7 +133,7 @@ fi
 if [ -e $HOME/.plenv ]; then
   export PERL_CPANM_OPT="--local-lib=~/perl5"
   export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
-  export PATH="$HOME/.plenv/bin:$HOME/.plenv/shims:$PATH"
+  export PATH="$HOME/.plenv/bin:$HOME/.plenv/shims:$PATH:$HOME/perl5/bin"
   eval "$(plenv init -)"
 fi
 
@@ -141,6 +147,11 @@ fi
 if [ -e $HOME/.rbenv ]; then
   export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
   eval "$(rbenv init -)"
+fi
+
+# tex
+if [ -e /usr/texbin ]; then
+  export PATH="/usr/texbin:$PATH"
 fi
 
 ### Environment ###
