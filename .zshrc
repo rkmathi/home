@@ -98,8 +98,21 @@ add-zsh-hook precmd _update_vcs_info_msg
 alias e="exit"
 alias be="bundle exec"
 alias v="vim"
+alias b2d="boot2docker"
+
 function p() {
   $* | peco
+}
+function peco_select_history() {
+    typeset tac
+    if which tac > /dev/null; then
+        tac=tac
+    else
+        tac='tail -r'
+    fi
+    BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle redisplay
 }
 function tex2pdf() {
   platex $1
@@ -118,18 +131,22 @@ export LESS="--RAW-CONTROL-CHARS"
 # PATH
 typeset -U path
 path=(\
-    /usr/local/bin \
-    /usr/sbin \
-    /usr/bin \
-    /sbin \
-    /bin \
-)
+  /usr/local/bin \
+  /usr/sbin \
+  /usr/bin \
+  /sbin \
+  /bin \
+  )
 
 # golang
 if [ -e $HOME/gopath ]; then
   export GOPATH=$HOME/gopath
   export GOROOT=/usr/local/opt/go/libexec
   export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
+if [ -e $GOPATH/bin/peco ]; then
+  zle -N peco_select_history
+  bindkey '^r' peco_select_history
 fi
 
 # plenv
