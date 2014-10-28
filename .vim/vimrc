@@ -282,7 +282,7 @@ set mouse=
 set novisualbell
 set number
 set ruler
-set scrolloff=3
+set scrolloff=2
 set showcmd
 set showmatch
 set showmode
