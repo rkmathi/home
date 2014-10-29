@@ -114,10 +114,18 @@ function peco_select_history() {
     CURSOR=$#BUFFER
     zle redisplay
 }
+function tex2bpdf() {
+  platex $1 && \
+  bibtex $1 && \
+  platex $1 && \
+  platex $1 && \
+  dvipdfmx $1 && \
+  open $1.pdf &
+}
 function tex2pdf() {
-  platex $1
-  dvipdfmx $1
-  open $1.pdf
+  platex $1 && \
+  dvipdfmx $1 && \
+  open $1.pdf &
 }
 
 
