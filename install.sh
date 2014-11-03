@@ -16,7 +16,6 @@ LN_GROUP=(
 ".sbtconfig"
 ".tigrc"
 ".vim"
-".vimrc"
 ".zsh-syntax-highlighting"
 )
 

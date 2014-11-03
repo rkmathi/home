@@ -28,7 +28,7 @@ NeoBundle 'Shougo/vimproc', {
 \   },
 \ }
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle "tsukkee/unite-tag.git"
+NeoBundle 'tsukkee/unite-tag.git'
 NeoBundle 'tpope/vim-surround'
 
 

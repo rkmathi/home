@@ -1,11 +1,9 @@
 """ scala.vim """
 
 NeoBundleLazy 'derekwyatt/vim-sbt', {
-\   'autoload': { 'filetypes': ['sbt'] }
+\   'autoload': { 'filetypes': ['sbt', 'scala'] }
 \ }
-
-
 NeoBundleLazy 'derekwyatt/vim-scala', {
-\   'autoload': { 'filetypes': ['scala'] }
+\   'autoload': { 'filetypes': ['sbt', 'scala'] }
 \ }
 
