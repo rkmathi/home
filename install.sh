@@ -5,14 +5,15 @@ PATTERN_LIG="^(lg|linux-gui)$"    # linux-gui
 PATTERN_LIS="^l(c|inux-cui)$"     # linux-cui
 PATTERN_OSX="^o(|sx)$"            # osx
 PATTERN_WIN="^w(|indows)$"        # windows
-CP_GROUP=(
+COPY_GROUP=(
 ".zshrc"
 )
-LN_GROUP=(
+LINK_GROUP=(
 ".ctags"
 ".gitconfig"
 ".gitignore-rkmathi"
 ".hgrc"
+".rubocop.yml"
 ".sbtconfig"
 ".tigrc"
 ".vim"
@@ -36,26 +37,26 @@ _EOT_
   exit -1
 }
 
-function cp_file() {
+function copy_file() {
   \cp -afv `pwd`/$1 $HOME/$1
 }
 
-function ln_file() {
-  ln -fsv `pwd`/$1 $HOME/$1
+function link_file() {
+  \ln -fsv `pwd`/$1 $HOME/$1
 }
 
-function ln_env_file() {
+function link_env_file() {
   pattern="\/\.+$"
   if [[ ! $1 =~ $pattern ]]; then
-    filename=`echo $1 | awk -F'/' '{print $NF}'`
+    filename=`echo $1 | \awk -F'/' '{print $NF}'`
     ln -fsv `pwd`/$1 $HOME/$filename
   fi
 }
 
 function must_install() {
   echo "MUST INSTALL"
-  for file in ${CP_GROUP[@]}; do cp_file $file; done
-  for file in ${LN_GROUP[@]}; do ln_file $file; done
+  for file in ${COPY_GROUP[@]}; do copy_file $file; done
+  for file in ${LINK_GROUP[@]}; do link_file $file; done
 }
 
 function env_install() {
@@ -63,19 +64,19 @@ function env_install() {
   case "$1" in
     "lic" )
       echo "Linux CUI"
-      for file in ${env_path}.*; do ln_env_file $file; done
+      for file in ${env_path}.*; do link_env_file $file; done
       ;;
     "lig" )
       echo "Linux GUI"
-      for file in ${env_path}.*; do ln_env_file $file; done
+      for file in ${env_path}.*; do link_env_file $file; done
       ;;
     "osx" )
       echo "OSX"
-      for file in ${env_path}.*; do ln_env_file $file; done
+      for file in ${env_path}.*; do link_env_file $file; done
       ;;
     "win" )
       echo "Windows"
-      for file in ${env_path}.*; do ln_env_file $file; done
+      for file in ${env_path}.*; do link_env_file $file; done
       ;;
     * )
       echo "Invalid env_type"
@@ -84,7 +85,7 @@ function env_install() {
   esac
 }
 
-function add_install() {
+function additional_install() {
   if [ $# -gt 0 ]; then
     echo "ADDITIONAL INSTALL"
     for file in $@; do ln_file $file ; done
@@ -107,5 +108,5 @@ if [ -z $env_type ]; then echo "No option error"; goto_error; fi
 
 must_install
 env_install $env_type
-add_install $@
+additional_install $@
 
