@@ -1,8 +1,8 @@
-zcompile ~/.zshrc
+zcompile ~/.zshenv
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
-source ~/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zshenv.d/zsh-syntax-highlighting.zsh
 
 ### Autoload
 autoload -Uz add-zsh-hook
@@ -183,5 +183,5 @@ if [ -e /usr/texbin ]; then
 fi
 
 ### Environment ###
-source ~/.zshrc.env
+source ~/.zshrc
 
