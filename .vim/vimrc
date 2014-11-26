@@ -55,10 +55,10 @@ let g:syntastic_auto_loc_list=0
 let g:syntastic_mode_map={
 \   'mode': 'passive',
 \   'active_filetypes': [
-\     'c', 'cpp', 'go', 'vim',
+\     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'vim',
 \   ],
 \   'passive_filetypes': [
-\      'html', 'javascript', 'perl', 'python', 'ruby', 'xml',
+\      'java', 'html', 'xml',
 \   ],
 \ }
 let g:syntastic_ruby_checkers=['rubocop']
@@ -89,21 +89,19 @@ call neocomplete#custom_source('_', 'sorters',  ['sorter_length'])
 call neocomplete#custom_source('_', 'matchers', ['matcher_head'])
 " Shougo/neosnippet
 let g:neosnippet#snippets_directory='
-\   $HOME/.vim/bundle/vim-snippets/snippets,$HOME/.vim/snippets'
+\ $HOME/.vim/bundle/vim-snippets/snippets,$HOME/.vim/snippets'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 " Shougo/unite.vim
 let g:unite_enable_start_insert=1
 let g:unite_enable_split_vertically=0
-au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
-au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
 " thinca/vim-quickrun
 let g:quickrun_config = {}
 let g:quickrun_config = {
 \   '_': {
 \     'outputter/buffer/close_on_empty': 1,
-\     'outputter/buffer/split': ':botright 10sp',
+\     'outputter/buffer/split': ':botright 12sp',
 \     'runner': 'vimproc',
 \     'runner/vimproc/updatetime': 50,
 \   },
@@ -159,8 +157,11 @@ endif
 
 """ KEYMAP SETTINGS """
 " prefix
-noremap [exec]    <Nop>
-map     <leader>  [exec]
+noremap   [exec]   <Nop>
+map       <leader> [exec]
+nnoremap  [exec]r  <Nop>
+nnoremap  [exec]qr <Nop>
+nnoremap  <silent> <C-l> :noh<CR><C-l>
 
 " LeafCage/yankround.vim
 nmap  <C-p> <Plug>(yankround-prev)
@@ -181,26 +182,21 @@ imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \   "\<Plug>(neosnippet_expand_or_jump)"
 \   : pumvisible() ? "\<C-n>" : "\<TAB>"
 " Shougo/unite.vim
+au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
+au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
 nnoremap <silent> ,ub :<C-u>Unite -winheight=12 bookmark<CR>
 nnoremap <silent> ,uf :<C-u>Unite -winheight=12 file<CR>
 nnoremap <silent> ,um :<C-u>Unite -winheight=12 buffer file_mru<CR>
 nnoremap <silent> ,ur :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
 " thinca/vim-quickrun
 autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
-nnoremap  <leader>r  <Nop>
-nnoremap  [exec]qr <Nop>
 nnoremap  <silent> [exec]qr :QuickRun<CR>
 
-" bracket
+" bracket & move
 nnoremap  ( t(
 nnoremap  ) t)
 nnoremap  ] t]
 nnoremap  [ t[
-
-" clear
-nnoremap  <silent> <C-l> :noh<CR><C-l>
-
-" move
 nnoremap  <silent> j  gj
 nnoremap  <silent> gj j
 nnoremap  <silent> k  gk
@@ -214,14 +210,14 @@ nnoremap  <silent> gk k
 nnoremap  <silent> $  g$
 nnoremap  <silent> g$ $
 
-" tab
+" tab (T-*)
 nnoremap <silent> <S-t>c  :tablast <bar> tabnew<CR>
 nnoremap <silent> <S-t>x  :tabclose<CR>
 nnoremap <silent> <S-t>n  :tabnext<CR>
 nnoremap <silent> <S-Tab> :tabnext<CR>
 nnoremap <silent> <S-t>p  :tabprevious<CR>
 
-" tag
+" tag (t-*)
 nnoremap <silent> t]      g]
 nnoremap <silent> t<C-]>  <C-w>g]
 nnoremap <silent> t}      <C-w>g}
@@ -299,32 +295,18 @@ set title
 
 " statusline
 set laststatus=2
-set statusline=%<
-set statusline+=[%n]
-set statusline+=%m
-set statusline+=%r
-set statusline+=%h
-set statusline+=%w
-set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}
-set statusline+=%y
-set statusline+=\ 
-if winwidth(0) >= 120
-  set statusline+=%F
-else
-  set statusline+=%t
-endif
-set statusline+=%=
-set statusline+=%{fugitive#statusline()}
-set statusline+=\ \ 
-set statusline+=%1l
-set statusline+=/
-set statusline+=%L
-set statusline+=,
-set statusline+=%c
-set statusline+=%V
-set statusline+=\ \ 
-set statusline+=%P
-
+set statusline=%<     " too long
+set statusline+=(%n)  " buffer number
+set statusline+=%m    " edited flag
+set statusline+=%r    " read only flag
+set statusline+=%h    " help buffer flag
+set statusline+=%w    " preview window flag
+set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'} " fenc & ff
+set statusline+=%y    " filetype
+set statusline+=\ %f  " file path
+set statusline+=%=    " separator
+set statusline+=%1l,%c/%L%4p%%              " line
+set statusline+=\ %{fugitive#statusline()}  " git
 
 
 """ Remember last opened place """
