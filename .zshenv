@@ -182,6 +182,6 @@ if [ -e /usr/texbin ]; then
   export PATH="/usr/texbin:$PATH"
 fi
 
-### Environment ###
-source ~/.zshrc
+### Environment settings ###
+source ~/.zshrc.env
 
