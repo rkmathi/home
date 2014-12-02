@@ -157,40 +157,10 @@ endif
 
 """ KEYMAP SETTINGS """
 " prefix
-noremap   [exec]   <Nop>
-map       <leader> [exec]
-nnoremap  [exec]r  <Nop>
-nnoremap  [exec]qr <Nop>
-nnoremap  <silent> <C-l> :noh<CR><C-l>
-
-" LeafCage/yankround.vim
-nmap  <C-p> <Plug>(yankround-prev)
-nmap  <C-n> <Plug>(yankround-next)
-" osyo-manga/vim-over
-nnoremap  [exec]s :OverCommandLine<CR>
-nnoremap  [exec]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
-" othree/eregex.vim
-let g:eregex_default_enable=1
-nnoremap / :M/
-nnoremap ? :M?
-nnoremap ,/ /
-nnoremap ,? /
-" Shougo/neosnippet.vim
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\   "\<Plug>(neosnippet_expand_or_jump)"
-\   : pumvisible() ? "\<C-n>" : "\<TAB>"
-" Shougo/unite.vim
-au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
-au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
-nnoremap <silent> ,ub :<C-u>Unite -winheight=12 bookmark<CR>
-nnoremap <silent> ,uf :<C-u>Unite -winheight=12 file<CR>
-nnoremap <silent> ,um :<C-u>Unite -winheight=12 buffer file_mru<CR>
-nnoremap <silent> ,ur :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
-" thinca/vim-quickrun
-autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
-nnoremap  <silent> [exec]qr :QuickRun<CR>
+nnoremap <C-l>    :noh<CR><C-l>
+nnoremap Q        <Nop>
+nnoremap ZZ       <Nop>
+nnoremap ZQ       <Nop>
 
 " bracket & move
 nnoremap  ( t(
@@ -209,18 +179,55 @@ nnoremap  <silent> k  gk
 nnoremap  <silent> gk k
 nnoremap  <silent> $  g$
 nnoremap  <silent> g$ $
+" ctags (c-*)
+nnoremap [tag]    <Nop>
+nmap     <Space>c [tag]
+nnoremap <silent> [tag]]      g]
+nnoremap <silent> [tag]<C-]>  <C-w>g]
+nnoremap <silent> [tag]}      <C-w>g}
+" tab (t-*)
+nnoremap  [tab]    <Nop>
+nmap      <Space>t [tab]
+nnoremap  <silent> [tab]c  :tablast <bar> tabnew<CR>
+nnoremap  <silent> [tab]x  :tabclose<CR>
+nnoremap  <silent> <S-Tab> :tabnext<CR>
+nnoremap  <silent> [tab]n  :tabnext<CR>
+nnoremap  <silent> [tab]p  :tabprevious<CR>
 
-" tab (T-*)
-nnoremap <silent> <S-t>c  :tablast <bar> tabnew<CR>
-nnoremap <silent> <S-t>x  :tabclose<CR>
-nnoremap <silent> <S-t>n  :tabnext<CR>
-nnoremap <silent> <S-Tab> :tabnext<CR>
-nnoremap <silent> <S-t>p  :tabprevious<CR>
-
-" tag (t-*)
-nnoremap <silent> t]      g]
-nnoremap <silent> t<C-]>  <C-w>g]
-nnoremap <silent> t}      <C-w>g}
+" LeafCage/yankround.vim
+nmap  <C-p> <Plug>(yankround-prev)
+nmap  <C-n> <Plug>(yankround-next)
+" osyo-manga/vim-over
+nnoremap  [vimover] <Nop>
+nmap      <Space>o  [over]
+nnoremap  <silent>  [over]s :OverCommandLine<CR>
+nnoremap  <silent>  [over]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
+" othree/eregex.vim
+let g:eregex_default_enable=1
+nnoremap / :M/
+nnoremap ? :M?
+nnoremap ,/ /
+nnoremap ,? /
+" Shougo/neosnippet.vim
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\   "\<Plug>(neosnippet_expand_or_jump)"
+\   : pumvisible() ? "\<C-n>" : "\<TAB>"
+" Shougo/unite.vim
+nnoremap [unite]    <Nop>
+nmap     <Space>u   [unite]
+au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
+au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
+nnoremap <silent> [unite]b :<C-u>Unite -winheight=12 bookmark<CR>
+nnoremap <silent> [unite]f :<C-u>Unite -winheight=12 file<CR>
+nnoremap <silent> [unite]m :<C-u>Unite -winheight=12 buffer file_mru<CR>
+nnoremap <silent> [unite]r :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
+" thinca/vim-quickrun
+nnoremap [qrun]     <Nop>
+nmap     <Space>q   [qrun]
+autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
+nnoremap  <silent> [qrun]r :QuickRun<CR>
 
 
 """ INPUT & VIEW SETTINGS """
