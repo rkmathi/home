@@ -146,7 +146,6 @@ export PAGER="less"
 export LESS="--RAW-CONTROL-CHARS"
 
 # PATH
-typeset -U path
 path=(\
   $HOME/opt/bin
   /usr/local/bin \
@@ -181,6 +180,10 @@ fi
 if [ -e /usr/texbin ]; then
   export PATH="/usr/texbin:$PATH"
 fi
+
+# Remove overlapped path
+typeset -U path PATH
+typeset -U manpath MANPATH
 
 ### Environment settings ###
 source ~/.zshrc.env
