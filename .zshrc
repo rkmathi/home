@@ -1,105 +1,114 @@
-zcompile ~/.zshenv
+zcompile ~/.zshrc
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
-source ~/.zshenv.d/zsh-syntax-highlighting.zsh
+source ~/.zsh.d/zsh-syntax-highlighting.zsh
+
 
 ### Autoload
-autoload -Uz add-zsh-hook
 autoload -Uz colors     ; colors
 autoload -Uz compinit   ; compinit
+autoload -Uz promptinit ; promptinit
+autoload -Uz add-zsh-hook
 autoload -Uz is-at-least
-autoload -U  promptinit ; promptinit
 autoload -Uz vcs_info
+
 
 ### General
 bindkey -e
 setopt always_last_prompt
+setopt auto_cd
+setopt auto_list
+setopt auto_menu
 setopt auto_name_dirs
+setopt auto_param_slash
+setopt auto_param_keys
+setopt auto_pushd
+setopt auto_remove_slash
 setopt auto_resume
 setopt brace_ccl
 setopt bsd_echo
+setopt complete_in_word
 setopt cdable_vars sh_word_split
 setopt extended_glob
 setopt hash_cmds
+setopt list_packed
+setopt list_types
 setopt long_list_jobs
 setopt magic_equal_subst
+setopt mark_dirs
 setopt multios
 setopt no_beep
 setopt no_clobber
 setopt no_flow_control
 setopt no_hup
+setopt no_menu_complete
 setopt notify
 setopt numeric_glob_sort
 setopt path_dirs
 setopt print_eight_bit
-setopt short_loops
-
-### Completion ###
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
-zstyle ':completion:*' use-cache true
-zstyle ':completion:*:processes' command 'ps x'
-setopt auto_remove_slash
-setopt auto_param_slash
-setopt auto_list
-setopt auto_menu
-setopt auto_param_keys
-setopt list_packed
-setopt list_types
-setopt complete_in_word
-setopt mark_dirs
-setopt no_menu_complete
-
-### Directory ###
-setopt auto_cd
-setopt auto_pushd
+setopt prompt_subst
 setopt pushd_ignore_dups
 setopt pushd_to_home
 setopt pushd_silent
+setopt short_loops
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+zstyle ':completion:*:default' menu select=1
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*:processes' command 'ps aux'
 
 ### History ###
 HISTFILE=$HOME/.zhistory
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000
+SAVEHIST=1000
 setopt append_history
 setopt extended_history
 setopt hist_expand
+setopt hist_find_no_dups
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt hist_ignore_space
+setopt hist_no_functions
 setopt hist_no_store
 setopt hist_reduce_blanks
 setopt hist_save_no_dups
 setopt inc_append_history
-setopt share_history
 
-### Show vcs branch name ###
+
+### VCS ###
 zstyle ':vcs_info:*' enable git svn hg bzr
-zstyle ':vcs_info:*' formats '(%s)-[%b]'
-zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
-zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
-zstyle ':vcs_info:bzr:*' use-simple true
-if is-at-least 4.3.10; then
-  zstyle ':vcs_info:git:*' check-for-changes true
-  zstyle ':vcs_info:git:*' stagedstr "C"
-  zstyle ':vcs_info:git:*' unstagedstr "U"
-  zstyle ':vcs_info:git:*' formats '(%s)-[%b] %c%u'
-  zstyle ':vcs_info:git:*' actionformats '(%s)-[%b|%a] %c%u'
-fi
-function _update_vcs_info_msg() {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+zstyle ':vcs_info:*' actionformats '(%s)-[%b]' '%m' '<!%a>'
+zstyle ':vcs_info:*' formats '(%s)-[%b]' '%m'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' max-exports 3
+zstyle ':vcs_info:git:*' actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
+zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u'
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' get-revision true
+zstyle ':vcs_info:git:*' stagedstr '+'
+zstyle ':vcs_info:git:*' unstagedstr '-'
+function _precmd_vcs_info () {
+  psvar=()
+  LANG=en_US.UTF-8 vcs_info
+  if [[ -z ${vcs_info_msg_0_} ]]; then
+    psvar[1]=""
+    psvar[2]=""
+    psvar[3]=""
+  else
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]=( "${vcs_info_msg_0_}" )
+    [[ -n "$vcs_info_msg_1_" ]] && psvar[2]=( "${vcs_info_msg_1_}" )
+    [[ -n "$vcs_info_msg_2_" ]] && psvar[3]=( "${vcs_info_msg_2_}" )
+  fi
 }
-add-zsh-hook precmd _update_vcs_info_msg
+add-zsh-hook precmd _precmd_vcs_info
+
 
 ### Alias/Export/PATH ###
 alias e="exit"
 alias be="bundle exec"
 alias v="vim"
 alias b2d="boot2docker"
-
 function p() {
   $* | peco
 }
@@ -139,12 +148,23 @@ export LESS="--RAW-CONTROL-CHARS"
 # PATH
 typeset -U path
 path=(\
+  $HOME/opt/bin
   /usr/local/bin \
   /usr/sbin \
   /usr/bin \
   /sbin \
   /bin \
   )
+
+# anyenv
+if [ -d ${HOME}/.anyenv ] ; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  for D in `ls $HOME/.anyenv/envs`
+  do
+    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
+  done
+fi
 
 # golang
 if [ -e $HOME/gopath ]; then
@@ -155,26 +175,6 @@ fi
 if [ -e $GOPATH/bin/peco ]; then
   zle -N peco_select_history
   bindkey '^r' peco_select_history
-fi
-
-# plenv
-if [ -e $HOME/.plenv ]; then
-  export PERL_CPANM_OPT="--local-lib=~/perl5"
-  export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
-  export PATH="$HOME/.plenv/bin:$HOME/.plenv/shims:$PATH:$HOME/perl5/bin"
-  eval "$(plenv init -)"
-fi
-
-# pyenv
-if [ -e $HOME/.pyenv ]; then
-  export PATH="$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH"
-  eval "$(pyenv init -)"
-fi
-
-# rbenv
-if [ -e $HOME/.rbenv ]; then
-  export PATH="$HOME/.rbenv/bin:$HOME/.rbenv/shims:$PATH"
-  eval "$(rbenv init -)"
 fi
 
 # tex

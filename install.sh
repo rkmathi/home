@@ -6,7 +6,7 @@ PATTERN_LIS="^l(c|inux-cui)$"     # linux-cui
 PATTERN_OSX="^o(|sx)$"            # osx
 PATTERN_WIN="^w(|indows)$"        # windows
 COPY_GROUP=(
-".zshenv"
+".zshrc"
 )
 LINK_GROUP=(
 ".ctags"
@@ -17,7 +17,7 @@ LINK_GROUP=(
 ".sbtconfig"
 ".tigrc"
 ".vim"
-".zshenv.d"
+".zsh.d"
 )
 
 
