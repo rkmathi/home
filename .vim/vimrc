@@ -193,6 +193,8 @@ nnoremap  <silent> [tab]x  :tabclose<CR>
 nnoremap  <silent> <S-Tab> :tabnext<CR>
 nnoremap  <silent> [tab]n  :tabnext<CR>
 nnoremap  <silent> [tab]p  :tabprevious<CR>
+" number/relativenumber
+nnoremap <F3> :<C-u>setlocal relativenumber!<CR>
 
 " LeafCage/yankround.vim
 nmap  <C-p> <Plug>(yankround-prev)
@@ -290,6 +292,7 @@ set matchtime=1
 set mouse=
 set novisualbell
 set number
+"set relativenumber
 set ruler
 set scrolloff=2
 set showcmd
