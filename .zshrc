@@ -32,6 +32,7 @@ setopt complete_in_word
 setopt cdable_vars sh_word_split
 setopt extended_glob
 setopt hash_cmds
+setopt ignoreeof
 setopt list_packed
 setopt list_types
 setopt long_list_jobs
