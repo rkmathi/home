@@ -2,6 +2,7 @@ zcompile ~/.zshrc
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export TERM=xterm-256color
+export WORDCHARS='~!#$%^&()-_=[]{}<>?'
 source ~/.zsh.d/zsh-syntax-highlighting.zsh
 
 
@@ -58,6 +59,7 @@ zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*' use-cache true
 zstyle ':completion:*:processes' command 'ps aux'
 
+
 ### History ###
 HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
@@ -106,6 +108,9 @@ add-zsh-hook precmd _precmd_vcs_info
 
 
 ### Alias/Export/PATH ###
+alias cp="\cp -i"
+alias mv="\mv -i"
+alias rm="\rm -i"
 alias e="exit"
 alias be="bundle exec"
 alias v="vim"
@@ -137,7 +142,6 @@ function tex2pdf() {
   dvipdfmx $1 && \
   open $1.pdf &
 }
-
 
 # EDITOR
 export EDITOR="vim"
