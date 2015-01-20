@@ -1,8 +1,20 @@
-# Limit lines 80 chars
-LineLength:
-  Enabled: false
+Metrics/LineLength:
+  Enabled: true
+  Max: 100
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
 
-# Use only ascii symbols in comments.
-AsciiComments:
-  Enabled: false
+Metrics/ClassLength:
+  Enable: true
+  Max: 200
+  CountComments: false
 
+Metrics/MethodLength:
+  Enabled: true
+  Max: 20
+  CountComments: false
+
+Style/AsciiComments:
+  Enabled: false
