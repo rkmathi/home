@@ -1,4 +1,8 @@
+.vim/.vim
+.zsh.d/.zsh.d
+
 .vim/bundle/
+.vim/.undo
 .vim/.netrwhist
 .vim/.yankround/
 .xmonad/*

@@ -34,23 +34,23 @@ NeoBundle 'tpope/vim-surround'
 
 
 """ Plugin settings """
-" check new bundles
+""" check new bundles
 if neobundle#exists_not_installed_bundles()
   echomsg 'Not installed bundles : ' .
     \ string(neobundle#get_not_installed_bundle_names())
   echomsg 'Please execute ":NeoBundleInstall" command.'
 endif
 
-" LeafCage/yankround.vim
+""" LeafCage/yankround.vim
 let g:yankround_dir='$HOME/.vim/.yankround'
 let g:yankround_max_history=20
-" nathanaelkane/vim-indent-guides
+""" nathanaelkane/vim-indent-guides
 au VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=grey
 au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightgrey
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_guide_size=1
-" scrooloose/syntastic
+""" scrooloose/syntastic
 let g:syntastic_auto_loc_list=0
 let g:syntastic_mode_map={
 \   'mode': 'passive',
@@ -58,11 +58,11 @@ let g:syntastic_mode_map={
 \     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'vim',
 \   ],
 \   'passive_filetypes': [
-\      'java', 'html', 'xml',
+\     'html', 'xml', 'java', 'scala',
 \   ],
 \ }
 let g:syntastic_ruby_checkers=['rubocop']
-" Shougo/neocomplete.vim
+""" Shougo/neocomplete.vim
 let g:acp_enableAtStartup=0
 let g:neocomplete#enable_at_startup=1
 if !exists('g:neocomplete#force_omni_input_patterns')
@@ -87,16 +87,16 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 \ }
 call neocomplete#custom_source('_', 'sorters',  ['sorter_length'])
 call neocomplete#custom_source('_', 'matchers', ['matcher_head'])
-" Shougo/neosnippet
+""" Shougo/neosnippet
 let g:neosnippet#snippets_directory='
 \ $HOME/.vim/bundle/vim-snippets/snippets,$HOME/.vim/snippets'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
-" Shougo/unite.vim
+""" Shougo/unite.vim
 let g:unite_enable_start_insert=1
 let g:unite_enable_split_vertically=0
-" thinca/vim-quickrun
+""" thinca/vim-quickrun
 let g:quickrun_config = {}
 let g:quickrun_config = {
 \   '_': {
@@ -156,13 +156,13 @@ endif
 
 
 """ KEYMAP SETTINGS """
-" prefix
+""" prefix
 nnoremap <C-l>    :noh<CR><C-l>
 nnoremap Q        <Nop>
 nnoremap ZZ       <Nop>
 nnoremap ZQ       <Nop>
 
-" bracket & move
+""" bracket & move
 nnoremap  ( t(
 nnoremap  ) t)
 nnoremap  ] t]
@@ -179,13 +179,13 @@ nnoremap  <silent> k  gk
 nnoremap  <silent> gk k
 nnoremap  <silent> $  g$
 nnoremap  <silent> g$ $
-" ctags (c-*)
-nnoremap [tag]    <Nop>
-nmap     <Space>c [tag]
-nnoremap <silent> [tag]]      g]
-nnoremap <silent> [tag]<C-]>  <C-w>g]
-nnoremap <silent> [tag]}      <C-w>g}
-" tab (t-*)
+""" ctags (<Space>-c-*)
+nnoremap  [tag]    <Nop>
+nmap      <Space>c [tag]
+nnoremap  <silent> [tag]]      g]
+nnoremap  <silent> [tag]<C-]>  <C-w>g]
+nnoremap  <silent> [tag]}      <C-w>g}
+""" tab (<Space>-t-*)
 nnoremap  [tab]    <Nop>
 nmap      <Space>t [tab]
 nnoremap  <silent> [tab]c  :tablast <bar> tabnew<CR>
@@ -193,52 +193,51 @@ nnoremap  <silent> [tab]x  :tabclose<CR>
 nnoremap  <silent> <S-Tab> :tabnext<CR>
 nnoremap  <silent> [tab]n  :tabnext<CR>
 nnoremap  <silent> [tab]p  :tabprevious<CR>
-" number/relativenumber
-nnoremap <F3> :<C-u>setlocal relativenumber!<CR>
+""" number/relativenumber
+nnoremap  <F3> :<C-u>setlocal relativenumber!<CR>
 
-" LeafCage/yankround.vim
+""" LeafCage/yankround.vim
 nmap  <C-p> <Plug>(yankround-prev)
 nmap  <C-n> <Plug>(yankround-next)
-" osyo-manga/vim-over
+""" osyo-manga/vim-over (<Space>-o-*)
 nnoremap  [vimover] <Nop>
 nmap      <Space>o  [over]
 nnoremap  <silent>  [over]s :OverCommandLine<CR>
 nnoremap  <silent>  [over]S :OverCommandLine<CR>%s/<C-r><C-w>//g<Left><Left>
-" othree/eregex.vim
+""" othree/eregex.vim
 let g:eregex_default_enable=1
 nnoremap / :M/
 nnoremap ? :M?
 nnoremap ,/ /
 nnoremap ,? /
-" Shougo/neosnippet.vim
+""" Shougo/neosnippet.vim
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \   "\<Plug>(neosnippet_expand_or_jump)"
 \   : pumvisible() ? "\<C-n>" : "\<TAB>"
-" Shougo/unite.vim
-nnoremap [unite]    <Nop>
-nmap     <Space>u   [unite]
+""" Shougo/unite.vim (<Space>-u-*)
+nnoremap  [unite]    <Nop>
+nmap      <Space>u   [unite]
 au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
 au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
-nnoremap <silent> [unite]b :<C-u>Unite -winheight=12 bookmark<CR>
-nnoremap <silent> [unite]f :<C-u>Unite -winheight=12 file<CR>
-nnoremap <silent> [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-nnoremap <silent> [unite]m :<C-u>Unite -winheight=12 buffer file_mru<CR>
-nnoremap <silent> [unite]r :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
-" thinca/vim-quickrun
-nnoremap [qrun]     <Nop>
-nmap     <Space>q   [qrun]
+nnoremap  <silent> [unite]b :<C-u>Unite -winheight=12 bookmark<CR>
+nnoremap  <silent> [unite]f :<C-u>Unite -winheight=12 file<CR>
+nnoremap  <silent> [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap  <silent> [unite]m :<C-u>Unite -winheight=12 buffer file_mru<CR>
+nnoremap  <silent> [unite]r :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
+""" thinca/vim-quickrun (<Space>-q-*)
+nnoremap  [qrun]     <Nop>
+nmap      <Space>q   [qrun]
 autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
 nnoremap  <silent> [qrun]r :QuickRun<CR>
 
 
 """ INPUT & VIEW SETTINGS """
-" syntax
+""" syntax
 syntax enable
 filetype plugin indent on
-
-" augroup for draw underscore (from @tyru's vimrc)
+"""" augroup for draw underscore (from @tyru's vimrc)
 augroup vimrc
   autocmd!
 augroup END
@@ -250,61 +249,24 @@ MyAutoCmd InsertLeave * setlocal  nocursorline
 MyAutoCmd InsertEnter * setlocal  cursorline
 MyAutoCmd InsertLeave * highlight StatusLine ctermfg=black guibg=black
 MyAutoCmd InsertEnter * highlight StatusLine ctermfg=grey  guibg=black
-
-" backspace
-set backspace=indent,eol,start
-
-" backup
-set nobackup noswapfile nowritebackup
-
-" colorscheme
+""" colorscheme
 if stridx($TERM, "xterm-256color") >= 0
   set t_Co=256
 else
   set t_Co=16
 endif
-"colorscheme peachpuff
 set background=light
 colorscheme solarized
-
-" hex
-set display=uhex
-
-" indent / tabstop
-set autoindent expandtab smartindent smarttab
-set sw=2 sts=0 ts=2
-
-" search
-set hlsearch incsearch smartcase wrapscan
-
-" view
-set ambw=double
-set autoread
-set cmdheight=1
-set colorcolumn=80
-set completeopt-=preview
-set foldenable
-set foldlevel=99
-set foldmethod=syntax
-set foldnestmax=2
-set list listchars=tab:»_,trail:_
-set matchtime=1
-set mouse=
-set novisualbell
-set number
-"set relativenumber
-set ruler
-set scrolloff=2
-set showcmd
-set showmatch
-set showmode
-set shortmess=a
-set previewheight=12
-set t_vb=
-set tags=tags;
-set title
-
-" statusline
+"colorscheme peachpuff
+""" persistent undo
+if has('persistent_undo')
+  set undodir=~/.vim/.undo
+  set undofile
+end
+""" remember last opened place
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+autocmd BufReadPost * delmarks!
+""" statusline
 set laststatus=2
 set statusline=%<     " too long
 set statusline+=(%n)  " buffer number
@@ -319,10 +281,37 @@ set statusline+=%=    " separator
 set statusline+=%1l,%c/%L%4p%%              " line
 set statusline+=\ %{fugitive#statusline()}  " git
 
-
-""" Remember last opened place """
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-autocmd BufReadPost * delmarks!
+""" misc settings
+set ambw=double
+set autoindent expandtab smartindent smarttab sw=2 sts=0 ts=2
+set autoread
+set backspace=indent,eol,start
+set display=uhex
+set cmdheight=1
+set colorcolumn=80
+set completeopt-=preview
+set foldenable
+set foldlevel=99
+set foldmethod=syntax
+set foldnestmax=2
+set hlsearch incsearch smartcase wrapscan
+set lazyredraw
+set list listchars=tab:»_,trail:_
+set matchtime=1
+set mouse=
+set nobackup noswapfile nowritebackup
+set novisualbell
+set number
+set ruler
+set scrolloff=2
+set showcmd
+set showmatch
+set showmode
+set shortmess=a
+set previewheight=12
+set t_vb=
+set tags=tags;
+set title
 
 
 """ Other setting files """
