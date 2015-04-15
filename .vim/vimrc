@@ -5,7 +5,9 @@ filetype off
 if has('vim_starting')
   set runtimepath+=$HOME/.vim/neobundle.vim
 endif
-call neobundle#rc(expand('$HOME/.vim/bundle'))
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+call neobundle#end()
 
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'honza/vim-snippets'
