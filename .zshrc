@@ -115,6 +115,7 @@ alias e="exit"
 alias be="bundle exec"
 alias v="vim"
 alias b2d="boot2docker"
+alias rl="rlwrap"
 function p() {
   $* | peco
 }
