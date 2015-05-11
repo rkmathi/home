@@ -240,6 +240,9 @@ nnoremap  <silent> [qrun]r :QuickRun<CR>
 """ syntax
 syntax enable
 filetype plugin indent on
+autocmd BufRead,BufNewFile *.erb set filetype=eruby.html
+autocmd BufRead,BufNewFile *.haml set filetype=haml.html
+autocmd BufRead,BufNewFile *.tx set filetype=xslate.html
 """" augroup for draw underscore (from @tyru's vimrc)
 augroup vimrc
   autocmd!
