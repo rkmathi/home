@@ -226,7 +226,7 @@ au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
 nnoremap  <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
 nnoremap  <silent> [unite]b :<C-u>Unite -winheight=12 bookmark<CR>
 nnoremap  <silent> [unite]f :<C-u>Unite -winheight=12 file<CR>
-nnoremap  <silent> [unite]g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
+nnoremap  <silent> [unite]g :<C-u>Unite grep -buffer-name=search-buffer<CR>
 nnoremap  <silent> [unite]m :<C-u>Unite -winheight=12 buffer file_mru<CR>
 nnoremap  <silent> [unite]r :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
 """ thinca/vim-quickrun (<Space>-q-*)
