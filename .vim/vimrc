@@ -318,6 +318,8 @@ set previewheight=12
 set t_vb=
 set tags=tags;
 set title
+set wildignorecase
+set wildmode=list,full
 
 
 """ Other setting files """
