@@ -181,6 +181,8 @@ nnoremap  <silent> k  gk
 nnoremap  <silent> gk k
 nnoremap  <silent> $  g$
 nnoremap  <silent> g$ $
+""" search
+vnoremap * "zy:let @/ = @z<CR>n
 """ ctags (<Space>-c-*)
 nnoremap  [tag]    <Nop>
 nmap      <Space>c [tag]
@@ -197,7 +199,6 @@ nnoremap  <silent> [tab]n  :tabnext<CR>
 nnoremap  <silent> [tab]p  :tabprevious<CR>
 """ number/relativenumber
 nnoremap  <F3> :<C-u>setlocal relativenumber!<CR>
-
 """ LeafCage/yankround.vim
 nmap  <C-p> <Plug>(yankround-prev)
 nmap  <C-n> <Plug>(yankround-next)
