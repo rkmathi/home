@@ -308,13 +308,14 @@ set mouse=
 set nobackup noswapfile nowritebackup
 set novisualbell
 set number
+set previewheight=12
 set ruler
 set scrolloff=2
 set showcmd
 set showmatch
 set showmode
 set shortmess=a
-set previewheight=12
+set ttyfast
 set t_vb=
 set tags=tags;
 set title
