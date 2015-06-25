@@ -11,6 +11,7 @@
   d1  = diff HEAD~1
   d2  = diff HEAD~2
   d3  = diff HEAD~3
+  dc  = diff --cached
   f   = fetch --prune
   g   = grep -nH --break --heading
   l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
