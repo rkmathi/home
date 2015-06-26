@@ -5,6 +5,7 @@
   b   = branch
   ba  = branch --all
   br  = branch --remote
+  bv  = branch -vv
   cm  = commit --message
   co  = checkout
   d   = diff
