@@ -6,6 +6,6 @@ set guifontwide=ゆたぽん（コーディング）Backsl:h12
 set columns=316
 set lines=120
 
-set transparency=20
+set transparency=15
 
 colorscheme solarized
