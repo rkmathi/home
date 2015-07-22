@@ -63,7 +63,7 @@ let g:syntastic_mode_map={
 \     'html', 'xml', 'java', 'scala',
 \   ],
 \ }
-let g:syntastic_ruby_checkers=['rubocop']
+"let g:syntastic_ruby_checkers=['rubocop']
 """ Shougo/neocomplete.vim
 let g:acp_enableAtStartup=0
 let g:neocomplete#enable_at_startup=1
