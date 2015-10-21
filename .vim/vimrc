@@ -320,7 +320,6 @@ set novisualbell
 set number
 set previewheight=12
 set ruler
-set scrolloff=2
 set showcmd
 set showmatch
 set showmode
