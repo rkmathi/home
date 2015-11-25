@@ -9,6 +9,7 @@ COPY_GROUP=(
 ".zshrc"
 )
 LINK_GROUP=(
+".config/nvim"
 ".ctags"
 ".gitconfig"
 ".gitignore-rkmathi"

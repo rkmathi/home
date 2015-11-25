@@ -1,11 +1,16 @@
-.vim/.vim
-.zsh.d/.zsh.d
+.config/nvim/bundle/
+.config/nvim/snippets/
+.config/nvim/yankround/
 
-.vim/bundle/
-.vim/.undo
 .vim/.netrwhist
+.vim/.vim
+.vim/.undo
 .vim/.yankround/
+.vim/bundle/
+
 .xmonad/*
+
+.zsh.d/.zsh.d
 
 !.xmonad/conkyrc
 !.xmonad/topstatusbar.sh
