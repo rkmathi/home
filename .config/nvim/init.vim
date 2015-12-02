@@ -1,7 +1,7 @@
 """ Initial settings
 filetype off
-set runtimepath+=~/.config/nvim/neobundle.vim/
-call neobundle#begin(expand('~/.config/nvim/bundle/'))
+set runtimepath+=$HOME/.config/nvim/neobundle.vim/
+call neobundle#begin(expand('$HOME/.config/nvim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
 NeoBundle 'altercation/vim-colors-solarized'
@@ -61,8 +61,7 @@ let g:deoplete#enable_ignore_case=1
 let g:deoplete#enable_smart_case=1
 let g:deoplete#sources#buffer#disabled_pattern='\.log\|\.log\.\|\.jax'
 " Shougo/neosnippet
-let g:neosnippet#snippets_directory='
-\ ~/.config/nvim/bundle/vim-snippets/snippets,~/.config/nvim/snippets'
+let g:neosnippet#snippets_directory='$HOME/.config/nvim/bundle/vim-snippets/snippets,$HOME/.config/nvim/snippets'
 if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
@@ -233,7 +232,7 @@ set background=light
 colorscheme solarized
 "colorscheme peachpuff
 " persistent undo
-set undodir=~/.config/nvim/.undo
+set undodir=$HOME/.config/nvim/.undo
 set undofile
 " remember last opened line 
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
