@@ -268,6 +268,7 @@ set hlsearch incsearch smartcase wrapscan
 set lazyredraw
 set list listchars=tab:»_,trail:_
 set matchtime=1
+set mouse=
 set nobackup noswapfile nowritebackup
 set novisualbell
 set number
