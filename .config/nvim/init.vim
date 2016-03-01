@@ -292,5 +292,3 @@ runtime! nvimrc.d/*.nvim
 """ Environment dependent settings
 " Python3 settings
 let g:python3_host_prog='/usr/local/bin/python3'
-
-

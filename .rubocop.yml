@@ -1,20 +1,43 @@
+# See also: https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+#
+# Usage:
+#   $ rubocop -aD #{targeted_ruby_file}
+#
+
+# 1行の長さ
 Metrics/LineLength:
   Enabled: true
-  Max: 100
+  Max: 120
   AllowURI: true
   URISchemes:
     - http
     - https
 
+# 1クラスの行数
 Metrics/ClassLength:
-  Enable: true
+  Enabled: true
   Max: 200
   CountComments: false
 
+# 1メソッドの循環的複雑度
+Metrics/CyclomaticComplexity:
+  Enabled: true
+  Max: 8
+
+# 1メソッドの行数
 Metrics/MethodLength:
   Enabled: true
-  Max: 20
+  Max: 40
   CountComments: false
 
+# 英数字以外の文字でのコメントの許可
 Style/AsciiComments:
   Enabled: false
+
+# メソッドの引数のハッシュをブレースで囲う必要は無い
+Style/BracesAroundHashParameters:
+  Enabled: false
+
+# 複数行にまたがる配列、ハッシュの末尾にはカンマをつけること
+Style/TrailingCommaInLiteral:
+  EnforcedStyleForMultiline: comma

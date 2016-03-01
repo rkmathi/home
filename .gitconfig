@@ -5,6 +5,8 @@
   ag  = !git ls-files | xargs ag --pager="less -F -R" --nogroup
   b   = branch
   ba  = branch --all
+  bc  = rev-parse --abbrev-ref @
+  bd  = branch --delete
   br  = branch --remote
   bv  = branch -vv
   cm  = commit --message
@@ -25,12 +27,12 @@
   ps  = push
   pso = push origin
   psom= push origin master
+  psuo= push -u origin
   rsh = remote show
   rsho= remote show origin
   s   = status --branch --short
   sh  = show
   wc  = whatchanged
-  rkmathi = !git config --replace-all --local user.name 'Ryuichi KAWAMATA' && git config --replace-all --local user.email 'iam@rkmathi.net'
 
 [color]
   branch      = auto
@@ -56,4 +58,3 @@
 [user]
   name        = Ryuichi KAWAMATA
   email       = iam@rkmathi.net
-
