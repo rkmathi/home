@@ -10,6 +10,8 @@ NeoBundle 'LeafCage/yankround.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'osyo-manga/vim-over'
 NeoBundle 'othree/eregex.vim'
+NeoBundle 'racer-rust/vim-racer'
+NeoBundle 'rust-lang/rust.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'Shougo/deoplete.nvim'
 NeoBundle 'Shougo/neosnippet'
@@ -42,6 +44,12 @@ au VimEnter,Colorscheme * :hi IndentGuidesEven ctermbg=lightgrey
 let g:indent_guides_auto_colors=0
 let g:indent_guides_enable_on_vim_startup=1
 let g:indent_guides_guide_size=1
+" racer-rust/vim-racer
+let g:rustfmt_autosave=1
+let g:rustfmt_command=('$HOME/.cargo/bin/rustfmt')
+set hidden
+let g:racer_cmd=expand('$HOME/.cargo/bin/racer')
+let $RUST_SRC_PATH=expand('$HOME/.cargo/rustc/src')
 " scrooloose/syntastic
 let g:syntastic_auto_loc_list=0
 let g:syntastic_mode_map={
