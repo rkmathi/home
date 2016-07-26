@@ -113,7 +113,7 @@ alias mv="\mv -i"
 alias rm="\rm -i"
 alias e="exit"
 alias be="bundle exec"
-alias v="vim"
+alias nv="nvim"
 alias b2d="boot2docker"
 alias rl="rlwrap"
 function p() {
@@ -161,16 +161,6 @@ path=(\
   /bin \
   )
 
-# anyenv
-if [ -d ${HOME}/.anyenv ] ; then
-  export PATH="$HOME/.anyenv/bin:$PATH"
-  eval "$(anyenv init -)"
-  for D in `ls $HOME/.anyenv/envs`
-  do
-    export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
-  done
-fi
-
 # golang
 if [ -e $HOME/gopath ]; then
   export GOPATH=$HOME/gopath
@@ -182,10 +172,16 @@ if [ -e $GOPATH/bin/peco ]; then
   bindkey '^r' peco_select_history
 fi
 
-# tex
-if [ -e /usr/texbin ]; then
-  export PATH="/usr/texbin:$PATH"
-fi
+# rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
+export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
+
+# Docker
+#eval $(docker-machine env)
 
 # Remove overlapped path
 typeset -U path PATH
@@ -193,4 +189,3 @@ typeset -U manpath MANPATH
 
 ### Environment settings ###
 source ~/.zshrc.env
-
