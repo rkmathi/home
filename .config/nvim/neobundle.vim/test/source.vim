@@ -73,27 +73,23 @@ set wildignore+=.git
 set wildignore+=.git/*
 set wildignore+=*/.git/*
 
-function! s:suite.pattern_a()
+function! s:suite.pattern_a() abort
   call s:assert.equals(neobundle#is_sourced('echodoc'), 1)
   call s:assert.equals(neobundle#is_sourced('unite-build'), 1)
 endfunction
 
-function! s:suite.pattern_b()
+function! s:suite.pattern_b() abort
   call s:assert.equals(neobundle#is_sourced('unite-ssh'), 1)
   call s:assert.equals(neobundle#is_sourced('unite-sudo'), 1)
 endfunction
 
-function! s:suite.pattern_c()
+function! s:suite.pattern_c() abort
   call s:assert.equals(neobundle#is_sourced('neomru.vim'), 0)
   call s:assert.equals(neobundle#is_sourced('neocomplcache.vim'), 1)
 endfunction
 
-function! s:suite.pattern_d()
+function! s:suite.pattern_d() abort
   call s:assert.equals(neobundle#is_sourced('vimshell'), 0)
   call s:assert.equals(neobundle#is_sourced('vinarise'), 0)
-endfunction
-
-function! s:suite.autoload()
-  call s:assert.equals(neobundle#get('unite.vim').autoload.commands, ['Unite'])
 endfunction
 

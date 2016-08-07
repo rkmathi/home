@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: neobundle_vim_recipes.vim
+" FILE: metadata.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -28,75 +28,74 @@ set cpo&vim
 
 let s:repository_cache = []
 
-function! neobundle#sources#neobundle_vim_recipes#define() "{{{
+function! neobundle#sources#metadata#define() abort "{{{
   return s:source
 endfunction"}}}
 
 let s:source = {
-      \ 'name' : 'neobundle-vim-recipes',
-      \ 'short_name' : 'neobundle',
+      \ 'name' : 'metadata',
+      \ 'short_name' : 'meta',
       \ }
 
-function! s:source.gather_candidates(args, context) "{{{
+function! s:source.gather_candidates(args, context) abort "{{{
   let plugins = s:get_repository_plugins(a:context)
 
-  return map(copy(plugins), "{
+  try
+    return map(copy(plugins), "{
         \ 'word' : v:val.name . ' ' . v:val.description,
         \ 'source__name' : v:val.name,
+        \ 'source__path' : v:val.repository,
+        \ 'source__script_type' : s:convert2script_type(v:val.raw_type),
         \ 'source__description' : v:val.description,
-        \ 'source__script_type' : v:val.script_type,
-        \ 'source__options' : v:val.options,
-        \ 'source__path' : v:val.path,
-        \ 'action__path' : v:val.receipe_path,
-        \ 'action__uri' : v:val.website,
+        \ 'source__options' : [],
+        \ 'action__uri' : v:val.uri,
         \ }")
+  catch
+    call unite#print_error(
+          \ '[neobundle/search:metadata] '
+          \ .'Error occurred in loading cache.')
+    call unite#print_error(
+          \ '[neobundle/search:metadata] '
+          \ .'Please re-make cache by <Plug>(unite_redraw) mapping.')
+    call neobundle#installer#error(v:exception . ' ' . v:throwpoint)
+
+    return []
+  endtry
 endfunction"}}}
 
 " Misc.
-function! s:get_repository_plugins(context) "{{{
-  if a:context.is_redraw || empty(s:repository_cache)
+function! s:get_repository_plugins(context) abort "{{{
+  if a:context.is_redraw
     " Reload cache.
-    let s:repository_cache = []
+    call unite#print_message(
+          \ '[neobundle/search:metadata] '
+          \ .'Reloading cache from metadata repository')
+    redraw
 
-    for path in split(globpath(&runtimepath,
-          \ 'recipes/**/*.vimrecipe', 1), '\n')
-      sandbox let data = eval(join(filter(readfile(path),
-            \ "v:val !~ '^\\s*\\%(#.*\\)\\?$'"), ''))
-
-      if !has_key(data, 'name') || !has_key(data, 'path')
-        call unite#print_error(
-              \ '[neobundle/search:neobundle-vim-recipes] ' . path)
-        call unite#print_error(
-              \ '[neobundle/search:neobundle-vim-recipes] ' .
-              \ 'The recipe file format is wrong.')
-        continue
-      endif
-
-      let data.receipe_path = path
-
-      " Initialize.
-      let default = {
-            \ 'options' : {},
-            \ 'description' : '',
-            \ 'website' : '',
-            \ 'script_type' : '',
-            \ }
-
-      let data = extend(data, default, 'keep')
-
-      " Set options.
-      for key in ['depends', 'rev', 'type', 'script_type',
-            \ 'rtp', 'base', 'build', 'external_commands']
-        if has_key(data, key)
-          let data.options[key] = data[key]
-        endif
-      endfor
-
-      call add(s:repository_cache, data)
-    endfor
+    call neobundle#metadata#update()
   endif
 
-  return s:repository_cache
+  return s:convert_metadata(neobundle#metadata#get())
+endfunction"}}}
+
+function! s:convert_metadata(data) abort "{{{
+  return values(map(copy(a:data), "{
+        \ 'name' : v:key,
+        \ 'raw_type' : get(v:val, 'script-type', ''),
+        \ 'repository' : substitute(v:val.url, '^git://', 'https://', ''),
+        \ 'description' : '',
+        \ 'uri' : get(v:val, 'homepage', ''),
+        \ }"))
+endfunction"}}}
+
+function! s:convert2script_type(type) abort "{{{
+  if a:type ==# 'utility'
+    return 'plugin'
+  elseif a:type ==# 'color scheme'
+    return 'colors'
+  else
+    return a:type
+  endif
 endfunction"}}}
 
 let &cpo = s:save_cpo

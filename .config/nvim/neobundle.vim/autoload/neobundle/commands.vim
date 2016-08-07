@@ -32,7 +32,9 @@ call neobundle#util#set_default(
       \ (neobundle#util#is_windows() ? 'rmdir /S /Q' : 'rm -rf'),
       \ 'g:neobundle_rm_command')
 
-function! neobundle#commands#install(bang, bundle_names) "{{{
+let s:vimrcs = []
+
+function! neobundle#commands#install(bang, bundle_names) abort "{{{
   if neobundle#util#is_sudo()
     call neobundle#util#print_error(
           \ '"sudo vim" is detected. This feature is disabled.')
@@ -89,7 +91,7 @@ function! neobundle#commands#install(bang, bundle_names) "{{{
         \ 'Update done: ' . strftime('(%Y/%m/%d %H:%M:%S)'))
 endfunction"}}}
 
-function! neobundle#commands#helptags(bundles) "{{{
+function! neobundle#commands#helptags(bundles) abort "{{{
   if neobundle#util#is_sudo()
     call neobundle#util#print_error(
           \ '"sudo vim" is detected. This feature is disabled.')
@@ -115,7 +117,7 @@ function! neobundle#commands#helptags(bundles) "{{{
   return help_dirs
 endfunction"}}}
 
-function! neobundle#commands#check() "{{{
+function! neobundle#commands#check() abort "{{{
   if neobundle#installer#get_tags_info() !=#
         \ sort(map(neobundle#config#get_neobundles(), 'v:val.name'))
     " Recache automatically.
@@ -140,13 +142,14 @@ function! neobundle#commands#check() "{{{
     echomsg 'Not installed bundles: '
           \ string(neobundle#get_not_installed_bundle_names())
     if confirm('Install bundles now?', "yes\nNo", 2) == 1
-      call neobundle#commands#install(0, '')
+      call neobundle#commands#install(0,
+            \ join(neobundle#get_not_installed_bundle_names()))
     endif
     echo ''
   endif
 endfunction"}}}
 
-function! neobundle#commands#check_update(bundle_names) "{{{
+function! neobundle#commands#check_update(bundle_names) abort "{{{
   let bundle_names = split(a:bundle_names)
 
   " Set context.
@@ -160,46 +163,77 @@ function! neobundle#commands#check_update(bundle_names) "{{{
 
   let context.source__max_bundles =
         \ len(context.source__bundles)
-  while 1
-    while context.source__number < context.source__max_bundles
-          \ && len(context.source__processes) <
-          \      g:neobundle#install_max_processes
+  let statusline_save = &l:statusline
+  try
+    while 1
+      while context.source__number < context.source__max_bundles
+            \ && len(context.source__processes) <
+            \      g:neobundle#install_max_processes
 
-      let bundle = context.source__bundles[context.source__number]
-      call s:check_update_init(bundle, context, 0)
-      call neobundle#util#redraw_echo(
-            \ neobundle#installer#get_progress_message(bundle,
-            \ context.source__number,
-            \ context.source__max_bundles))
+        let bundle = context.source__bundles[context.source__number]
+        call s:check_update_init(bundle, context, 0)
+        call s:print_message(
+              \ neobundle#installer#get_progress_message(bundle,
+              \   context.source__number,
+              \   context.source__max_bundles))
+      endwhile
+
+      for process in context.source__processes
+        call s:check_update_process(context, process, 0)
+      endfor
+
+      " Filter eof processes.
+      call filter(context.source__processes, '!v:val.eof')
+
+      if empty(context.source__processes)
+            \ && context.source__number == context.source__max_bundles
+        break
+      endif
     endwhile
+  finally
+    let &l:statusline = statusline_save
+  endtry
 
-    for process in context.source__processes
-      call s:check_update_process(context, process, 0)
-    endfor
-
-    " Filter eof processes.
-    call filter(context.source__processes, '!v:val.eof')
-
-    if empty(context.source__processes)
-          \ && context.source__number == context.source__max_bundles
-      break
-    endif
-  endwhile
-
-  let bundles = map(context.source__updated_bundles, 'v:val.name')
+  let bundles = context.source__updated_bundles
   redraw!
 
   if !empty(bundles)
     echomsg 'Updates available bundles: '
-          \ string(bundles)
+          \ string(map(copy(bundles), 'v:val.name'))
+    echomsg ' '
+
+    for bundle in bundles
+      let cwd = getcwd()
+      try
+        call neobundle#util#cd(bundle.path)
+
+        let type = neobundle#config#get_types(bundle.type)
+        let rev = neobundle#installer#get_revision_number(bundle)
+        let fetch_command = has_key(type, 'get_fetch_remote_command') ?
+              \ type.get_fetch_remote_command(bundle) : ''
+        let log_command = has_key(type, 'get_log_command') ?
+              \ type.get_log_command(bundle, bundle.remote_rev, rev) : ''
+        if log_command != ''
+          echomsg bundle.name
+          call neobundle#util#system(fetch_command)
+          for output in split(neobundle#util#system(log_command), '\n')
+            echomsg output
+          endfor
+          echomsg ' '
+        endif
+      finally
+        call neobundle#util#cd(cwd)
+      endtry
+    endfor
 
     if confirm('Update bundles now?', "yes\nNo", 2) == 1
-      call neobundle#commands#install(1, join(bundles))
+      call neobundle#commands#install(1,
+            \ join(map(copy(bundles), 'v:val.name')))
     endif
   endif
 endfunction"}}}
 
-function! neobundle#commands#clean(bang, ...) "{{{
+function! neobundle#commands#clean(bang, ...) abort "{{{
   if neobundle#util#is_sudo()
     call neobundle#util#print_error(
           \ '"sudo vim" is detected. This feature is disabled.')
@@ -246,19 +280,9 @@ function! neobundle#commands#clean(bang, ...) "{{{
     if !has('vim_starting')
       redraw
     endif
-    let cmdline = join(map(copy(x_dirs), '"\"" . v:val . "\""'), ' ')
-    if neobundle#util#is_windows()
-      " Note: In rm command, must use "\" instead of "/".
-      let cmdline = substitute(cmdline, '/', '\\\\', 'g')
-    endif
-
-    " Use system instead of vimproc#system()
-    let result = system(g:neobundle#rm_command . ' ' . cmdline)
-    if v:shell_error
-      call neobundle#installer#error(result)
-    endif
 
     for dir in x_dirs
+      call neobundle#util#rmdir(dir)
       call neobundle#config#rmdir(dir)
     endfor
 
@@ -273,7 +297,7 @@ function! neobundle#commands#clean(bang, ...) "{{{
   endtry
 endfunction"}}}
 
-function! neobundle#commands#reinstall(bundle_names) "{{{
+function! neobundle#commands#reinstall(bundle_names) abort "{{{
   let bundles = neobundle#config#search_simple(split(a:bundle_names))
 
   if empty(bundles)
@@ -287,7 +311,7 @@ function! neobundle#commands#reinstall(bundle_names) "{{{
   call neobundle#installer#reinstall(bundles)
 endfunction"}}}
 
-function! neobundle#commands#gc(bundle_names) "{{{
+function! neobundle#commands#gc(bundle_names) abort "{{{
   let bundle_names = split(a:bundle_names)
   let number = 0
   let bundles = empty(bundle_names) ?
@@ -307,10 +331,8 @@ function! neobundle#commands#gc(bundle_names) "{{{
 
     let cwd = getcwd()
     try
-      if isdirectory(bundle.path)
-        " Cd to bundle path.
-        call neobundle#util#cd(bundle.path)
-      endif
+      " Cd to bundle path.
+      call neobundle#util#cd(bundle.path)
 
       redraw
       call neobundle#util#redraw_echo(
@@ -321,9 +343,7 @@ function! neobundle#commands#gc(bundle_names) "{{{
       call neobundle#util#redraw_echo(result)
       let status = neobundle#util#get_last_status()
     finally
-      if isdirectory(cwd)
-        call neobundle#util#cd(cwd)
-      endif
+      call neobundle#util#cd(cwd)
     endtry
 
     if status
@@ -333,7 +353,7 @@ function! neobundle#commands#gc(bundle_names) "{{{
   endfor
 endfunction"}}}
 
-function! neobundle#commands#rollback(bundle_name) "{{{
+function! neobundle#commands#rollback(bundle_name) abort "{{{
   let bundle = get(neobundle#config#search_simple([a:bundle_name]), 0, {})
   if empty(bundle) || !isdirectory(bundle.path)
     call neobundle#util#print_error(a:bundle_name . ' is not found.')
@@ -384,23 +404,22 @@ function! neobundle#commands#rollback(bundle_name) "{{{
     call neobundle#util#cd(bundle.path)
     call neobundle#util#system(cmd)
   finally
-    if isdirectory(cwd)
-      call neobundle#util#cd(cwd)
-    endif
+    call neobundle#util#cd(cwd)
     let bundle.rev = revision_save
   endtry
 endfunction"}}}
 
-function! neobundle#commands#list() "{{{
+function! neobundle#commands#list() abort "{{{
   call neobundle#util#redraw_echo('#: not sourced, X: not installed')
-  for bundle in neobundle#config#get_neobundles()
+  for bundle in neobundle#util#sort_by(
+        \ neobundle#config#get_neobundles(), 'tolower(v:val.name)')
     echo (bundle.sourced ? ' ' :
           \ neobundle#is_installed(bundle.name) ? '#' : 'X')
           \ . ' ' . bundle.name
   endfor
 endfunction"}}}
 
-function! neobundle#commands#lock(name, rev) "{{{
+function! neobundle#commands#lock(name, rev) abort "{{{
   let bundle = neobundle#config#get(a:name)
   if empty(bundle)
     return
@@ -409,7 +428,7 @@ function! neobundle#commands#lock(name, rev) "{{{
   let bundle.install_rev = a:rev
 endfunction"}}}
 
-function! neobundle#commands#remote_plugins() "{{{
+function! neobundle#commands#remote_plugins() abort "{{{
   if !has('nvim')
     return
   endif
@@ -422,7 +441,7 @@ function! neobundle#commands#remote_plugins() "{{{
   UpdateRemotePlugins
 endfunction"}}}
 
-function! neobundle#commands#source(names, ...) "{{{
+function! neobundle#commands#source(names, ...) abort "{{{
   let is_force = get(a:000, 0, 1)
 
   let names = neobundle#util#convert2list(a:names)
@@ -437,18 +456,18 @@ function! neobundle#commands#source(names, ...) "{{{
   call neobundle#config#source(names, is_force)
 endfunction "}}}
 
-function! neobundle#commands#complete_bundles(arglead, cmdline, cursorpos) "{{{
+function! neobundle#commands#complete_bundles(arglead, cmdline, cursorpos) abort "{{{
   return filter(map(neobundle#config#get_neobundles(), 'v:val.name'),
         \ 'stridx(tolower(v:val), tolower(a:arglead)) >= 0')
 endfunction"}}}
 
-function! neobundle#commands#complete_lazy_bundles(arglead, cmdline, cursorpos) "{{{
+function! neobundle#commands#complete_lazy_bundles(arglead, cmdline, cursorpos) abort "{{{
   return filter(map(filter(neobundle#config#get_neobundles(),
         \ "!v:val.sourced && v:val.rtp != ''"), 'v:val.name'),
         \ 'stridx(tolower(v:val), tolower(a:arglead)) == 0')
 endfunction"}}}
 
-function! neobundle#commands#complete_deleted_bundles(arglead, cmdline, cursorpos) "{{{
+function! neobundle#commands#complete_deleted_bundles(arglead, cmdline, cursorpos) abort "{{{
   let bundle_dirs = map(copy(neobundle#config#get_neobundles()), 'v:val.path')
   let all_dirs = split(neobundle#util#substitute_path_separator(
         \ globpath(neobundle#get_neobundle_dir(), '*', 1)), "\n")
@@ -458,15 +477,15 @@ function! neobundle#commands#complete_deleted_bundles(arglead, cmdline, cursorpo
         \ 'stridx(v:val, a:arglead) == 0')
 endfunction"}}}
 
-function! neobundle#commands#get_default_cache_file() "{{{
+function! neobundle#commands#get_default_cache_file() abort "{{{
   return neobundle#get_rtp_dir() . '/cache'
 endfunction"}}}
 
-function! neobundle#commands#get_cache_file() "{{{
+function! neobundle#commands#get_cache_file() abort "{{{
   return get(g:, 'neobundle#cache_file', neobundle#commands#get_default_cache_file())
 endfunction"}}}
 
-function! neobundle#commands#save_cache() "{{{
+function! neobundle#commands#save_cache() abort "{{{
   if !has('vim_starting')
     " Ignore if loaded
     return
@@ -478,7 +497,8 @@ function! neobundle#commands#save_cache() "{{{
   call neobundle#autoload#_set_function_prefixes(
         \ neobundle#config#get_autoload_bundles())
 
-  let bundles = deepcopy(neobundle#config#get_neobundles())
+  let bundles = neobundle#config#tsort(
+        \ deepcopy(neobundle#config#get_neobundles()))
   for bundle in bundles
     " Clear hooks.  Because, VimL cannot save functions in JSON.
     let bundle.hooks = {}
@@ -487,15 +507,20 @@ function! neobundle#commands#save_cache() "{{{
 
   let current_vim = neobundle#util#redir('version')
 
-  call writefile( [s:get_cache_version(),
-        \ v:progname, current_vim, string(bundles)], cache)
+  call writefile([neobundle#get_cache_version(),
+        \ v:progname, current_vim, string(s:vimrcs),
+        \ neobundle#util#vim2json(bundles)], cache)
 endfunction"}}}
-function! neobundle#commands#load_cache(...) "{{{
-  let vimrc = get(a:000, 0, $MYVIMRC)
+function! neobundle#commands#load_cache(vimrcs) abort "{{{
+  let s:vimrcs = a:vimrcs
+
   let cache = neobundle#commands#get_cache_file()
-  if !filereadable(cache) || getftime(cache) < getftime(vimrc)
-    return 1
-  endif
+  if !filereadable(cache) | return 1 | endif
+
+  for vimrc in a:vimrcs
+    let vimrc_ftime = getftime(vimrc)
+    if vimrc_ftime != -1 && getftime(cache) < vimrc_ftime | return 1 | endif
+  endfor
 
   let current_vim = neobundle#util#redir('version')
 
@@ -504,16 +529,18 @@ function! neobundle#commands#load_cache(...) "{{{
     let ver = list[0]
     let prog = get(list, 1, '')
     let vim = get(list, 2, '')
+    let vimrcs = get(list, 3, '')
 
-    if len(list) != 4
-          \ || ver !=# s:get_cache_version()
+    if len(list) != 5
+          \ || ver !=# neobundle#get_cache_version()
           \ || v:progname !=# prog
           \ || current_vim !=# vim
+          \ || string(a:vimrcs) !=# vimrcs
       call neobundle#commands#clear_cache()
       return 1
     endif
 
-    sandbox let bundles = eval(list[3])
+    let bundles = neobundle#util#json2vim(list[4])
 
     if type(bundles) != type([])
       call neobundle#commands#clear_cache()
@@ -525,12 +552,12 @@ function! neobundle#commands#load_cache(...) "{{{
     endfor
   catch
     call neobundle#util#print_error(
-          \ 'Error occurred while loading cache : ' . v:errmsg)
+          \ 'Error occurred while loading cache : ' . v:exception)
     call neobundle#commands#clear_cache()
     return 1
   endtry
 endfunction"}}}
-function! neobundle#commands#clear_cache() "{{{
+function! neobundle#commands#clear_cache() abort "{{{
   let cache = neobundle#commands#get_cache_file()
   if !filereadable(cache)
     return
@@ -539,7 +566,16 @@ function! neobundle#commands#clear_cache() "{{{
   call delete(cache)
 endfunction"}}}
 
-function! s:install(bang, bundles) "{{{
+function! s:print_message(msg) abort "{{{
+  if !has('vim_starting')
+    let &l:statusline = a:msg
+    redrawstatus
+  else
+    call neobundle#util#redraw_echo(a:msg)
+  endif
+endfunction"}}}
+
+function! s:install(bang, bundles) abort "{{{
   " Set context.
   let context = {}
   let context.source__bang = a:bang
@@ -551,39 +587,45 @@ function! s:install(bang, bundles) "{{{
   let context.source__max_bundles =
         \ len(context.source__bundles)
 
-  while 1
-    while context.source__number < context.source__max_bundles
-          \ && len(context.source__processes) <
-          \      g:neobundle#install_max_processes
+  let statusline_save = &l:statusline
+  try
 
-      let bundle = context.source__bundles[context.source__number]
-      call neobundle#installer#sync(
-            \ context.source__bundles[context.source__number],
-            \ context, 0)
-      call neobundle#util#redraw_echo(
-            \ neobundle#installer#get_progress_message(bundle,
-            \ context.source__number,
-            \ context.source__max_bundles))
+    while 1
+      while context.source__number < context.source__max_bundles
+            \ && len(context.source__processes) <
+            \      g:neobundle#install_max_processes
+
+        let bundle = context.source__bundles[context.source__number]
+        call neobundle#installer#sync(
+              \ context.source__bundles[context.source__number],
+              \ context, 0)
+        call s:print_message(
+              \ neobundle#installer#get_progress_message(bundle,
+              \   context.source__number,
+              \   context.source__max_bundles))
+      endwhile
+
+      for process in context.source__processes
+        call neobundle#installer#check_output(context, process, 0)
+      endfor
+
+      " Filter eof processes.
+      call filter(context.source__processes, '!v:val.eof')
+
+      if empty(context.source__processes)
+            \ && context.source__number == context.source__max_bundles
+        break
+      endif
     endwhile
-
-    for process in context.source__processes
-      call neobundle#installer#check_output(context, process, 0)
-    endfor
-
-    " Filter eof processes.
-    call filter(context.source__processes, '!v:val.eof')
-
-    if empty(context.source__processes)
-          \ && context.source__number == context.source__max_bundles
-      break
-    endif
-  endwhile
+  finally
+    let &l:statusline = statusline_save
+  endtry
 
   return [context.source__synced_bundles,
         \ context.source__errored_bundles]
 endfunction"}}}
 
-function! s:check_update_init(bundle, context, is_unite) "{{{
+function! s:check_update_init(bundle, context, is_unite) abort "{{{
   let a:context.source__number += 1
 
   let num = a:context.source__number
@@ -626,15 +668,13 @@ function! s:check_update_init(bundle, context, is_unite) "{{{
       let process.status = neobundle#util#get_last_status()
     endif
   finally
-    if isdirectory(cwd)
-      call neobundle#util#cd(cwd)
-    endif
+    call neobundle#util#cd(cwd)
   endtry
 
   call add(a:context.source__processes, process)
 endfunction "}}}
 
-function! s:check_update_process(context, process, is_unite) "{{{
+function! s:check_update_process(context, process, is_unite) abort "{{{
   if neobundle#util#has_vimproc() && has_key(a:process, 'proc')
     let is_timeout = (localtime() - a:process.start_time)
           \             >= a:process.bundle.install_process_timeout
@@ -663,6 +703,7 @@ function! s:check_update_process(context, process, is_unite) "{{{
     let rev = neobundle#installer#get_revision_number(bundle)
   finally
     let bundle.rev = revision_save
+    let bundle.remote_rev = remote_rev
   endtry
 
   if is_timeout || status
@@ -681,14 +722,14 @@ function! s:check_update_process(context, process, is_unite) "{{{
   let a:process.eof = 1
 endfunction"}}}
 
-function! s:check_really_clean(dirs) "{{{
+function! s:check_really_clean(dirs) abort "{{{
   echo join(a:dirs, "\n")
 
   return input('Are you sure you want to remove '
         \        .len(a:dirs).' bundles? [y/n] : ') =~? 'y'
 endfunction"}}}
 
-function! s:update_tags() "{{{
+function! s:update_tags() abort "{{{
   let bundles = [{ 'rtp' : neobundle#get_runtime_dir()}]
         \ + neobundle#config#get_enabled_bundles()
   call neobundle#util#copy_bundle_files(bundles, 'doc')
@@ -699,7 +740,7 @@ function! s:update_tags() "{{{
   silent execute 'helptags' fnameescape(neobundle#get_tags_dir())
 endfunction"}}}
 
-function! s:has_doc(path) "{{{
+function! s:has_doc(path) abort "{{{
   return a:path != '' &&
         \ isdirectory(a:path.'/doc')
         \   && (!filereadable(a:path.'/doc/tags')
@@ -711,13 +752,9 @@ function! s:has_doc(path) "{{{
 endfunction"}}}
 
 " Vimproc is first.
-function! s:cmp_vimproc(a, b) "{{{
+function! s:cmp_vimproc(a, b) abort "{{{
   return !(a:a.name ==# 'vimproc' || a:a.name ==# 'vimproc.vim')
 endfunction"}}}
-
-function! s:get_cache_version()"{{{
-  return str2nr(printf('%02d%02d', 2, 5))
-endfunction "}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

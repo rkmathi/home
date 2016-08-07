@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neobundle#sources#github#define() "{{{
+function! neobundle#sources#github#define() abort "{{{
   return s:source
 endfunction"}}}
 
@@ -40,21 +40,14 @@ let s:filter = {
 \   "name" : "sorter_stars",
 \}
 
-function! s:filter.filter(candidates, context)
+function! s:filter.filter(candidates, context) abort
     return unite#util#sort_by(a:candidates, 'v:val.source__stars')
 endfunction
 
 call unite#define_filter(s:filter)
 unlet s:filter
 
-function! s:source.gather_candidates(args, context) "{{{
-  if !executable('wget')
-    call unite#print_error(
-          \ '[neobundle/search:github] '.
-          \ 'wget command is not available!')
-    return []
-  endif
-
+function! s:source.gather_candidates(args, context) abort "{{{
   let plugins = s:get_github_searches(a:context.source__input)
 
 
@@ -74,12 +67,12 @@ endfunction"}}}
 " @vimlint(EVL102, 1, l:true)
 " @vimlint(EVL102, 1, l:false)
 " @vimlint(EVL102, 1, l:null)
-function! s:get_github_searches(string) "{{{
-  let path = 'https://api.github.com/search/repositories?q='
+function! s:get_github_searches(string) abort "{{{
+  let uri = 'https://api.github.com/search/repositories?q='
         \ . a:string . '+language:VimL'.'\&sort=stars'.'\&order=desc'
   let temp = neobundle#util#substitute_path_separator(tempname())
 
-  let cmd = printf('%s "%s" "%s"', 'wget -q -O ', temp, path)
+  let cmd = neobundle#util#wget(uri, temp)
 
   call unite#print_message(
         \ '[neobundle/search:github] Searching plugins from github...')
@@ -87,7 +80,12 @@ function! s:get_github_searches(string) "{{{
 
   let result = unite#util#system(cmd)
 
-  if unite#util#get_last_status()
+  if cmd =~# '^E:'
+    call unite#print_error(
+          \ '[neobundle/search:github] '.
+          \ 'wget or curl command is not available!')
+    return []
+  elseif unite#util#get_last_status()
     call unite#print_message('[neobundle/search:github] ' . cmd)
     call unite#print_error('[neobundle/search:github] Error occurred!')
     call unite#print_error(result)

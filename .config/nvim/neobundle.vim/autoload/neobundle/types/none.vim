@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: nosync.vim
+" FILE: none.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -26,19 +26,19 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neobundle#types#nosync#define() "{{{
+function! neobundle#types#none#define() abort "{{{
   return s:type
 endfunction"}}}
 
 let s:type = {
-      \ 'name' : 'nosync',
+      \ 'name' : 'none',
       \ }
 
-function! s:type.detect(path, opts) "{{{
+function! s:type.detect(path, opts) abort "{{{
   " No Auto detect.
   return {}
 endfunction"}}}
-function! s:type.get_sync_command(bundle) "{{{
+function! s:type.get_sync_command(bundle) abort "{{{
   if isdirectory(a:bundle.path)
     return ''
   endif
@@ -62,10 +62,10 @@ function! s:type.get_sync_command(bundle) "{{{
 
   return 'E: Failed to auto installation.'
 endfunction"}}}
-function! s:type.get_revision_number_command(bundle) "{{{
+function! s:type.get_revision_number_command(bundle) abort "{{{
   return ''
 endfunction"}}}
-function! s:type.get_revision_lock_command(bundle) "{{{
+function! s:type.get_revision_lock_command(bundle) abort "{{{
   return ''
 endfunction"}}}
 
