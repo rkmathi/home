@@ -1,8 +1,6 @@
-.config/nvim/.netrwhist
 .config/nvim/.undo/
-.config/nvim/bundle/
+.config/nvim/dein/
 .config/nvim/snippets/
-.config/nvim/yankround/
 
 .vim/.netrwhist
 .vim/.vim
