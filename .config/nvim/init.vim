@@ -28,16 +28,6 @@ syntax on
 scriptencoding utf-8
 
 
-""" FILETYPE SETTING
-autocmd BufNewFile,BufRead *.erb  set filetype=eruby.html
-autocmd BufNewFile,BufRead *.go   set filetype=go
-autocmd FileType go setlocal noexpandtab tabstop=4 shiftwidth=4
-autocmd BufNewFile,BufRead *.haml set filetype=haml.html
-autocmd BufNewFile,BufRead *.md   set filetype=markdown
-autocmd BufNewFile,BufRead *.rs   set filetype=rust
-autocmd BufNewFile,BufRead *.tx   set filetype=xslate.html
-
-
 """ KEYMAP SETTING
 " prefix
 nnoremap <C-w>o   <Nop>
@@ -162,3 +152,14 @@ set statusline+=\ %f  " file path
 set statusline+=%=    " separator
 set statusline+=%1l,%c/%L%4p%%              " line
 set statusline+=\ %{fugitive#statusline()}  " git
+
+
+""" FILETYPE SETTING
+autocmd BufNewFile,BufRead *.erb  set filetype=eruby.html
+autocmd BufNewFile,BufRead *.go   set filetype=go
+autocmd BufNewFile,BufRead *.haml set filetype=haml.html
+autocmd BufNewFile,BufRead *.md   set filetype=markdown
+autocmd BufNewFile,BufRead *.rs   set filetype=rust
+autocmd BufNewFile,BufRead *.tx   set filetype=xslate.html
+autocmd FileType go       setlocal noexpandtab tabstop=4 shiftwidth=4
+autocmd FileType markdown setlocal             tabstop=4 shiftwidth=4
