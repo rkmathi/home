@@ -59,8 +59,8 @@ vnoremap * "zy:let @/ = @z<CR>n
 nnoremap  [tag]    <Nop>
 nmap      <Space>c [tag]
 nnoremap  <silent> [tag]]      g]
-nnoremap  <silent> [tag]<C-]>  <C-w>g]
 nnoremap  <silent> [tag]}      <C-w>g}
+nnoremap  <silent> [tag]-      <C-w>g]
 " tab (<Space>-t-*)
 nnoremap  [tab]    <Nop>
 nmap      <Space>t [tab]
