@@ -159,7 +159,7 @@ if [ -e $HOME/gopath ]; then
   export GOROOT=/usr/local/opt/go/libexec
   export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 fi
-if [ -e $GOPATH/bin/peco ]; then
+if type peco >/dev/null 2>&1; then
   zle -N peco_select_history
   bindkey '^r' peco_select_history
 fi
@@ -183,10 +183,10 @@ typeset -U manpath MANPATH
 alias cp='\cp -i'
 alias mv='\mv -i'
 alias rm='\rm -i'
-alias e="exit'
-alias be="bundle exec'
+alias e='exit'
+alias be='bundle exec'
 alias gl='cd $(ghq list -p | peco)'
-alias nv="nvim'
+alias nv='nvim'
 
 ### Environment settings ###
 source ~/.zshrc.env

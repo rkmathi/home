@@ -57,3 +57,6 @@
 [user]
   name        = Ryuichi KAWAMATA
   email       = iam@rkmathi.net
+
+[ghq]
+  root        = ~/Documents/rep
