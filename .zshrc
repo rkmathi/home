@@ -107,15 +107,7 @@ function _precmd_vcs_info () {
 add-zsh-hook precmd _precmd_vcs_info
 
 
-### Alias/Export/PATH ###
-alias cp="\cp -i"
-alias mv="\mv -i"
-alias rm="\rm -i"
-alias e="exit"
-alias be="bundle exec"
-alias nv="nvim"
-alias b2d="boot2docker"
-alias rl="rlwrap"
+# functions
 function p() {
   $* | peco
 }
@@ -186,6 +178,15 @@ export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
 # Remove overlapped path
 typeset -U path PATH
 typeset -U manpath MANPATH
+
+# aliases
+alias cp='\cp -i'
+alias mv='\mv -i'
+alias rm='\rm -i'
+alias e="exit'
+alias be="bundle exec'
+alias gl='cd $(ghq list -p | peco)'
+alias nv="nvim'
 
 ### Environment settings ###
 source ~/.zshrc.env
