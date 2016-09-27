@@ -146,6 +146,7 @@ export LESS="--RAW-CONTROL-CHARS"
 # PATH
 path=(\
   $HOME/opt/bin
+  /usr/local/sbin \
   /usr/local/bin \
   /usr/sbin \
   /usr/bin \
