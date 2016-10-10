@@ -116,6 +116,11 @@ lazy = 1
 on_ft = 'go'
 
 [[plugins]]
+repo = 'neovimhaskell/haskell-vim'
+lazy = 1
+on_ft = 'haskell'
+
+[[plugins]]
 repo = 'nsf/gocode'
 lazy = 1
 rtp = 'vim'
