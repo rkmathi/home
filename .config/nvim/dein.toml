@@ -30,21 +30,21 @@ hook_add = '''
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+on_i = 1
 lazy = 1
 hook_source = '''
-  let g:acp_enableAtStartup = 0
   let g:deoplete#auto_complete_start_length = 3
   let g:deoplete#enable_at_startup = 1
   let g:deoplete#enable_fuzzy_completion = 0
   let g:deoplete#enable_smart_case = 1
-  let g:deoplete#sources = {}
 '''
 
 [[plugins]]
 repo = 'Shougo/neosnippet'
+depends = ['neosnippet-snippets']
 lazy = 1
-depends = 'neosnippet-snippets'
-on_ft = 'snippet'
+on_ft = ['snippet']
+on_i = 1
 hook_source = '''
   if has('conceal')
     set conceallevel=2 concealcursor=niv
@@ -105,30 +105,30 @@ depends = 'unite.vim'
 [[plugins]]
 repo = 'vim-jp/cpp-vim'
 lazy = 1
-on_ft = 'cpp'
+on_ft = ['cpp']
 
 [[plugins]]
 repo = 'fatih/vim-go'
 lazy = 1
-on_ft = 'go'
+on_ft = ['go']
 
 [[plugins]]
 repo = 'neovimhaskell/haskell-vim'
 lazy = 1
-on_ft = 'haskell'
+on_ft = ['haskell']
 
 [[plugins]]
 repo = 'nsf/gocode'
 lazy = 1
 rtp = 'vim'
-on_ft = 'go'
+on_ft = ['go']
 
 [[plugins]]
 repo = 'vim-ruby/vim-ruby'
 lazy = 1
-on_ft = 'ruby'
+on_ft = ['ruby']
 
 [[plugins]]
 repo = 'cespare/vim-toml'
 lazy = 1
-on_ft = 'toml'
+on_ft = ['toml']
