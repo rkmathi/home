@@ -73,9 +73,9 @@ nnoremap  <silent> [tab]p  :tabprevious<CR>
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 xmap <C-k> <Plug>(neosnippet_expand_target)
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\ : pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><tab> pumvisible() ?
+\ "\<C-n>" :
+\ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
 " Shougo/unite.vim (<Space>-u-*)
 nnoremap  [unite]    <Nop>
 nmap      <Space>u   [unite]
