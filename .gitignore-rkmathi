@@ -2,25 +2,10 @@
 .hg/
 
 # OSX
-.DS_Store
+*.DS_Store
+._*
 
 # Windows
 Desktop.ini
 ehthumbs.db
 Thumbs.db
-
-# backup
-*~
-*.bak
-
-# c/c++
-*.o
-*.a
-
-# python
-*.pyc
-
-# ruby
-*.rbc
-*.gem
-
