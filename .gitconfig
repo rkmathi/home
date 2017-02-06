@@ -47,6 +47,7 @@
   excludesfile= ~/.gitignore-rkmathi
   pager       = less -R
   precomposeunicode = true
+  safecrlf    = true
 
 [interactive]
   singlekey   = true
