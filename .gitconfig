@@ -60,4 +60,4 @@
   email       = iam@rkmathi.net
 
 [ghq]
-  root        = ~/Documents/rep
+  root        = ~/ghq
