@@ -129,6 +129,17 @@ lazy = 1
 on_ft = ['ruby']
 
 [[plugins]]
+repo = 'phildawes/racer'
+build = 'cargo build --release'
+lazy = 1
+on_ft = ['rust']
+
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+lazy = 1
+on_ft = ['rust']
+
+[[plugins]]
 repo = 'cespare/vim-toml'
 lazy = 1
 on_ft = ['toml']
