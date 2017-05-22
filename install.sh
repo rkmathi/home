@@ -2,7 +2,7 @@
 
 ### Variables
 PATTERN_LIG="^(lg|linux-gui)$"    # linux-gui
-PATTERN_LIS="^l(c|inux-cui)$"     # linux-cui
+PATTERN_LIS="^(lc|linux-cui)$"     # linux-cui
 PATTERN_OSX="^o(|sx)$"            # osx
 PATTERN_WIN="^w(|indows)$"        # windows
 COPY_GROUP=(
