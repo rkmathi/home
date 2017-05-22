@@ -133,8 +133,8 @@ else
   set t_Co=16
 endif
 set background=light
-colorscheme solarized
-"colorscheme peachpuff
+"colorscheme solarized
+colorscheme peachpuff
 " remember last opened line 
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd BufReadPost * delmarks!
