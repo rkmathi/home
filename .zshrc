@@ -174,9 +174,6 @@ eval "$(rbenv init -)"
 export PATH="$HOME/.cargo/bin:$PATH"
 export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
 
-# Docker
-#eval $(docker-machine env)
-
 # Remove overlapped path
 typeset -U path PATH
 typeset -U manpath MANPATH
