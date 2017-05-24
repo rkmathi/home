@@ -55,6 +55,10 @@ function link_env_file() {
   fi
 }
 
+function mkdir_dirs() {
+  mkdir -p ~/.config/nvim
+}
+
 function must_install() {
   echo "MUST INSTALL"
   for file in ${COPY_GROUP[@]}; do copy_file $file; done
@@ -108,6 +112,7 @@ done
 shift `expr $OPTIND - 1`
 if [ -z $env_type ]; then echo "No option error"; goto_error; fi
 
+mkdir_dirs
 must_install
 env_install $env_type
 additional_install $@
