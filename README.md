@@ -1,2 +1,3 @@
-Install with *install.sh*
+# home
+Use `install.sh`
 
