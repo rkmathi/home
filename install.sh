@@ -1,25 +1,25 @@
 #!/bin/bash
 
 ### Variables
-PATTERN_LIG="^(lg|linux-gui)$"    # linux-gui
-PATTERN_LIS="^(lc|linux-cui)$"     # linux-cui
-PATTERN_OSX="^o(|sx)$"            # osx
-PATTERN_WIN="^w(|indows)$"        # windows
+PATTERN_LIG="^(lg|linux-gui)$"
+PATTERN_LIS="^(lc|linux-cui)$"
+PATTERN_OSX="^o(|sx)$"
+PATTERN_WIN="^w(|indows)$"
 COPY_GROUP=(
-".zshrc"
+  ".zshrc"
 )
 LINK_GROUP=(
-".config/nvim/dein.toml"
-".config/nvim/init.vim"
-".ctags"
-".gitconfig"
-".gitignore-rkmathi"
-".hgrc"
-".rubocop.yml"
-".sbtconfig"
-".tigrc"
-".vim"
-".zsh.d"
+  ".config/nvim/dein.toml"
+  ".config/nvim/init.vim"
+  ".ctags"
+  ".gitconfig"
+  ".gitignore-rkmathi"
+  ".hgrc"
+  ".rubocop.yml"
+  ".sbtconfig"
+  ".tigrc"
+  ".vim"
+  ".zsh.d"
 )
 
 
@@ -116,4 +116,3 @@ mkdir_dirs
 must_install
 env_install $env_type
 additional_install $@
-
