@@ -1,0 +1,36 @@
+!!! Rxvt configures
+! general
+Rxvt.fading: 50
+Rxvt.font: xft:MyricaM M:pixelsize=16:antialias=true
+Rxvt.geometry: 210x64
+Rxvt.iso14755: false
+Rxvt.saveLines: 8192
+Rxvt.scrollBar: false
+
+! color
+Rxvt.background: #FFFFFF
+Rxvt.foreground: #000000
+! black
+Rxvt.color0:  #000000
+Rxvt.color8:  #686868
+! red
+Rxvt.color1:  #B21818
+Rxvt.color9:  #FF5454
+! green
+Rxvt.color2:  #18B218
+Rxvt.color10: #54FF54
+! yellow
+Rxvt.color3:  #B26818
+Rxvt.color11: #FFFF54
+! blue
+Rxvt.color4:  #1818B2
+Rxvt.color12: #5454FF
+! purple
+Rxvt.color5:  #B218B2
+Rxvt.color13: #FF54FF
+! cyan
+Rxvt.color6:  #18B2B2
+Rxvt.color14: #54FFFF
+! white
+Rxvt.color7:  #B2B2B2
+Rxvt.color15: #FFFFFF

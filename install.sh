@@ -22,6 +22,7 @@ LINK_GROUP=(
   ".sbtconfig"
   ".tigrc"
   ".vim"
+  ".Xresources"
   ".zsh.d"
 )
 
