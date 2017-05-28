@@ -1,6 +1,6 @@
 !!! Rxvt configures
 ! general
-Rxvt.fading: 50
+Rxvt.fading: 75
 Rxvt.font: xft:MyricaM M:pixelsize=16:antialias=true
 Rxvt.geometry: 210x64
 Rxvt.iso14755: false
