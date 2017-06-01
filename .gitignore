@@ -1,16 +1,16 @@
-.config/nvim/.undo/
-.config/nvim/dein/
-.config/nvim/snippets/
+/.config/nvim/.undo/
+/.config/nvim/dein/
+/.config/nvim/snippets/
 
-.vim/.netrwhist
-.vim/.vim
-.vim/.undo
-.vim/.yankround/
-.vim/bundle/
+/.vim/.netrwhist
+/.vim/.vim
+/.vim/.undo
+/.vim/.yankround/
+/.vim/bundle/
 
 .xmonad/*
 !.xmonad/conkyrc
 !.xmonad/topstatusbar.sh
 !.xmonad/xmonad.hs
 
-.zsh.d/.zsh.d
+/.zsh.d/.zsh.d
