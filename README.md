@@ -2,8 +2,8 @@
 Use `install.sh`
 
 ```sh
-$ ./install.sh -lg
-$ ./install.sh -lc
-$ ./install.sh -o
-$ ./install.sh -w
+$ ./install.sh -lg # linux gui
+$ ./install.sh -lc # linux cui
+$ ./install.sh -o  # osx
+$ ./install.sh -w  # windows
 ```
