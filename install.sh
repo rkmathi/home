@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
-set -u
+set -eu
 
 ### Variables
 PATTERN_LIG="^(lg|linux-gui)$"
