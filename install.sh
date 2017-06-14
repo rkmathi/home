@@ -13,13 +13,7 @@ COPY_GROUP=(
 LINK_GROUP=(
   ".config/nvim/dein.toml"
   ".config/nvim/init.vim"
-  ".ctags"
   ".gitconfig"
-  ".gitignore-rkmathi"
-  ".hgrc"
-  ".rubocop.yml"
-  ".sbtconfig"
-  ".tigrc"
   ".vim"
   ".Xresources"
   ".zsh.d"
@@ -32,7 +26,7 @@ function goto_error() {
 Usage:
   $ ./install.sh -[Environment] [want_to_install_additional]
 Example:
-  $ ./install.sh -o .xmonad
+  $ ./install.sh -o
 Environment:
   -c : Linux CUI
   -g : Linux GUI
@@ -60,6 +54,8 @@ function link_env_file() {
 
 function mkdir_dirs() {
   mkdir -p ~/.config/nvim
+  mkdir -p ~/.vim
+  mkdir -p ~/.zsh.d
 }
 
 function must_install() {
