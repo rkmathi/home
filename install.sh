@@ -7,10 +7,10 @@ PATTERN_LIG="^(lg|linux-gui)$"
 PATTERN_LIS="^(lc|linux-cui)$"
 PATTERN_OSX="^o(|sx)$"
 PATTERN_WIN="^w(|indows)$"
-COPY_GROUP=(
+CP_A_GROUP=(
   ".zshrc"
 )
-LINK_GROUP=(
+LN_S_GROUP=(
   ".config/nvim/dein.toml"
   ".config/nvim/init.vim"
   ".gitconfig"
@@ -60,8 +60,8 @@ function mkdir_dirs() {
 
 function must_install() {
   echo "MUST INSTALL"
-  for file in ${COPY_GROUP[@]}; do copy_file $file; done
-  for file in ${LINK_GROUP[@]}; do link_file $file; done
+  for file in ${CP_A_GROUP[@]}; do copy_file $file; done
+  for file in ${LN_S_GROUP[@]}; do link_file $file; done
 }
 
 function env_install() {
