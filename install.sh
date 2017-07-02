@@ -3,10 +3,10 @@
 set -eu
 
 ### Variables
-PATTERN_LIG="^(lg|linux-gui)$"
-PATTERN_LIS="^(lc|linux-cui)$"
-PATTERN_OSX="^o(|sx)$"
-PATTERN_WIN="^w(|indows)$"
+PATTERN_CUI="^(c)$"
+PATTERN_GUI="^(g)$"
+PATTERN_MAC="^(m)$"
+PATTERN_WIN="^(w)$"
 CP_A_GROUP=(
   ".zshrc"
 )
@@ -20,20 +20,19 @@ LN_S_GROUP=(
 )
 
 
-### Functions
 function goto_error() {
-  cat << _EOT_
+  cat << EOS
 Usage:
-  $ ./install.sh -[Environment] [want_to_install_additional]
+  $ ./install.sh -[Environment]
 Example:
-  $ ./install.sh -o
+  $ ./install.sh -m
 Environment:
-  -c : Linux CUI
-  -g : Linux GUI
-  -o : OS X
+  -c : Linux (CUI)
+  -g : Linux (GUI)
+  -m : macOS
   -w : Windows
-_EOT_
-  exit -1
+EOS
+  exit 1
 }
 
 function copy_file() {
@@ -58,8 +57,7 @@ function mkdir_dirs() {
   mkdir -p ~/.zsh.d
 }
 
-function must_install() {
-  echo "MUST INSTALL"
+function global_install() {
   for file in ${CP_A_GROUP[@]}; do copy_file $file; done
   for file in ${LN_S_GROUP[@]}; do link_file $file; done
 }
@@ -67,16 +65,16 @@ function must_install() {
 function env_install() {
   env_path="envs/$env_type/"
   case "$1" in
-    "lic" )
+    "cui" )
       echo "Linux CUI"
       for file in ${env_path}.*; do link_env_file $file; done
       ;;
-    "lig" )
+    "gui" )
       echo "Linux GUI"
       for file in ${env_path}.*; do link_env_file $file; done
       ;;
-    "osx" )
-      echo "OSX"
+    "mac" )
+      echo "macOS"
       for file in ${env_path}.*; do link_env_file $file; done
       ;;
     "win" )
@@ -90,20 +88,12 @@ function env_install() {
   esac
 }
 
-function additional_install() {
-  if [ $# -gt 0 ]; then
-    echo "ADDITIONAL INSTALL"
-    for file in $@; do ln_file $file ; done
-  fi
-}
 
-
-### Main
-while getopts ":cgow" opts; do
+while getopts ":cgmw" opts; do
   case ${opts} in
-    c ) env_type="lic" ;;
-    g ) env_type="lig" ;;
-    o ) env_type="osx" ;;
+    c ) env_type="cui" ;;
+    g ) env_type="gui" ;;
+    m ) env_type="mac" ;;
     w ) env_type="win" ;;
     \? ) echo "Invalid option"; goto_error ;;
   esac
@@ -112,6 +102,5 @@ shift `expr $OPTIND - 1`
 if [ -z $env_type ]; then echo "No option error"; goto_error; fi
 
 mkdir_dirs
-must_install
+global_install
 env_install $env_type
-additional_install $@

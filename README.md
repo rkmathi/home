@@ -1,9 +1,8 @@
 # home
-Use `install.sh`
 
 ```sh
-$ ./install.sh -lg # linux gui
-$ ./install.sh -lc # linux cui
-$ ./install.sh -o  # osx
-$ ./install.sh -w  # windows
+$ ./install.sh -c # for Linux (only CUI)
+$ ./install.sh -g # for Linux (with GUI)
+$ ./install.sh -m # for macOS
+$ ./install.sh -w # for Windows
 ```

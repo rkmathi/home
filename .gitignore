@@ -8,9 +8,4 @@
 /.vim/.yankround/
 /.vim/bundle/
 
-.xmonad/*
-!.xmonad/conkyrc
-!.xmonad/topstatusbar.sh
-!.xmonad/xmonad.hs
-
 /.zsh.d/.zsh.d
