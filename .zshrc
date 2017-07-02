@@ -150,6 +150,16 @@ path=(\
   /bin \
 )
 
+# golang
+if [ -e $HOME/gopath ]; then
+  export GOPATH=$HOME/gopath
+  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
+if type peco >/dev/null 2>&1; then
+  zle -N peco_select_history
+  bindkey '^r' peco_select_history
+fi
+
 # rbenv
 if type rbenv > /dev/null 2>&1; then
   export PATH="$HOME/.rbenv/bin:$PATH"
@@ -171,6 +181,7 @@ alias gl='cd $(ghq list -p | peco)'
 alias mv='\mv -i'
 alias nv='nvim'
 alias rm='\rm -i'
+alias t='tmux -f ~/.tmux.conf'
 
 
 ### Environment settings ###
