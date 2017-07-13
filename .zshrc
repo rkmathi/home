@@ -161,13 +161,13 @@ if type peco >/dev/null 2>&1; then
 fi
 
 # rbenv
-if type rbenv > /dev/null 2>&1; then
+if [ -e $HOME/.rbenv ]; then
   export PATH="$HOME/.rbenv/bin:$PATH"
   eval "$(rbenv init -)"
 fi
 
 # rust
-if type cargo > /dev/null 2>&1; then
+if [ -e $HOME/.cargo ]; then
   export PATH="$HOME/.cargo/bin:$PATH"
   export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
 fi
