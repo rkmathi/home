@@ -1,4 +1,4 @@
-# home
+# home files
 
 ```sh
 $ ./install.sh -c # for Linux with CUI
