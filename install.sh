@@ -36,18 +36,18 @@ EOS
 }
 
 function copy_file() {
-  \cp -afv `pwd`/$1 $HOME/$1
+  \cp -afv $(pwd)/$1 $HOME/$1
 }
 
 function link_file() {
-  \ln -fsv `pwd`/$1 $HOME/$1
+  \ln -fsv $(pwd)/$1 $HOME/$1
 }
 
 function link_env_file() {
   pattern="\/\.+$"
   if [[ ! $1 =~ $pattern ]]; then
-    filename=`echo $1 | \awk -F'/' '{print $NF}'`
-    ln -fsv `pwd`/$1 $HOME/$filename
+    filename=$(echo $1 | \awk -F'/' '{print $NF}')
+    ln -fsv $(pwd)/$1 $HOME/$filename
   fi
 }
 
@@ -98,7 +98,7 @@ while getopts ":cgmw" opts; do
     \? ) echo "Invalid option"; goto_error ;;
   esac
 done
-shift `expr $OPTIND - 1`
+shift $(expr $OPTIND - 1)
 if [ -z $env_type ]; then echo "No option error"; goto_error; fi
 
 mkdir_dirs
