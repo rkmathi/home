@@ -46,6 +46,7 @@
   editor      = vi
   pager       = less -R
   precomposeunicode = true
+  quotepath   = false
   safecrlf    = true
 
 [interactive]
