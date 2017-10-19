@@ -176,12 +176,9 @@ fi
 
 ### Aliases
 alias be='bundle exec'
-alias cp='\cp -i'
 alias e='exit'
 alias gl='cd $(ghq list -p | peco)'
-alias mv='\mv -i'
 alias nv='nvim'
-alias rm='\rm -i'
 alias t='tmux -f ~/.tmux.conf'
 
 
