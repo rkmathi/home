@@ -1,6 +1,7 @@
+#### .zshrc
 zcompile ~/.zshrc
-export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
 export WORDCHARS='~!#$%^&()-_=[]{}<>?'
 source ~/.zsh.d/zsh-syntax-highlighting.zsh
@@ -60,10 +61,10 @@ zstyle ':completion:*' use-cache true
 zstyle ':completion:*:processes' command 'ps aux'
 
 
-### History ###
+### History
 HISTFILE=$HOME/.zhistory
 HISTSIZE=1000
-SAVEHIST=100000
+SAVEHIST=10000
 setopt append_history
 setopt extended_history
 setopt hist_expand
@@ -79,72 +80,67 @@ setopt inc_append_history
 setopt share_history
 
 
-### VCS ###
-zstyle ':vcs_info:*' enable git svn hg bzr
-zstyle ':vcs_info:*' actionformats '(%s)-[%b]' '%m' '<!%a>'
-zstyle ':vcs_info:*' formats '(%s)-[%b]' '%m'
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' get-revision true
-zstyle ':vcs_info:*' max-exports 3
-zstyle ':vcs_info:git:*' actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
-zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u'
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' get-revision true
-zstyle ':vcs_info:git:*' stagedstr '+'
-zstyle ':vcs_info:git:*' unstagedstr '-'
-function _precmd_vcs_info () {
-  psvar=()
-  LANG=en_US.UTF-8 vcs_info
-  if [[ -z ${vcs_info_msg_0_} ]]; then
-    psvar[1]=""
-    psvar[2]=""
-    psvar[3]=""
-  else
-    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]=( "${vcs_info_msg_0_}" )
-    [[ -n "$vcs_info_msg_1_" ]] && psvar[2]=( "${vcs_info_msg_1_}" )
-    [[ -n "$vcs_info_msg_2_" ]] && psvar[3]=( "${vcs_info_msg_2_}" )
-  fi
-}
-add-zsh-hook precmd _precmd_vcs_info
-
-
-# functions
-function p() {
-  $* | peco
-}
-function peco_select_history() {
-    typeset tac
-    if which tac > /dev/null; then
-        tac=tac
+### VCS
+if type git > /dev/null 2>&1; then
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:*' actionformats '(%s)-[%b]' '%m' '<!%a>'
+  zstyle ':vcs_info:*' formats '(%s)-[%b]' '%m'
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' get-revision true
+  zstyle ':vcs_info:*' max-exports 3
+  zstyle ':vcs_info:git:*' actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
+  zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u'
+  zstyle ':vcs_info:git:*' check-for-changes true
+  zstyle ':vcs_info:git:*' get-revision true
+  zstyle ':vcs_info:git:*' stagedstr '+'
+  zstyle ':vcs_info:git:*' unstagedstr '-'
+  function _precmd_vcs_info () {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    if [[ -z ${vcs_info_msg_0_} ]]; then
+      psvar[1]=""
+      psvar[2]=""
+      psvar[3]=""
     else
-        tac='tail -r'
+      [[ -n "$vcs_info_msg_0_" ]] && psvar[1]=( "${vcs_info_msg_0_}" )
+      [[ -n "$vcs_info_msg_1_" ]] && psvar[2]=( "${vcs_info_msg_1_}" )
+      [[ -n "$vcs_info_msg_2_" ]] && psvar[3]=( "${vcs_info_msg_2_}" )
     fi
-    BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle redisplay
-}
-function tex2bpdf() {
-  platex $1 && \
-  bibtex $1 && \
-  platex $1 && \
-  platex $1 && \
-  dvipdfmx $1 && \
-  open $1.pdf &
-}
-function tex2pdf() {
-  platex $1 && \
-  dvipdfmx $1 && \
-  open $1.pdf &
-}
+  }
+  add-zsh-hook precmd _precmd_vcs_info
+fi
 
+
+### Functions
+if type peco > /dev/null 2>&1; then
+  function p() {
+    $* | peco
+  }
+  function peco_select_history() {
+      typeset tac
+      if which tac > /dev/null; then
+          tac=tac
+      else
+          tac='tail -r'
+      fi
+      BUFFER=$(fc -l -n 1 | eval $tac | peco --query "$LBUFFER")
+      CURSOR=$#BUFFER
+      zle redisplay
+  }
+fi
+
+
+### Variables
 # EDITOR
-export EDITOR="vim"
+export EDITOR="vi"
 
 # PAGER
 export PAGER="less"
 export LESS="--RAW-CONTROL-CHARS"
 
 # PATH
+typeset -U path PATH
+typeset -U manpath MANPATH
 path=(\
   $HOME/opt/bin
   /usr/local/sbin \
@@ -153,28 +149,41 @@ path=(\
   /usr/bin \
   /sbin \
   /bin \
-  )
+)
+
+# golang
+if [ -e $HOME/gopath ]; then
+  export GOPATH=$HOME/gopath
+  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
+if type peco >/dev/null 2>&1; then
+  zle -N peco_select_history
+  bindkey '^r' peco_select_history
+fi
 
 # rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if [ -e $HOME/.rbenv ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
 
 # rust
-export PATH="$HOME/.cargo/bin:$PATH"
-export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
+if [ -e $HOME/.cargo ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+  export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
+fi
 
-# Remove overlapped path
-typeset -U path PATH
-typeset -U manpath MANPATH
 
-# aliases
-alias cp='\cp -i'
-alias mv='\mv -i'
-alias rm='\rm -i'
-alias e='exit'
+### Aliases
 alias be='bundle exec'
+alias cp='\cp -i'
+alias e='exit'
 alias gl='cd $(ghq list -p | peco)'
+alias mv='\mv -i'
 alias nv='nvim'
+alias rm='\rm -i'
+alias t='tmux -f ~/.tmux.conf'
+
 
 ### Environment settings ###
 source ~/.zshrc.env

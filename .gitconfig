@@ -43,10 +43,10 @@
 
 [core]
   autocrlf    = input
-  editor      = vim
-  excludesfile= ~/.gitignore-rkmathi
+  editor      = vi
   pager       = less -R
   precomposeunicode = true
+  quotepath   = false
   safecrlf    = true
 
 [interactive]
