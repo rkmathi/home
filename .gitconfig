@@ -48,6 +48,7 @@
   precomposeunicode = true
   quotepath   = false
   safecrlf    = true
+  excludesfile = /home/rkmathi/.gitignore-rkmathi
 
 [interactive]
   singlekey   = true
