@@ -2,8 +2,8 @@
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
   a   = add --verbose
   ag  = !git ls-files | xargs ag --pager="less -F -R" --nogroup
-  b   = branch
-  ba  = branch --all
+  b   = !git --no-pager branch
+  ba  = !git --no-pager branch --all
   bc  = rev-parse --abbrev-ref @
   bd  = branch --delete
   br  = branch --remote
