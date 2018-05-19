@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
 set -eu
 
 ### Variables
@@ -14,9 +13,9 @@ LN_S_GROUP=(
   ".config/nvim/dein.toml"
   ".config/nvim/init.vim"
   ".gitconfig"
-  ".vim"
+  ".gitignore-rkmathi"
   ".Xresources"
-  ".zsh.d"
+  ".zsh.d/zsh-syntax-highlighting"
 )
 
 
@@ -53,7 +52,6 @@ function link_env_file() {
 
 function mkdir_dirs() {
   mkdir -p ~/.config/nvim
-  mkdir -p ~/.vim
   mkdir -p ~/.zsh.d
 }
 

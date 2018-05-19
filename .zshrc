@@ -3,8 +3,8 @@ zcompile ~/.zshrc
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
-export WORDCHARS='~!#$%^&()-_=[]{}<>?'
-source ~/.zsh.d/zsh-syntax-highlighting.zsh
+export WORDCHARS='~!#$%^&()_[]{}<>?'
+source ~/.zsh.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 ### Autoload
@@ -127,6 +127,8 @@ if type peco > /dev/null 2>&1; then
       CURSOR=$#BUFFER
       zle redisplay
   }
+  zle -N peco_select_history
+  bindkey '^r' peco_select_history
 fi
 
 
@@ -141,8 +143,8 @@ export LESS="--RAW-CONTROL-CHARS"
 # PATH
 typeset -U path PATH
 typeset -U manpath MANPATH
-path=(\
-  $HOME/opt/bin
+path=( \
+  $HOME/opt/bin \
   /usr/local/sbin \
   /usr/local/bin \
   /usr/sbin \
@@ -155,10 +157,6 @@ path=(\
 if [ -e $HOME/gopath ]; then
   export GOPATH=$HOME/gopath
   export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-fi
-if type peco >/dev/null 2>&1; then
-  zle -N peco_select_history
-  bindkey '^r' peco_select_history
 fi
 
 # rbenv
