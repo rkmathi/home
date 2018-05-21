@@ -31,6 +31,7 @@
   rsho= remote show origin
   s   = status --branch --short
   sh  = show
+  sm  = submodule
   wc  = whatchanged
 
 [color]
