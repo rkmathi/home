@@ -2,7 +2,7 @@
 ! general
 Rxvt.fading: 10
 Rxvt.font: xft:MyricaM M:pixelsize=16:antialias=true
-Rxvt.geometry: 210x64
+Rxvt.geometry: 200x64
 Rxvt.iso14755: false
 Rxvt.saveLines: 8192
 Rxvt.scrollBar: false
@@ -34,3 +34,7 @@ Rxvt.color14: #54FFFF
 ! white
 Rxvt.color7:  #B2B2B2
 Rxvt.color15: #FFFFFF
+
+! Require urxvt-fullscreen
+URxvt.perl-ext-common: fullscreen
+URxvt.keysym.F11: perl:fullscreen:switch
