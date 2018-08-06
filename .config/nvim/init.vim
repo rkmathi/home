@@ -30,11 +30,12 @@ scriptencoding utf-8
 
 """ KEYMAP SETTING
 " prefix
-nnoremap <C-w>o   <Nop>
-nnoremap Q        <Nop>
-nnoremap ZZ       <Nop>
-nnoremap ZQ       <Nop>
-nnoremap <C-l>    :noh<CR><C-l>
+nnoremap <C-w>o     <Nop>
+nnoremap <C-w><C-o> <Nop>
+nnoremap Q          <Nop>
+nnoremap ZZ         <Nop>
+nnoremap ZQ         <Nop>
+nnoremap <C-l>      :noh<CR><C-l>
 " bracket
 nnoremap  ( t(
 nnoremap  ) t)
