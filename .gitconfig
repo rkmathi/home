@@ -1,38 +1,35 @@
 [alias]
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
   a   = add --verbose
-  ag  = !git ls-files | xargs ag --pager="less -F -R" --nogroup
+  ad  = add --verbose .
+  ap  = add --verbose -p
   b   = !git --no-pager branch
   ba  = !git --no-pager branch --all
   bc  = rev-parse --abbrev-ref @
-  bd  = branch --delete
+  bd  = branch --delete --force
   br  = branch --remote
-  bv  = branch -vv
   cm  = commit --message
   co  = checkout
   d   = diff
-  d1  = diff HEAD~1
-  d2  = diff HEAD~2
-  d3  = diff HEAD~3
   dc  = diff --cached
   f   = fetch --prune
   g   = grep -nH --break --heading
   l   = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n'
   lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
   plf = pull --ff-only
-  plfo= pull --ff-only origin
   pln = pull --no-ff
   plr = pull --rebase
   ps  = push
   pso = push origin
-  psom= push origin master
   psuo= push -u origin
-  rsh = remote show
-  rsho= remote show origin
-  s   = status --branch --short
-  sh  = show
+  res = remote show
+  reso= remote show origin
+  st  = status --branch --short
   sm  = submodule
-  wc  = whatchanged
+  smui= submodule update --init
+  w   = whatchanged
+  wp  = whatchanged -p
+  rkmathi = !git config --replace-all --local user.name 'Ryuichi KAWAMATA' && git config --replace-all --local user.email 'iam@rkmathi.net'
 
 [color]
   branch      = auto
@@ -43,13 +40,14 @@
   ui          = auto
 
 [core]
-  autocrlf    = input
-  editor      = vi
-  pager       = less -R
+  #autocrlf          = false
+  autocrlf          = input
+  editor            = vi
+  pager             = less -R
   precomposeunicode = true
-  quotepath   = false
-  safecrlf    = true
-  excludesfile = /home/rkmathi/.gitignore-rkmathi
+  quotepath         = false
+  safecrlf          = true
+  excludesfile      = /home/rkmathi/.gitignore-rkmathi
 
 [interactive]
   singlekey   = true
