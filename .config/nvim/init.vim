@@ -117,7 +117,7 @@ set mouse=
 set nobackup noswapfile nowritebackup
 set novisualbell
 set number
-set previewheight=12
+set previewheight=15
 set ruler
 set showcmd
 set showmatch

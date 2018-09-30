@@ -23,7 +23,7 @@ hook_add = '''
   let g:syntastic_mode_map = {
   \   'mode': 'passive',
   \   'active_filetypes': [
-  \     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'vim',
+  \     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'rust', 'vim',
   \   ],
   \ }
 '''
@@ -112,11 +112,6 @@ on_ft = ['cpp']
 repo = 'fatih/vim-go'
 lazy = 1
 on_ft = ['go']
-
-[[plugins]]
-repo = 'neovimhaskell/haskell-vim'
-lazy = 1
-on_ft = ['haskell']
 
 [[plugins]]
 repo = 'nsf/gocode'

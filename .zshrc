@@ -153,10 +153,35 @@ path=( \
   /bin \
 )
 
-# golang
+# cargo
+if [ -e $HOME/.cargo ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# gopath
 if [ -e $HOME/gopath ]; then
   export GOPATH=$HOME/gopath
   export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+fi
+
+# ndenv
+if [ -e $HOME/.ndenv ]; then
+  export PATH="$HOME/.ndenv/bin:$PATH"
+  eval "$(ndenv init -)"
+fi
+
+# plenv
+if [ -e $HOME/.plenv ]; then
+  export PATH="$HOME/.plenv/bin:$PATH"
+  eval "$(plenv init - zsh)"
+fi
+
+# pyenv
+if [ -e $HOME/.pyenv ]; then
+  export PYENV_ROOT=$HOME/.pyenv
+  export PATH=$PYENV_ROOT/bin:$PATH
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
 
 # rbenv
@@ -165,10 +190,9 @@ if [ -e $HOME/.rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
-# rust
-if [ -e $HOME/.cargo ]; then
-  export PATH="$HOME/.cargo/bin:$PATH"
-  export RUST_SRC_PATH="$HOME/.cargo/rustc/src"
+# wasm
+if [ -e /usr/lib/emscripten ]; then
+  export PATH="/usr/lib/emscripten:$PATH"
 fi
 
 

@@ -1,11 +1,4 @@
 /.config/nvim/.undo/
 /.config/nvim/dein/
 /.config/nvim/snippets/
-
-/.vim/.netrwhist
-/.vim/.vim
-/.vim/.undo
-/.vim/.yankround/
-/.vim/bundle/
-
 /.zsh.d/.zsh.d
