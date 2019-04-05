@@ -161,7 +161,9 @@ fi
 # gopath
 if [ -e $HOME/gopath ]; then
   export GOPATH=$HOME/gopath
-  export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+  export PATH=$GOPATH/bin:$PATH
+  #export GOROOT=$HOME/go
+  #export PATH=$GOROOT/bin:$PATH
 fi
 
 # ndenv
