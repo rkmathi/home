@@ -8,9 +8,6 @@ if !isdirectory(s:dein_repo_dir)
 endif
 execute 'set runtimepath^=' . s:dein_repo_dir
 
-call dein#begin(s:dein_dir)
-" Use here when debug
-call dein#clear_state()
 if dein#load_state(s:dein_dir)
   let s:toml = '~/.config/nvim/dein.toml'
   call dein#begin(s:dein_dir)

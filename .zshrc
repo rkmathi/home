@@ -199,7 +199,15 @@ fi
 ### Aliases
 alias be='bundle exec'
 alias e='exit'
-alias gl='cd $(ghq list -p | peco)'
+alias dcd='docker-compose down'
+alias dcu='docker-compose up'
+alias dcp='docker-compose ps'
+alias dcr='docker-compose run --rm'
+alias doe='docker exec -it'
+alias doi='docker image'
+alias dois='docker images'
+alias dop='docker ps'
+alias dopa='docker ps -a'
 alias nv='nvim'
 alias t='tmux -f ~/.tmux.conf'
 
