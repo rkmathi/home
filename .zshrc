@@ -158,12 +158,10 @@ if [ -e $HOME/.cargo ]; then
   export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-# gopath
-if [ -e $HOME/gopath ]; then
-  export GOPATH=$HOME/gopath
+# go
+if [ -e $HOME/go ]; then
+  export GOPATH=$HOME/go
   export PATH=$GOPATH/bin:$PATH
-  #export GOROOT=$HOME/go
-  #export PATH=$GOROOT/bin:$PATH
 fi
 
 # ndenv
