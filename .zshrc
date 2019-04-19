@@ -199,7 +199,9 @@ fi
 ### Aliases
 alias be='bundle exec'
 alias e='exit'
+alias dcb='docker-compose build'
 alias dcd='docker-compose down'
+alias dce='docker-compose exec'
 alias dcu='docker-compose up'
 alias dcp='docker-compose ps'
 alias dcr='docker-compose run --rm'
