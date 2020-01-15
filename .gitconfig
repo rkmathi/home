@@ -10,6 +10,7 @@
   br  = branch --remote
   cm  = commit --message
   co  = checkout
+  cp  = cherry-pick
   d   = diff
   dc  = diff --cached
   f   = fetch --prune
