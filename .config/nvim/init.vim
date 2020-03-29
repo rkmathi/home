@@ -100,7 +100,6 @@ set backspace=indent,eol,start
 set display=uhex
 set cmdheight=1
 set colorcolumn=80
-"set completeopt-=preview
 set fileformats=unix,dos,mac
 set foldenable
 set foldlevel=99
@@ -158,6 +157,5 @@ autocmd BufNewFile,BufRead *.go   set filetype=go
 autocmd BufNewFile,BufRead *.haml set filetype=haml.html
 autocmd BufNewFile,BufRead *.md   set filetype=markdown
 autocmd BufNewFile,BufRead *.rs   set filetype=rust
-autocmd BufNewFile,BufRead *.tx   set filetype=xslate.html
 autocmd FileType go       setlocal noexpandtab tabstop=4 shiftwidth=4
 autocmd FileType markdown setlocal             tabstop=4 shiftwidth=4

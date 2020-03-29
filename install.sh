@@ -36,31 +36,28 @@ function install_common_files() {
 }
 
 function link_env_file() {
-  if [[ ! ${1} =~ "\/\.+$" ]]; then
-    file=$(echo ${1} | \awk -F'/' '{print $NF}')
-    \ln -fsv $(pwd)/${1} ${HOME}/${file}
-  fi
+  basename=$(echo ${1} | \awk -F'/' '{print $NF}')
+  \ln -fsv $(pwd)/${1} ${HOME}/${basename}
 }
 
 function install_env_files() {
-  for file in "envs/${1}/".*; do link_env_file ${file}; done
-}
-
-function main() {
-  env_type=""
-  while getopts ":lmw" opts; do
-    case "${opts}" in
-      l ) env_type="linux";;
-      m ) env_type="mac";;
-      w ) env_type="win";;
-      \? ) goto_error;;
-    esac
+  for file in envs/${1}/.*; do
+    if [[ ! ${file} =~ \/\.{1,2}$ ]]; then link_env_file ${file}; fi
   done
-  shift $(expr ${OPTIND} - 1)
-  if [ -z ${env_type} ]; then goto_error; fi
-
-  install_common_files
-  install_env_files ${env_type}
 }
 
-main
+env_type=""
+while getopts ":lmw" opts; do
+  case ${opts} in
+    l ) env_type="linux";;
+    m ) env_type="mac";;
+    w ) env_type="win";;
+    \? ) goto_error;;
+  esac
+done
+shift $(expr ${OPTIND} - 1)
+if [ -z ${env_type} ]; then goto_error; fi
+
+install_common_files
+install_env_files ${env_type}
+echo "OK"

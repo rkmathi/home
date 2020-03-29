@@ -1,18 +1,17 @@
-#### .zshrc
-zcompile ~/.zshrc
+#### Initialize
+zcompile $HOME/.zshrc
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export TERM=xterm-256color
 export WORDCHARS='~!#$%^&()_[]{}<>?'
-source ~/.zsh.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/.zsh.d/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 
 ### Autoload
-autoload -Uz colors     ; colors
-autoload -Uz compinit   ; compinit
-autoload -Uz promptinit ; promptinit
 autoload -Uz add-zsh-hook
-autoload -Uz is-at-least
+autoload -Uz colors; colors
+autoload -Uz compinit; compinit
+autoload -Uz promptinit; promptinit
 autoload -Uz vcs_info
 
 
@@ -31,6 +30,7 @@ setopt auto_resume
 setopt brace_ccl
 setopt bsd_echo
 setopt complete_in_word
+setopt correct
 setopt cdable_vars sh_word_split
 setopt extended_glob
 setopt hash_cmds
@@ -56,8 +56,8 @@ setopt pushd_to_home
 setopt pushd_silent
 setopt short_loops
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*' use-cache true
+zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*:processes' command 'ps aux'
 
 
@@ -84,13 +84,13 @@ setopt share_history
 if type git > /dev/null 2>&1; then
   zstyle ':vcs_info:*' enable git
   zstyle ':vcs_info:*' actionformats '(%s)-[%b]' '%m' '<!%a>'
-  zstyle ':vcs_info:*' formats '(%s)-[%b]' '%m'
   zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' formats '(%s)-[%b]' '%m'
   zstyle ':vcs_info:*' get-revision true
   zstyle ':vcs_info:*' max-exports 3
   zstyle ':vcs_info:git:*' actionformats '(%s)-[%b]' '%c%u %m' '<!%a>'
-  zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u'
   zstyle ':vcs_info:git:*' check-for-changes true
+  zstyle ':vcs_info:git:*' formats '(%s)-[%b]' '%c%u'
   zstyle ':vcs_info:git:*' get-revision true
   zstyle ':vcs_info:git:*' stagedstr '+'
   zstyle ':vcs_info:git:*' unstagedstr '-'
@@ -113,9 +113,6 @@ fi
 
 ### Functions
 if type peco > /dev/null 2>&1; then
-  function p() {
-    $* | peco
-  }
   function peco_select_history() {
       typeset tac
       if which tac > /dev/null; then
@@ -153,6 +150,9 @@ path=( \
   /bin \
 )
 
+# REPORTTIME
+export REPORTTIME=3
+
 # cargo
 if [ -e $HOME/.cargo ]; then
   export PATH="$HOME/.cargo/bin:$PATH"
@@ -164,10 +164,10 @@ if [ -e $HOME/go ]; then
   export PATH=$GOPATH/bin:$PATH
 fi
 
-# ndenv
-if [ -e $HOME/.ndenv ]; then
-  export PATH="$HOME/.ndenv/bin:$PATH"
-  eval "$(ndenv init -)"
+# nodenv
+if [ -e $HOME/.nodenv ]; then
+  export PATH="$HOME/.nodenv/bin:$PATH"
+  eval "$(nodenv init -)"
 fi
 
 # plenv
@@ -190,11 +190,6 @@ if [ -e $HOME/.rbenv ]; then
   eval "$(rbenv init -)"
 fi
 
-# wasm
-if [ -e /usr/lib/emscripten ]; then
-  export PATH="/usr/lib/emscripten:$PATH"
-fi
-
 
 ### Aliases
 alias be='bundle exec'
@@ -212,7 +207,10 @@ alias dop='docker ps'
 alias dopa='docker ps -a'
 alias nv='nvim'
 alias t='tmux -f ~/.tmux.conf'
+alias v='vim'
 
 
-### Environment settings ###
-source ~/.zshrc.env
+### Environment settings
+if [ -e $HOME/.zshrc.env ]; then
+  source $HOME/.zshrc.env
+fi
