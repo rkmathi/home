@@ -41,7 +41,6 @@
   ui          = auto
 
 [core]
-  #autocrlf          = false
   autocrlf          = input
   editor            = vi
   pager             = less -R
