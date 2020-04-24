@@ -2,8 +2,8 @@
 set -eu
 
 COMMON_MKDIR_PATHS=(
-  "~/.config/nvim"
-  "~/.zsh.d"
+  ".config/nvim"
+  ".zsh.d"
 )
 COMMON_COPY_FILES=(
   ".zshrc"
@@ -30,14 +30,14 @@ EOS
 }
 
 function install_common_files() {
-  for path in ${COMMON_MKDIR_PATHS[@]}; do \mkdir -p ${path}; done
-  for file in ${COMMON_COPY_FILES[@]}; do \cp -afv $(pwd)/${file} ${HOME}/${file}; done
-  for file in ${COMMON_LINK_FILES[@]}; do \ln -fsv $(pwd)/${file} ${HOME}/${file}; done
+  for path in ${COMMON_MKDIR_PATHS[@]}; do mkdir -p ${HOME}/${path}; done
+  for file in ${COMMON_COPY_FILES[@]};  do cp -afv $(pwd)/${file} ${HOME}/${file}; done
+  for file in ${COMMON_LINK_FILES[@]};  do ln -fsv $(pwd)/${file} ${HOME}/${file}; done
 }
 
 function link_env_file() {
-  basename=$(echo ${1} | \awk -F'/' '{print $NF}')
-  \ln -fsv $(pwd)/${1} ${HOME}/${basename}
+  basename=$(echo ${1} | awk -F'/' '{print $NF}')
+  ln -fsv $(pwd)/${1} ${HOME}/${basename}
 }
 
 function install_env_files() {
