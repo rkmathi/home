@@ -2,7 +2,7 @@
 ! general
 Rxvt.fading: 10
 Rxvt.font: xft:MyricaM M:pixelsize=16:antialias=true
-Rxvt.geometry: 200x64
+Rxvt.geometry: 240x60
 Rxvt.iso14755: false
 Rxvt.saveLines: 8192
 Rxvt.scrollBar: false
