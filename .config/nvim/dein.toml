@@ -139,3 +139,8 @@ on_ft = ['rust']
 repo = 'cespare/vim-toml'
 lazy = 1
 on_ft = ['toml']
+
+[[plugins]]
+repo = 'kovisoft/slimv'
+lazy = 1
+on_ft = ['lisp']
