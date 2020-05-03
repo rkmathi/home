@@ -30,7 +30,6 @@ setopt auto_resume
 setopt brace_ccl
 setopt bsd_echo
 setopt complete_in_word
-setopt correct
 setopt cdable_vars sh_word_split
 setopt extended_glob
 setopt hash_cmds
