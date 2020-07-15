@@ -18,22 +18,25 @@ autoload -Uz vcs_info
 ### General
 bindkey -e
 setopt always_last_prompt
-setopt auto_cd
+unsetopt auto_cd
 setopt auto_list
 setopt auto_menu
 setopt auto_name_dirs
 setopt auto_param_slash
 setopt auto_param_keys
 setopt auto_pushd
-setopt auto_remove_slash
+unsetopt auto_remove_slash
 setopt auto_resume
 setopt brace_ccl
 setopt bsd_echo
+setopt cdable_vars
 setopt complete_in_word
-setopt cdable_vars sh_word_split
+unsetopt correct
+unsetopt correct_all
 setopt extended_glob
+setopt function_argzero
 setopt hash_cmds
-setopt ignoreeof
+setopt ignore_eof
 setopt list_packed
 setopt list_types
 setopt long_list_jobs
@@ -52,7 +55,9 @@ setopt print_eight_bit
 setopt prompt_subst
 setopt pushd_ignore_dups
 setopt pushd_to_home
+setopt rm_star_wait
 setopt pushd_silent
+setopt sh_word_split
 setopt short_loops
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' use-cache true
@@ -150,7 +155,7 @@ path=( \
 )
 
 # REPORTTIME
-export REPORTTIME=3
+export REPORTTIME=5
 
 # cargo
 if [ -e $HOME/.cargo ]; then
