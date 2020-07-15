@@ -1,7 +1,6 @@
 [alias]
   alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/'
   a   = add --verbose
-  ad  = add --verbose .
   ap  = add --verbose -p
   b   = !git --no-pager branch
   ba  = !git --no-pager branch --all
@@ -19,12 +18,10 @@
   lv  = log --abbrev-commit --date=iso --graph --pretty=format:'%C(red)%h %C(yellow)%d%C(green)%cd %C(blue)%cn\n%C(reset)%s\n' --name-status
   plf = pull --ff-only
   pln = pull --no-ff
-  plr = pull --rebase
   ps  = push
   pso = push origin
-  psuo= push -u origin
+  psoc= !git push origin `git rev-parse --abbrev-ref @`
   res = remote show
-  reso= remote show origin
   st  = status --branch --short
   sm  = submodule
   smui= submodule update --init
