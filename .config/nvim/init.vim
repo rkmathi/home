@@ -129,10 +129,10 @@ if stridx($TERM, "xterm-256color") >= 0
 else
   set t_Co=16
 endif
-set background=light
-"colorscheme solarized
-colorscheme peachpuff
-" remember last opened line 
+set background=dark
+colorscheme solarized
+"colorscheme peachpuff
+" remember last opened line
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 autocmd BufReadPost * delmarks!
 " statusline
