@@ -197,6 +197,7 @@ fi
 
 ### Aliases
 alias be='bundle exec'
+alias bt='batcat --color=always --paging=never --style=full --theme=GitHub'
 alias e='exit'
 alias dcb='docker-compose build'
 alias dcd='docker-compose down'
