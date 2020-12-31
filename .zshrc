@@ -36,7 +36,7 @@ unsetopt correct_all
 setopt extended_glob
 setopt function_argzero
 setopt hash_cmds
-setopt ignore_eof
+setopt ignoreeof
 setopt list_packed
 setopt list_types
 setopt long_list_jobs
@@ -55,9 +55,7 @@ setopt print_eight_bit
 setopt prompt_subst
 setopt pushd_ignore_dups
 setopt pushd_to_home
-setopt rm_star_wait
 setopt pushd_silent
-setopt sh_word_split
 setopt short_loops
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 zstyle ':completion:*' use-cache true
@@ -166,6 +164,7 @@ fi
 if [ -e $HOME/go ]; then
   export GOPATH=$HOME/go
   export PATH=$GOPATH/bin:$PATH
+  #export PATH=$GOPATH/bin:/opt/go/bin:$PATH
 fi
 
 # nodenv
@@ -219,3 +218,4 @@ alias v='vim'
 if [ -e $HOME/.zshrc.env ]; then
   source $HOME/.zshrc.env
 fi
+# export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0
