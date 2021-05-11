@@ -129,7 +129,7 @@ if stridx($TERM, "xterm-256color") >= 0
 else
   set t_Co=16
 endif
-set background=dark
+set background=light
 colorscheme solarized
 "colorscheme peachpuff
 " remember last opened line
