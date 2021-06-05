@@ -1,132 +1,67 @@
-### PRIMARY PLUGINS
-[[plugins]]
-repo = 'Shougo/dein.vim'
-
+### GENERAL PLUGINS
 [[plugins]]
 repo = 'altercation/vim-colors-solarized'
 
 [[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+[[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 hook_add = '''
-  let g:indent_guides_auto_colors = 1
-  let g:indent_guides_enable_on_vim_startup = 1
-  let g:indent_guides_guide_size = 1
+let g:indent_guides_auto_colors = 1
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
 '''
 
 [[plugins]]
-repo = 'scrooloose/syntastic'
+repo = 'prabirshrestha/async.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete.vim'
 hook_add = '''
-  let g:syntastic_auto_loc_list = 0
-  let g:syntastic_cpp_compiler_options = ' -Wall -std=c++17 -stdlib=libc++'
-  let g:syntastic_mode_map = {
-  \   'mode': 'passive',
-  \   'active_filetypes': [
-  \     'c', 'cpp', 'go', 'javascript', 'perl', 'python', 'ruby', 'rust', 'vim',
-  \   ],
-  \ }
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
 '''
+
+[[plugins]]
+repo = 'prabirshrestha/asyncomplete-lsp.vim'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_document_code_action_signs_enabled = 0
+let g:lsp_settings_filetyple_go = ['gopls', 'golangci-lint-langserver']
+'''
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
 on_i = 1
 lazy = 1
 hook_source = '''
-  let g:deoplete#auto_complete_start_length = 3
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_fuzzy_completion = 0
-  let g:deoplete#enable_smart_case = 1
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet'
-depends = ['neosnippet-snippets']
-lazy = 1
-on_ft = ['snippet']
-on_i = 1
-hook_source = '''
-  if has('conceal')
-    set conceallevel=2 concealcursor=niv
-  endif
-'''
-
-[[plugins]]
-repo = 'Shougo/neosnippet-snippets'
-
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
-
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-depends = 'vimproc.vim'
-hook_add = '''
-  let g:quickrun_config = {
-  \   '_': {
-  \     'outputter/buffer/close_on_empty': 1,
-  \     'outputter/buffer/split': ':botright 12sp',
-  \     'runner': 'vimproc',
-  \     'runner/vimproc/updatetime': 50,
-  \   },
-  \ }
+let g:deoplete#auto_complete_start_length = 3
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_fuzzy_completion = 0
+let g:deoplete#enable_smart_case = 1
 '''
 
 [[plugins]]
 repo = 'tpope/vim-fugitive'
 
 
-### Unite PLUGINS
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-lazy = 1
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
-lazy = 1
-depends = 'neomru.vim'
-hook_source = '''
-  let g:unite_enable_start_insert = 1
-  let g:unite_enable_split_vertically = 1
-  let g:unite_winwidth = 30
-  if executable('ag')
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-    let g:unite_source_grep_recursive_opt = ''
-  endif
-'''
-
-[[plugins]]
-repo = 'tsukkee/unite-tag'
-lazy = 1
-depends = 'unite.vim'
-
-
 ### LANGUAGE SPECIFIC PLUGINS
 [[plugins]]
-repo = 'vim-jp/cpp-vim'
+repo = 'cespare/vim-toml'
 lazy = 1
-on_ft = ['cpp']
+on_ft = ['toml']
 
 [[plugins]]
-repo = 'fatih/vim-go'
+repo = 'mattn/vim-goimports'
 lazy = 1
 on_ft = ['go']
-
-[[plugins]]
-repo = 'nsf/gocode'
-lazy = 1
-rtp = 'vim'
-on_ft = ['go']
-
-[[plugins]]
-repo = 'vim-ruby/vim-ruby'
-lazy = 1
-on_ft = ['ruby']
-
-[[plugins]]
-repo = 'phildawes/racer'
-build = 'cargo build --release'
-lazy = 1
-on_ft = ['rust']
 
 [[plugins]]
 repo = 'rust-lang/rust.vim'
@@ -134,11 +69,16 @@ lazy = 1
 on_ft = ['rust']
 
 [[plugins]]
-repo = 'cespare/vim-toml'
+repo = 'racer-rust/vim-racer'
 lazy = 1
-on_ft = ['toml']
+on_ft = ['rust']
 
 [[plugins]]
-repo = 'kovisoft/slimv'
+repo = 'vim-jp/cpp-vim'
 lazy = 1
-on_ft = ['lisp']
+on_ft = ['cpp']
+
+[[plugins]]
+repo = 'vim-ruby/vim-ruby'
+lazy = 1
+on_ft = ['ruby']

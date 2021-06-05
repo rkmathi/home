@@ -16,12 +16,13 @@ if dein#load_state(s:dein_dir)
   " Comment out here when debug
   "call dein#save_state()
 endif
+
 if dein#check_install()
   call dein#install()
 endif
 
 filetype plugin indent on
-syntax on
+syntax enable
 scriptencoding utf-8
 
 
@@ -45,51 +46,70 @@ nnoremap  <silent> k  gk
 nnoremap  <silent> gk k
 nnoremap  <silent> $  g$
 nnoremap  <silent> g$ $
-nnoremap  <silent> j  gj
-nnoremap  <silent> gj j
-nnoremap  <silent> k  gk
-nnoremap  <silent> gk k
-nnoremap  <silent> $  g$
-nnoremap  <silent> g$ $
 " search
 vnoremap * "zy:let @/ = @z<CR>n
-" ctags (<Space>-c-*)
-nnoremap  [tag]    <Nop>
-nmap      <Space>c [tag]
-nnoremap  <silent> [tag]]      g]
-nnoremap  <silent> [tag]}      <C-w>g}
-nnoremap  <silent> [tag]-      <C-w>g]
+
+" prabirshrestha/vim-lsp (<Space>-l-*)
+nnoremap [lsp]     <Nop>
+nmap     <Space>l  [lsp]
+if empty(globpath(&rtp, 'autoload/lsp.vim'))
+  finish
+endif
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <silent> [lsp]d <plug>(lsp-definition)
+  nmap <silent> [lsp]h <plug>(lsp-hover)
+  nmap <silent> [lsp]i <plug>(lsp-implementation)
+  nmap <silent> [lsp]p <plug>(lsp-peek-definition)
+  nmap <silent> [lsp]t <plug>(lsp-type-definition)
+  nmap <silent> [lsp]r <plug>(lsp-references)
+endfunction
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+
 " tab (<Space>-t-*)
-nnoremap  [tab]    <Nop>
-nmap      <Space>t [tab]
-nnoremap  <silent> [tab]c  :tablast <bar> tabnew<CR>
-nnoremap  <silent> [tab]x  :tabclose<CR>
-nnoremap  <silent> <S-Tab> :tabnext<CR>
-nnoremap  <silent> [tab]n  :tabnext<CR>
-nnoremap  <silent> [tab]p  :tabprevious<CR>
-" Shougo/neosnippet.vim
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-xmap <C-k> <Plug>(neosnippet_expand_target)
-inoremap <expr><tab> pumvisible() ?
-\ "\<C-n>" :
-\ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<tab>"
-" Shougo/unite.vim (<Space>-u-*)
-nnoremap  [unite]    <Nop>
-nmap      <Space>u   [unite]
-au FileType unite nn <silent><buffer><expr><C-k> unite#do_action('split')
-au FileType unite nn <silent><buffer><expr><C-l> unite#do_action('vsplit')
-nnoremap  <silent> [unite]a :<C-u>UniteBookmarkAdd<CR>
-nnoremap  <silent> [unite]b :<C-u>Unite -winheight=12 bookmark<CR>
-nnoremap  <silent> [unite]f :<C-u>Unite -winheight=12 file<CR>
-nnoremap  <silent> [unite]g :<C-u>Unite grep -buffer-name=search-buffer<CR>
-nnoremap  <silent> [unite]m :<C-u>Unite -winheight=12 buffer file_mru<CR>
-nnoremap  <silent> [unite]r :<C-u>Unite -winheight=12 -buffer-name=register register<CR>
-" thinca/vim-quickrun (<Space>-q-*)
-nnoremap  [qrun]     <Nop>
-nmap      <Space>q   [qrun]
-autocmd FileType qf nn <buffer><silent> q :q<CR>:HierClear<CR>
-nnoremap  <silent> [qrun]r :QuickRun<CR>
+nnoremap [tab]    <Nop>
+nmap     <Space>t [tab]
+nmap <silent> [tab]n  :tabnext<CR>
+nmap <silent> [tab]p  :tabprevious<CR>
+nmap <silent> [tab]t  :tablast <bar> tabnew<CR>
+nmap <silent> [tab]x  :tabclose<CR>
+
+" Shougo/denite.nvim (<Space>-<Space>-*)
+nnoremap  [denite]       <Nop>
+nmap      <Space><Space> [denite]
+nmap <silent> [denite]b :<C-u>Denite -split=floating buffer<CR>
+nmap <silent> [denite]f :<C-u>Denite -split=floating file/rec<CR>
+nmap <silent> [denite]g :<C-u>Denite -split=floating grep<CR>
+nmap <silent> [denite]l :<C-u>Denite -split=floating line<CR>
+autocmd FileType denite call s:denite_my_settings()
+function! s:denite_my_settings() abort
+  nnoremap <silent><buffer><expr> <CR>    denite#do_map('do_action')
+  nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+  nnoremap <silent><buffer><expr> i       denite#do_map('open_filter_buffer')
+  nnoremap <silent><buffer><expr> p       denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> q       denite#do_map('quit')
+  nnoremap <silent><buffer><expr> \|       denite#do_map('do_action', 'vsplit')
+  nnoremap <silent><buffer><expr> -       denite#do_map('do_action', 'split')
+endfunction
+let s:ignore_globs = ['.git', '.svn', 'node_modules']
+call denite#custom#filter('matcher/ignore_globs', 'ignore_globs', s:ignore_globs)
+let s:denite_win_width_percent = 0.8
+let s:denite_win_height_percent = 0.6
+call denite#custom#option('default', {
+  \ 'split': 'floating',
+  \ 'winwidth': float2nr(&columns * s:denite_win_width_percent),
+  \ 'wincol': float2nr((&columns - (&columns * s:denite_win_width_percent)) / 2),
+  \ 'winheight': float2nr(&lines * s:denite_win_height_percent),
+  \ 'winrow': float2nr((&lines - (&lines * s:denite_win_height_percent)) / 2),
+  \ })
+call denite#custom#source('file/rec', 'matchers', ['matcher/substring'])
+call denite#custom#var('file/rec', 'command', ['ag', '--follow']
+  \ + map(deepcopy(s:ignore_globs), { k, v -> '--ignore=' . v })
+  \ + ['--nocolor', '--nogroup', '-g', ''])
 
 
 """ MISC SETTING
